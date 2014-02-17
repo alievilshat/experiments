@@ -17,12 +17,31 @@
                 </MultiBinding>
             </HierarchicalDataTemplate.ItemsSource>
             
-            <TextBlock Text="{Binding Name}"></TextBlock>
+            <TextBlock Text="{Binding Name}">
+                <TextBlock.ContextMenu>
+                    <ContextMenu Name="Designer_menu">
+                        <MenuItem Header="Add Attribute" Name="addattr" Click="addattr_Click" />
+                        <MenuItem Header="Add Elemnet" Name="addelem" Click="addelem_Click">
+                        </MenuItem>
+                        <Separator />
+                        <MenuItem Header="Import Database Tables" Name="ImporDBtble">   
+                        </MenuItem>
+                        <MenuItem Header="Import Query" Name="impoQry"></MenuItem>
+                        <MenuItem Header="Import XSD" Name="imporXSD"></MenuItem>
+                        <MenuItem Header="Import XML" Name="ImporXML"></MenuItem>
+                        <MenuItem Header="Import CSV" Name="ImportCSV"></MenuItem>
+                    </ContextMenu>
+                </TextBlock.ContextMenu>
+            </TextBlock>
         </HierarchicalDataTemplate>
         
         <DataTemplate DataType="{x:Type xs:XmlSchemaAttribute}">
             <TextBlock FontStyle="Italic" Text="{Binding Name}"></TextBlock>
         </DataTemplate>
+
+        <Style TargetType="{x:Type TreeViewItem}">
+            <EventSetter Event="TreeViewItem.ContextMenuOpening" Handler="schemaTree_PreviewMouseRightButtonDown"/>
+        </Style>
     </Window.Resources>
     
     <TabControl TabStripPlacement="Bottom" SelectionChanged="TabControl_SelectionChanged">
@@ -32,7 +51,7 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-        
+
                 <TreeView x:Name="schemaTree" Grid.Column="0" ItemsSource="{Binding Schema.Items}" />
                 <wpg:PropertyGrid Grid.Column="1" Instance="{Binding SelectedItem, ElementName=schemaTree}" />
             </Grid>
@@ -43,5 +62,6 @@
                 <TextBox x:Name="schemaCode" Text="{Binding Code}" />
             </Grid>
         </TabItem>
+       
     </TabControl>
 </Window>
