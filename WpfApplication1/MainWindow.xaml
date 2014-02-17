@@ -53,7 +53,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TreeView x:Name="schemaTree" Grid.Column="0" ItemsSource="{Binding Schema.Items}" />
-                <wpg:PropertyGrid Grid.Column="1" Instance="{Binding SelectedItem, ElementName=schemaTree}" />
+                <wpg:PropertyGrid Grid.Column="1" Instance="{Binding SelectedItem, ElementName=schemaTree}" PropertyFilter="PropertyFilter"  />
             </Grid>
         </TabItem>
         

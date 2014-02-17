@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Xml.Schema;
+using WPG.Data;
 
 namespace WpfApplication1
 {
@@ -49,6 +50,16 @@ namespace WpfApplication1
             Console.WriteLine(e.Message);
         }
 
+        private bool PropertyFilter(Property p)
+        {
+            return p.PropertyType == typeof(string)
+                || p.PropertyType == typeof(int)
+                || p.PropertyType == typeof(long)
+                || p.PropertyType == typeof(float)
+                || p.PropertyType == typeof(double)
+                || p.PropertyType == typeof(decimal);
+        }
+
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             updateTargets();
@@ -62,7 +73,10 @@ namespace WpfApplication1
                 schemaCode.GetBindingExpression(TextBox.TextProperty).UpdateTarget();
             }
             else
+            {
+                designerTab.Focus();
                 schemaTree.GetBindingExpression(TreeView.ItemsSourceProperty).UpdateTarget();
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
