@@ -28,15 +28,31 @@
                         </MenuItem>
                         <MenuItem Header="Import Query" Name="impoQry"></MenuItem>
                         <MenuItem Header="Import XSD" Name="imporXSD"></MenuItem>
-                        <MenuItem Header="Import XML" Name="ImporXML"></MenuItem>
-                        <MenuItem Header="Import CSV" Name="ImportCSV"></MenuItem>
+                        <MenuItem Header="Import XML" Name="ImporXML" Click="ImporXML_Click"></MenuItem>
+                        <MenuItem Header="Import CSV" Name="ImportCSV" Click="ImportCSV_Click"></MenuItem>
+                        <Separator />
+                        <MenuItem Header="Delete Element" Name="deletelem" Click="deletelem_Click"></MenuItem>
                     </ContextMenu>
                 </TextBlock.ContextMenu>
             </TextBlock>
         </HierarchicalDataTemplate>
-        
+
+        <HierarchicalDataTemplate DataType="{x:Type xs:XmlSchemaChoice}">
+            <HierarchicalDataTemplate.ItemsSource>
+                <Binding  Path="Items" />
+            </HierarchicalDataTemplate.ItemsSource>
+            
+            <TextBlock Text="[choise]" />
+        </HierarchicalDataTemplate>
+
         <DataTemplate DataType="{x:Type xs:XmlSchemaAttribute}">
-            <TextBlock FontStyle="Italic" Text="{Binding Name}"></TextBlock>
+            <TextBlock FontStyle="Italic" Text="{Binding Name}">
+                 <TextBlock.ContextMenu>
+                     <ContextMenu Name="Designer_menu_attr">
+                         <MenuItem Header="Delete" Name="deleattr" Click="deleattr_Click"/>
+                     </ContextMenu>
+                  </TextBlock.ContextMenu>
+            </TextBlock>
         </DataTemplate>
 
         <Style TargetType="{x:Type TreeViewItem}">

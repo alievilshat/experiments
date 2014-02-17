@@ -61,7 +61,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Utils\CsvReader.cs" />
+    <Compile Include="Utils\CsvToXmlConverter.cs" />
     <Compile Include="Utils\UnionConverter.cs" />
+    <Compile Include="Utils\XsdInferrer.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
