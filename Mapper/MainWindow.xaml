@@ -1,0 +1,67 @@
+﻿<Window x:Class="Mapper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:uc="clr-namespace:Mapper"
+        Title="MainWindow">
+    
+    <Window.Resources>
+        <Style x:Key="ExpandedStyle">
+            <Setter Property="TreeViewItem.IsExpanded" Value="True" />
+        </Style>
+        <Style TargetType="{x:Type TreeViewItem}">
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+    
+    <DockPanel x:Name="canvas" ClipToBounds="True" Background="Transparent" Focusable="True">
+        <ScrollViewer DockPanel.Dock="Left" FlowDirection="RightToLeft" Grid.Column="0" Grid.Row="0">
+            <TreeView x:Name="sourceTreeView" 
+                    ItemContainerStyle="{StaticResource ExpandedStyle}" FlowDirection="LeftToRight">
+                <TreeView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Margin="0, 10, 20, 10" />
+                    </ItemsPanelTemplate>
+                </TreeView.ItemsPanel>
+                <TreeViewItem Header="root">
+                    <TreeViewItem Header="item1" />
+                    <TreeViewItem x:Name="sourcenode">
+                        <TreeViewItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="item2" />
+                                <Thumb Height="0" />
+                            </StackPanel>
+                        </TreeViewItem.Header>
+                    </TreeViewItem>
+                    <TreeViewItem Header="item3" />
+                </TreeViewItem>
+            </TreeView>
+        </ScrollViewer>
+
+        <ScrollViewer DockPanel.Dock="Right">
+            <TreeView x:Name="destinationTreeView" FlowDirection="RightToLeft"
+                    ItemContainerStyle="{StaticResource ExpandedStyle}">
+                <TreeView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Margin="0, 10, 20, 10" />
+                    </ItemsPanelTemplate>
+                </TreeView.ItemsPanel>
+                <TreeViewItem Header="root">
+                    <TreeViewItem x:Name="targetnode">
+                        <TreeViewItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="item1" />
+                                <Thumb Height="0" />
+                            </StackPanel>
+                        </TreeViewItem.Header>
+                    </TreeViewItem>
+                    <TreeViewItem Header="item2" />
+                    <TreeViewItem Header="item3" />
+                </TreeViewItem>
+            </TreeView>
+        </ScrollViewer>
+        <StackPanel>
+            <uc:Transformation Source="{Binding ElementName=sourcenode}" Target="{Binding ElementName=targetnode}"  />
+        </StackPanel>
+    </DockPanel>
+</Window>

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  <s:Body>
+    <CheckOrderStatus xmlns="http://tempuri.org/">
+      <orderid>10</orderid>
+    </CheckOrderStatus>
+  </s:Body>
+</s:Envelope>

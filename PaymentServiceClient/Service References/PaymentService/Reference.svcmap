@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="0ab72328-1c8b-4205-9e9d-ddaae9fd8685" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:50358/PaymentGateway.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="PaymentGateway.xsd" MetadataType="Schema" ID="40d01686-5119-4af5-be4a-8c4e40dfedd8" SourceId="1" SourceUrl="http://localhost:50358/PaymentGateway.svc?xsd=xsd1" />
+    <MetadataFile FileName="PaymentGateway1.xsd" MetadataType="Schema" ID="463cb30c-7346-48a9-82dc-16467d950260" SourceId="1" SourceUrl="http://localhost:50358/PaymentGateway.svc?xsd=xsd0" />
+    <MetadataFile FileName="PaymentGateway2.xsd" MetadataType="Schema" ID="84f8d36f-43ab-498b-b682-b6b755cf669b" SourceId="1" SourceUrl="http://localhost:50358/PaymentGateway.svc?xsd=xsd2" />
+    <MetadataFile FileName="PaymentGateway.disco" MetadataType="Disco" ID="7517e55f-186f-43bb-860d-a6da1ebc68b1" SourceId="1" SourceUrl="http://localhost:50358/PaymentGateway.svc?disco" />
+    <MetadataFile FileName="PaymentGatewayImpl.wsdl" MetadataType="Wsdl" ID="83eed605-bb16-4842-bd36-74f0be33c204" SourceId="1" SourceUrl="http://localhost:50358/PaymentGateway.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
