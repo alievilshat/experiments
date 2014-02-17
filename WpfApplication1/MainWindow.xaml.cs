@@ -73,5 +73,40 @@ namespace WpfApplication1
                 Schema.Write(stream);
             }
         }
+
+        private void addattr_Click(object sender, RoutedEventArgs e)
+        {
+            var parent = (XmlSchemaElement) schemaTree.SelectedItem;
+            if (parent != null)
+            {
+                var schema = parent.SchemaType as XmlSchemaComplexType;
+                if (schema == null)
+                    parent.SchemaType = schema = new XmlSchemaComplexType();
+
+                XmlSchemaAttribute xmlSchemaAttribute = new XmlSchemaAttribute { Name = "New Attribute" };
+                schema.Attributes.Add(xmlSchemaAttribute);
+                updateTargets();
+            }
+        }
+
+        private void addelem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private ContextMenuEventArgs handledContextMenuEventArgs;
+
+        private void schemaTree_PreviewMouseRightButtonDown(object sender, ContextMenuEventArgs e)
+        {
+            if (handledContextMenuEventArgs != e)
+            {
+                handledContextMenuEventArgs = e;
+                TreeViewItem item = sender as TreeViewItem;
+                if (item != null)
+                {
+                    item.Focus();
+                }
+            }
+        }
     }
 }
