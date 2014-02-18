@@ -61,10 +61,32 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ConnectionSettings.xaml.cs">
+      <DependentUpon>ConnectionSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="IConnectionSettings.cs" />
+    <Compile Include="ImportTables.xaml.cs">
+      <DependentUpon>ImportTables.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ImportWizard.xaml.cs">
+      <DependentUpon>ImportWizard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\CsvReader.cs" />
     <Compile Include="Utils\CsvToXmlConverter.cs" />
     <Compile Include="Utils\UnionConverter.cs" />
     <Compile Include="Utils\XsdInferrer.cs" />
+    <Page Include="ConnectionSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ImportTables.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ImportWizard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

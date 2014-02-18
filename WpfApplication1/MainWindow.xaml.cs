@@ -265,5 +265,17 @@ namespace WpfApplication1
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void ImporDBtble_Click(object sender, RoutedEventArgs e)
+        {
+            var wizard = new ImportWizard();
+            var settings = new ConnectionSettings { Next = new ImportTables() };
+            wizard.Navigate(settings);
+
+            if (wizard.ShowDialog().GetValueOrDefault())
+            {
+                
+            }
+        }
     }
 }
