@@ -56,6 +56,7 @@
         </DataTemplate>
 
         <Style TargetType="{x:Type TreeViewItem}">
+            <Setter Property="IsExpanded" Value="True" />
             <EventSetter Event="TreeViewItem.ContextMenuOpening" Handler="schemaTree_PreviewMouseRightButtonDown"/>
         </Style>
     </Window.Resources>
