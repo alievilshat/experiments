@@ -219,12 +219,51 @@ namespace WpfApplication1
 
         private void deletelem_Click(object sender, RoutedEventArgs e)
         {
+            var item = (XmlSchemaElement)schemaTree.SelectedItem;
+            var parent = item.Parent as XmlSchemaSequence;
+            if (parent == null)
+                throw new NotImplementedException("Cannot remove the element from " + parent);
+            parent.Items.Remove(item);
 
+            updateTargets();
         }
 
         private void deleattr_Click(object sender, RoutedEventArgs e)
         {
+            var attribute = (XmlSchemaAttribute)schemaTree.SelectedItem;
+            var parent = (XmlSchemaComplexType)attribute.Parent;
+            if (parent == null)
+                throw new NotImplementedException("Cannot remove the attribute from " + parent);
+            parent.Attributes.Remove(attribute);
 
+            updateTargets();
+
+        }
+
+        private void imporXSD_Click(object sender, RoutedEventArgs e)
+        {
+            var parent = (XmlSchemaElement)schemaTree.SelectedItem;
+            try
+            {
+                var dialog = new OpenFileDialog()
+                {
+                    Title = "Choose XSD File",
+                    Filter = "Xsd files (*.xsd)|*.xsd|All files|*.*"
+                };
+                if (dialog.ShowDialog().GetValueOrDefault())
+                {
+                    var source = dialog.FileName;
+                    using (var stream = File.Open(source, FileMode.Open))
+                    {
+                        var xsd = XmlSchema.Read(stream, validationCallback);
+                        importItems(parent, xsd);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
