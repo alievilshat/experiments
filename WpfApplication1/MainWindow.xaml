@@ -27,7 +27,7 @@
                         <MenuItem Header="Import Database Tables" Name="ImporDBtble">   
                         </MenuItem>
                         <MenuItem Header="Import Query" Name="impoQry"></MenuItem>
-                        <MenuItem Header="Import XSD" Name="imporXSD"></MenuItem>
+                        <MenuItem Header="Import XSD" Name="imporXSD" Click="imporXSD_Click"></MenuItem>
                         <MenuItem Header="Import XML" Name="ImporXML" Click="ImporXML_Click"></MenuItem>
                         <MenuItem Header="Import CSV" Name="ImportCSV" Click="ImportCSV_Click"></MenuItem>
                         <Separator />
