@@ -35,6 +35,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mono.Security, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql, Version=2.0.12.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Npgsql.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -61,29 +69,39 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ConnectionSettings.xaml.cs">
+    <Compile Include="Wizard\ConnectionSettings.xaml.cs">
       <DependentUpon>ConnectionSettings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="IConnectionSettings.cs" />
-    <Compile Include="ImportTables.xaml.cs">
+    <Compile Include="Wizard\IConnectionSettings.cs" />
+    <Compile Include="Wizard\ImportTables.xaml.cs">
       <DependentUpon>ImportTables.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ImportWizard.xaml.cs">
+    <Compile Include="Wizard\ImportType.xaml.cs">
+      <DependentUpon>ImportType.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Wizard\ImportWizard.xaml.cs">
       <DependentUpon>ImportWizard.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\CsvReader.cs" />
     <Compile Include="Utils\CsvToXmlConverter.cs" />
     <Compile Include="Utils\UnionConverter.cs" />
     <Compile Include="Utils\XsdInferrer.cs" />
-    <Page Include="ConnectionSettings.xaml">
+    <Compile Include="Wizard\Query.xaml.cs">
+      <DependentUpon>Query.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Wizard\ConnectionSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ImportTables.xaml">
+    <Page Include="Wizard\ImportTables.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ImportWizard.xaml">
+    <Page Include="Wizard\ImportType.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Wizard\ImportWizard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -99,6 +117,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Wizard\Query.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -123,6 +145,8 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <Content Include="lib\Mono.Security.dll" />
+    <Content Include="lib\Npgsql.dll" />
     <Content Include="lib\WPG.dll" />
     <Content Include="XMLSchema1.xsd">
       <SubType>Designer</SubType>

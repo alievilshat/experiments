@@ -222,7 +222,7 @@ namespace WpfApplication1
             var item = (XmlSchemaElement)schemaTree.SelectedItem;
             var parent = item.Parent as XmlSchemaSequence;
             if (parent == null)
-                throw new NotImplementedException("Cannot remove the element from " + parent);
+                throw new NotImplementedException("Cannot remove the element from schema " + parent);
             parent.Items.Remove(item);
 
             updateTargets();
@@ -233,7 +233,7 @@ namespace WpfApplication1
             var attribute = (XmlSchemaAttribute)schemaTree.SelectedItem;
             var parent = (XmlSchemaComplexType)attribute.Parent;
             if (parent == null)
-                throw new NotImplementedException("Cannot remove the attribute from " + parent);
+                throw new NotImplementedException("Cannot remove the attribute from schema " + parent);
             parent.Attributes.Remove(attribute);
 
             updateTargets();
@@ -269,7 +269,8 @@ namespace WpfApplication1
         private void ImporDBtble_Click(object sender, RoutedEventArgs e)
         {
             var wizard = new ImportWizard();
-            var settings = new ConnectionSettings { Next = new ImportTables() };
+            var settings = new ConnectionSettings();
+            
             wizard.Navigate(settings);
 
             if (wizard.ShowDialog().GetValueOrDefault())
