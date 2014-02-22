@@ -12,24 +12,24 @@
         <HierarchicalDataTemplate DataType="{x:Type xs:XmlSchemaElement}">
             <HierarchicalDataTemplate.ItemsSource>
                 <MultiBinding Converter="{StaticResource unionConverter}">
-                    <Binding Path="SchemaType.Attributes" />
-                    <Binding Path="SchemaType.Particle.Items" />
+                    <Binding Path="SchemaType.Attributes" Converter="{StaticResource observable}" /> 
+                    <Binding Path="SchemaType.Particle.Items" Converter="{StaticResource observable}" />
                 </MultiBinding>
             </HierarchicalDataTemplate.ItemsSource>
-            
-            <TextBlock Text="{Binding Name}">
+
+            <TextBlock DataContext="{Binding Converter={StaticResource observable}}" Text="{Binding Name}">
                 <TextBlock.ContextMenu>
                     <ContextMenu Name="Designer_menu">
-                        <MenuItem Header="Add Attribute" Name="addattr" Click="addattr_Click" />
-                        <MenuItem Header="Add Elemnet" Name="addelem" Click="addelem_Click" />
+                        <MenuItem Header="Add Attribute" Name="addAttr" Click="addAttr_Click" />
+                        <MenuItem Header="Add Element" Name="addElem" Click="addElem_Click" />
                         <Separator />
-                        <MenuItem Header="Import Database Tables" Name="ImporDBtble" Click="ImporDBtble_Click" />
-                        <MenuItem Header="Import Query" Name="impoQry" />
-                        <MenuItem Header="Import XSD" Name="imporXSD" Click="imporXSD_Click" />
-                        <MenuItem Header="Import XML" Name="ImporXML" Click="ImporXML_Click" />
-                        <MenuItem Header="Import CSV" Name="ImportCSV" Click="ImportCSV_Click" />
+                        <MenuItem Header="Import Database Tables" Name="importTables" Click="importTables_Click" />
+                        <MenuItem Header="Import Query" Name="importQuery" />
+                        <MenuItem Header="Import XSD" Name="importXSD" Click="importXSD_Click" />
+                        <MenuItem Header="Import XML" Name="importXML" Click="importXML_Click" />
+                        <MenuItem Header="Import CSV" Name="importCSV" Click="importXML_Click" />
                         <Separator />
-                        <MenuItem Header="Remove" Name="deletelem" Click="deletelem_Click"></MenuItem>
+                        <MenuItem Header="Remove" Name="deleteElem" Click="deleteElem_Click" />
                     </ContextMenu>
                 </TextBlock.ContextMenu>
             </TextBlock>
@@ -37,17 +37,17 @@
 
         <HierarchicalDataTemplate DataType="{x:Type xs:XmlSchemaChoice}">
             <HierarchicalDataTemplate.ItemsSource>
-                <Binding  Path="Items" />
+                <Binding  Path="Items" Converter="{StaticResource observable}" />
             </HierarchicalDataTemplate.ItemsSource>
             
             <TextBlock Text="[choise]" />
         </HierarchicalDataTemplate>
-
+        
         <DataTemplate DataType="{x:Type xs:XmlSchemaAttribute}">
-            <TextBlock FontStyle="Italic" Text="{Binding Name}">
+            <TextBlock FontStyle="Italic" DataContext="{Binding Converter={StaticResource observable}}" Text="{Binding Name}">
                  <TextBlock.ContextMenu>
                      <ContextMenu Name="Designer_menu_attr">
-                         <MenuItem Header="Remove" Name="deleattr" Click="deleattr_Click"/>
+                        <MenuItem Header="Remove" Name="deleteAttr" Click="deleteAttr_Click"/>
                      </ContextMenu>
                   </TextBlock.ContextMenu>
             </TextBlock>
@@ -67,8 +67,8 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <TreeView x:Name="schemaTree" Grid.Column="0" ItemsSource="{Binding Schema.Items}" />
-                <wpg:PropertyGrid Grid.Column="1" Instance="{Binding SelectedItem, ElementName=schemaTree}" PropertyFilter="PropertyFilter"  />
+                <TreeView x:Name="schemaTree" Grid.Column="0" ItemsSource="{Binding Schema.Items, Converter={StaticResource observable}}" TreeViewItem.Selected="OnItemSelected" />
+                <wpg:PropertyGrid Grid.Column="1" Instance="{Binding SelectedItem, ElementName=schemaTree, Converter={StaticResource observable}}" PropertyFilter="PropertyFilter"  />
             </Grid>
         </TabItem>
         

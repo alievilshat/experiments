@@ -2,8 +2,8 @@
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Xml.Schema;
 using System.Xml.Linq;
+using System.Xml.Schema;
 using Microsoft.Win32;
 using WPG.Data;
 
@@ -12,6 +12,7 @@ namespace WpfApplication1
     public partial class MainWindow : Window
     {
         private const string FILE = "XMLSchema1.xsd";
+        private TreeViewItem selectedItem;
 
         public XmlSchema Schema { get; set; }
 
@@ -90,7 +91,7 @@ namespace WpfApplication1
             }
         }
 
-        private void addattr_Click(object sender, RoutedEventArgs e)
+        private void addAttr_Click(object sender, RoutedEventArgs e)
         {
             var parent = (XmlSchemaElement)schemaTree.SelectedItem;
             if (parent != null)
@@ -102,14 +103,18 @@ namespace WpfApplication1
             }
         }
 
-        private void addAttribute(XmlSchemaElement parent, XmlSchemaAttribute xmlSchemaAttribute)
+        private void addAttribute(XmlSchemaElement parent, XmlSchemaAttribute attribute)
         {
             var schema = ensureType<XmlSchemaComplexType>(parent.SchemaType);
             parent.SchemaType = schema;
-            schema.Attributes.Add(xmlSchemaAttribute);
+            schema.Attributes.Add(attribute);
+            attribute.Parent = schema;
+
+            parent.Parent.As<XmlSchemaSequence>()
+                .Items.AsObservable().Update();
         }
 
-        private void addelem_Click(object sender, RoutedEventArgs e)
+        private void addElem_Click(object sender, RoutedEventArgs e)
         {
             var parent = (XmlSchemaElement)schemaTree.SelectedItem;
             if (parent != null)
@@ -130,6 +135,9 @@ namespace WpfApplication1
             schema.Particle = particle;
 
             particle.Items.Add(element);
+            element.Parent = particle;
+
+            parent.Parent.As<XmlSchemaSequence>().Items.AsObservable().Update();
         }
 
         private T ensureType<T>(object element)
@@ -157,7 +165,7 @@ namespace WpfApplication1
             }
         }
 
-        private void ImportCSV_Click(object sender, RoutedEventArgs e)
+        private void importCSV_Click(object sender, RoutedEventArgs e)
         {
             var parent = (XmlSchemaElement)schemaTree.SelectedItem;
             try
@@ -183,7 +191,7 @@ namespace WpfApplication1
 
         }
 
-        private void ImporXML_Click(object sender, RoutedEventArgs e)
+        private void importXML_Click(object sender, RoutedEventArgs e)
         {
             var parent = (XmlSchemaElement)schemaTree.SelectedItem;
             try
@@ -197,7 +205,7 @@ namespace WpfApplication1
                 {
                     var source = XDocument.Load(dialog.FileName);
                     var xsd = XsdInferrer.InferXsdFromXml(source);
-
+                     
                     importItems(parent, xsd);
                 }
             }
@@ -217,18 +225,17 @@ namespace WpfApplication1
             }
         }
 
-        private void deletelem_Click(object sender, RoutedEventArgs e)
+        private void deleteElem_Click(object sender, RoutedEventArgs e)
         {
             var item = (XmlSchemaElement)schemaTree.SelectedItem;
             var parent = item.Parent as XmlSchemaSequence;
             if (parent == null)
-                throw new NotImplementedException("Cannot remove the element from " + parent);
-            parent.Items.Remove(item);
-
-            updateTargets();
+                return;
+            dynamic sequence = parent.Items.AsObservable();
+            sequence.Remove(item);
         }
 
-        private void deleattr_Click(object sender, RoutedEventArgs e)
+        private void deleteAttr_Click(object sender, RoutedEventArgs e)
         {
             var attribute = (XmlSchemaAttribute)schemaTree.SelectedItem;
             var parent = (XmlSchemaComplexType)attribute.Parent;
@@ -236,11 +243,10 @@ namespace WpfApplication1
                 throw new NotImplementedException("Cannot remove the attribute from " + parent);
             parent.Attributes.Remove(attribute);
 
-            updateTargets();
-
+            attribute.Parent.As<XmlSchemaSequence>().Items.AsObservable().Update();
         }
 
-        private void imporXSD_Click(object sender, RoutedEventArgs e)
+        private void importXSD_Click(object sender, RoutedEventArgs e)
         {
             var parent = (XmlSchemaElement)schemaTree.SelectedItem;
             try
@@ -266,7 +272,7 @@ namespace WpfApplication1
             }
         }
 
-        private void ImporDBtble_Click(object sender, RoutedEventArgs e)
+        private void importTables_Click(object sender, RoutedEventArgs e)
         {
             var wizard = new ImportWizard();
             var settings = new ConnectionSettings { Next = new ImportTables() };
@@ -276,6 +282,11 @@ namespace WpfApplication1
             {
                 
             }
+        }
+
+        private void OnItemSelected(object sender, RoutedEventArgs e)
+        {
+            selectedItem = (TreeViewItem)e.OriginalSource;
         }
     }
 }
