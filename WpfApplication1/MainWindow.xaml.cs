@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,7 +13,6 @@ namespace WpfApplication1
     public partial class MainWindow : Window
     {
         private const string FILE = "XMLSchema1.xsd";
-        private TreeViewItem selectedItem;
 
         public XmlSchema Schema { get; set; }
 
@@ -98,8 +98,6 @@ namespace WpfApplication1
             {
                 var xmlSchemaAttribute = new XmlSchemaAttribute { Name = "New Attribute" };
                 addAttribute(parent, xmlSchemaAttribute);
-
-                updateTargets();
             }
         }
 
@@ -110,8 +108,8 @@ namespace WpfApplication1
             schema.Attributes.Add(attribute);
             attribute.Parent = schema;
 
-            parent.Parent.As<XmlSchemaSequence>()
-                .Items.AsObservable().Update();
+            var items = (IEnumerable)parent.Parent.As<dynamic>().Items;
+            items.AsObservable().Update();
         }
 
         private void addElem_Click(object sender, RoutedEventArgs e)
@@ -121,8 +119,6 @@ namespace WpfApplication1
             {
                 var xmlElement = new XmlSchemaElement { Name = "New Element" };
                 addChildElement(parent, xmlElement);
-
-                updateTargets();
             }
         }
 
@@ -137,7 +133,8 @@ namespace WpfApplication1
             particle.Items.Add(element);
             element.Parent = particle;
 
-            parent.Parent.As<XmlSchemaSequence>().Items.AsObservable().Update();
+            var items = (IEnumerable)parent.Parent.As<dynamic>().Items;
+            items.AsObservable().Update();
         }
 
         private T ensureType<T>(object element)
@@ -274,19 +271,24 @@ namespace WpfApplication1
 
         private void importTables_Click(object sender, RoutedEventArgs e)
         {
-            var wizard = new ImportWizard();
-            var settings = new ConnectionSettings { Next = new ImportTables() };
-            wizard.Navigate(settings);
+            var parent = (XmlSchemaElement)schemaTree.SelectedItem;
 
-            if (wizard.ShowDialog().GetValueOrDefault())
+            try
             {
-                
-            }
-        }
+                var wizard = new ImportWizard();
+                var settings = new ConnectionSettings();
 
-        private void OnItemSelected(object sender, RoutedEventArgs e)
-        {
-            selectedItem = (TreeViewItem)e.OriginalSource;
+                wizard.Navigate(settings);
+
+                if (wizard.ShowDialog().GetValueOrDefault())
+                {
+                    importItems(parent, wizard.Schema);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

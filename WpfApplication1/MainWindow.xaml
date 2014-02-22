@@ -1,4 +1,4 @@
-<Window x:Class="WpfApplication1.MainWindow"
+﻿<Window x:Class="WpfApplication1.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:xs="clr-namespace:System.Xml.Schema;assembly=System.Xml"
@@ -24,7 +24,6 @@
                         <MenuItem Header="Add Element" Name="addElem" Click="addElem_Click" />
                         <Separator />
                         <MenuItem Header="Import Database Tables" Name="importTables" Click="importTables_Click" />
-                        <MenuItem Header="Import Query" Name="importQuery" />
                         <MenuItem Header="Import XSD" Name="importXSD" Click="importXSD_Click" />
                         <MenuItem Header="Import XML" Name="importXML" Click="importXML_Click" />
                         <MenuItem Header="Import CSV" Name="importCSV" Click="importXML_Click" />
@@ -67,7 +66,7 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <TreeView x:Name="schemaTree" Grid.Column="0" ItemsSource="{Binding Schema.Items, Converter={StaticResource observable}}" TreeViewItem.Selected="OnItemSelected" />
+                <TreeView x:Name="schemaTree" Grid.Column="0" ItemsSource="{Binding Schema.Items, Converter={StaticResource observable}}" />
                 <wpg:PropertyGrid Grid.Column="1" Instance="{Binding SelectedItem, ElementName=schemaTree, Converter={StaticResource observable}}" PropertyFilter="PropertyFilter"  />
             </Grid>
         </TabItem>

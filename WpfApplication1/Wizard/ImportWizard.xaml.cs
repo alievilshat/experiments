@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Schema;
 
 namespace WpfApplication1
 {
@@ -19,9 +20,12 @@ namespace WpfApplication1
     /// </summary>
     public partial class ImportWizard : NavigationWindow
     {
+        public XmlSchema Schema { get; set; }
+
         public ImportWizard()
         {
             InitializeComponent();
         }
+
     }
 }
