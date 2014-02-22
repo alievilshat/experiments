@@ -20,7 +20,6 @@ namespace WpfApplication1
     /// </summary>
     public partial class ConnectionSettings : Page, IConnectionSettings
     {
-        NpgsqlConnection conn;
         public string Server
         {
             get { return (string)GetValue(ServerProperty); }
@@ -85,55 +84,59 @@ namespace WpfApplication1
         public static readonly DependencyProperty EncriptionProperty =
             DependencyProperty.Register("Encription", typeof(bool), typeof(ConnectionSettings), new UIPropertyMetadata(false));
 
-    
         public ConnectionSettings()
         {
+            
             InitializeComponent();
-
             DataContext = this;
+            
+            
+            Server = ConnectionSetting.Default.Server;
+            Login = ConnectionSetting.Default.Username;
+            Database = ConnectionSetting.Default.Database;
+            
         }
 
         private void Next_Click(object sender, RoutedEventArgs e)
         {
+            ConnectionSetting.Default.Server=Server;
+            ConnectionSetting.Default.Username = Login;
+            ConnectionSetting.Default.Database=   Database ;
+            ConnectionSetting.Default.Port=Port;
+            ConnectionSetting.Default.Timeout=Timeout;
+            ConnectionSetting.Default.Encription = Encription;
+            ConnectionSetting.Default.Save();
             this.NavigationService.Navigate(new ImportType(this));
+            
         }
 
         private void Test_connection_Click(object sender, RoutedEventArgs e)
         {
             if (!(Server == string.Empty) && !(Login == string.Empty) && !(LoginPassword == string.Empty) && !(Database == string.Empty))
             {
-                string connstring = String.Format("Server={0};Port={1};" +
-                        "User Id={2};Password={3};Database={4};",
-                        Server, Port, Login,
-                        LoginPassword, Database);
-
-                conn = new NpgsqlConnection(connstring);
-                this.OpenConn();
+                CheckConnection();
             }
             else 
                 MessageBox.Show("Field can not be empty");
        
         }
 
-        public void OpenConn()
+        public string GetConnectionString()
         {
-            try
-            {
-                conn.Open();
-                
-               MessageBox.Show("Connection Succeded");
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("Connection Error");
-            }
+            return String.Format("Server={0};Port={1};User Id={2};Password={3};Database={4};",
+                          Server, Port, Login, LoginPassword, Database);
         }
 
-        public void CloseConn()
+        public void CheckConnection()
         {
             try
             {
-                conn.Close();
+                using (var conn = new NpgsqlConnection(GetConnectionString()))
+                {
+                    conn.Open();
+                }
+                
+               MessageBox.Show("Connection Succeded");
             }
             catch (Exception e)
             {

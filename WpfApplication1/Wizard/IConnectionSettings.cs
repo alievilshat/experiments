@@ -14,5 +14,6 @@ namespace WpfApplication1
         string Database { get; }
         int Timeout { get; }
         bool Encription { get; }
+        string GetConnectionString();
     }
 }

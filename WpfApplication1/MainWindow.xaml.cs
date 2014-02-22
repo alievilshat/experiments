@@ -268,14 +268,23 @@ namespace WpfApplication1
 
         private void ImporDBtble_Click(object sender, RoutedEventArgs e)
         {
-            var wizard = new ImportWizard();
-            var settings = new ConnectionSettings();
-            
-            wizard.Navigate(settings);
+            var parent = (XmlSchemaElement)schemaTree.SelectedItem;
 
-            if (wizard.ShowDialog().GetValueOrDefault())
+            try
             {
-                
+                var wizard = new ImportWizard();
+                var settings = new ConnectionSettings();
+
+                wizard.Navigate(settings);
+
+                if (wizard.ShowDialog().GetValueOrDefault())
+                {
+                    importItems(parent, wizard.Schema);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

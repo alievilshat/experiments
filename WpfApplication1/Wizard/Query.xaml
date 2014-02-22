@@ -16,7 +16,7 @@
         
         
         <Label Content="Query :" ></Label>
-        <TextBox TextWrapping="Wrap" Grid.Row="1" Margin="5" AcceptsReturn="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+        <TextBox Name="QueryText" TextWrapping="Wrap" Grid.Row="1" Margin="5" AcceptsReturn="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
          ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" />
         <Button Content="Ok"    Grid.Row="2"  Click="Button_Click"  Width="150" HorizontalAlignment="Right" Margin="5" />
     </Grid>

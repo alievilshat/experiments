@@ -24,7 +24,6 @@
                         <MenuItem Header="Add Elemnet" Name="addelem" Click="addelem_Click" />
                         <Separator />
                         <MenuItem Header="Import Database Tables" Name="ImporDBtble" Click="ImporDBtble_Click" />
-                        <MenuItem Header="Import Query" Name="impoQry" />
                         <MenuItem Header="Import XSD" Name="imporXSD" Click="imporXSD_Click" />
                         <MenuItem Header="Import XML" Name="ImporXML" Click="ImporXML_Click" />
                         <MenuItem Header="Import CSV" Name="ImportCSV" Click="ImportCSV_Click" />
