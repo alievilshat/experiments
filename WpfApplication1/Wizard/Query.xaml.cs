@@ -43,12 +43,14 @@ namespace WpfApplication1
                 var cmd = con.CreateCommand();
                 cmd.CommandText = QueryText.Text;
                 var reader = cmd.ExecuteReader();
-                DataTable datatable = new DataTable();
+                var set = new DataSet(_connectionSettings.Database);
+                var datatable = new DataTable("query");
+                set.Tables.Add(datatable);
                 datatable.Load(reader);
 
                 using (MemoryStream stream = new MemoryStream())
                 {
-                    datatable.WriteXmlSchema(stream);
+                    set.WriteXmlSchema(stream);
                     stream.Seek(0, SeekOrigin.Begin);
                     var schema = XmlSchema.Read(stream, (o, e) => Console.WriteLine(e.Message));
                     return schema;
