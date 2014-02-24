@@ -238,9 +238,8 @@ namespace WpfApplication1
             var parent = (XmlSchemaComplexType)attribute.Parent;
             if (parent == null)
                 throw new NotImplementedException("Cannot remove the attribute from " + parent);
-            parent.Attributes.Remove(attribute);
-
-            attribute.Parent.As<XmlSchemaSequence>().Items.AsObservable().Update();
+            dynamic attributesCollection = parent.Attributes.AsObservable();
+            attributesCollection.Remove(attribute);
         }
 
         private void importXSD_Click(object sender, RoutedEventArgs e)
