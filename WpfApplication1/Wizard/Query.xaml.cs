@@ -16,6 +16,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Xml.Schema;
+using System.Xml;
 
 namespace WpfApplication1
 {
@@ -53,6 +54,7 @@ namespace WpfApplication1
                     set.WriteXmlSchema(stream);
                     stream.Seek(0, SeekOrigin.Begin);
                     var schema = XmlSchema.Read(stream, (o, e) => Console.WriteLine(e.Message));
+                    addAnnotations(schema);
                     return schema;
                 }
             }
@@ -75,6 +77,32 @@ namespace WpfApplication1
                 
             }
         }
+        private void addAnnotations(XmlSchema schema)
+        {
+            var root = schema.Items.OfType<XmlSchemaElement>().FirstOrDefault();
+            if (root == null)
+                return;
+            var annotation = new XmlSchemaAnnotation();
+            root.Annotation = annotation;
+            var info = new XmlSchemaAppInfo();
+            annotation.Items.Add(info);
 
+            XmlDocument xmldocument = new XmlDocument();
+            var server = xmldocument.CreateElement("Server");
+            server.InnerText = _connectionSettings.Server;
+            var port = xmldocument.CreateElement("port");
+            port.InnerText = _connectionSettings.Port.ToString();
+            var username = xmldocument.CreateElement("username");
+            username.InnerText = _connectionSettings.Login;
+            var password = xmldocument.CreateElement("password");
+            password.InnerText = _connectionSettings.LoginPassword;
+            var database = xmldocument.CreateElement("database");
+            database.InnerText = _connectionSettings.Database;
+            var query = xmldocument.CreateElement("query");
+            query.InnerText = QueryText.Text;
+            info.Markup = new[] {
+               server, port,username,password,database,query
+            };
+        }
     }
 }
