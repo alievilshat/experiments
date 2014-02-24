@@ -99,7 +99,7 @@ namespace WpfApplication1
             var database = xmldocument.CreateElement("database");
             database.InnerText = _connectionSettings.Database;
             var query = xmldocument.CreateElement("query");
-            database.InnerText = QueryText.Text;
+            query.InnerText = QueryText.Text;
             info.Markup = new[] {
                server, port,username,password,database,query
             };
