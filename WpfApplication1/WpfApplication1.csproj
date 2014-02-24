@@ -103,6 +103,9 @@
     <Compile Include="Wizard\Query.xaml.cs">
       <DependentUpon>Query.xaml</DependentUpon>
     </Compile>
+    <Compile Include="XMLSchema1.cs">
+      <DependentUpon>XMLSchema1.xsd</DependentUpon>
+    </Compile>
     <Page Include="Wizard\ConnectionSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -169,6 +172,12 @@
     <None Include="ConnectionSetting.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>ConnectionSetting.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="XMLSchema1.xsc">
+      <DependentUpon>XMLSchema1.xsd</DependentUpon>
+    </None>
+    <None Include="XMLSchema1.xss">
+      <DependentUpon>XMLSchema1.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -1,22 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Npgsql;
-using System.Data;
-using System.Data.SqlClient;
-using System.IO;
-using System.Xml.Schema;
 using System.Xml;
+using System.Xml.Schema;
+using Npgsql;
 
 namespace WpfApplication1
 {
@@ -88,20 +78,20 @@ namespace WpfApplication1
             annotation.Items.Add(info);
 
             XmlDocument xmldocument = new XmlDocument();
-            var server = xmldocument.CreateElement("Server");
-            server.InnerText = _connectionSettings.Server;
-            var port = xmldocument.CreateElement("port");
-            port.InnerText = _connectionSettings.Port.ToString();
-            var username = xmldocument.CreateElement("username");
-            username.InnerText = _connectionSettings.Login;
-            var password = xmldocument.CreateElement("password");
-            password.InnerText = _connectionSettings.LoginPassword;
-            var database = xmldocument.CreateElement("database");
-            database.InnerText = _connectionSettings.Database;
-            var query = xmldocument.CreateElement("query");
-            query.InnerText = QueryText.Text;
+            var createNode = (Func<string, string, XmlElement>)((name, value) =>
+            {
+                var res = xmldocument.CreateElement(name);
+                res.InnerText = value;
+                return res;
+            });
+
             info.Markup = new[] {
-               server, port,username,password,database,query
+                createNode("Server", _connectionSettings.Server),
+                createNode("port", _connectionSettings.Port.ToString()),
+                createNode("username", _connectionSettings.Login),
+                createNode("password", _connectionSettings.LoginPassword),
+                createNode("database", _connectionSettings.Database),
+                createNode("query", QueryText.Text)
             };
         }
     }
