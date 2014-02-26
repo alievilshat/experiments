@@ -8,7 +8,7 @@ using System.Xml.Schema;
 using Microsoft.Win32;
 using WPG.Data;
 
-namespace WpfApplication1
+namespace SchemaEditor
 {
     public partial class MainWindow : Window
     {
@@ -20,6 +20,8 @@ namespace WpfApplication1
         {
             get
             {
+                if (Schema == null) return string.Empty;
+
                 var w = new StringWriter();
                 Schema.Write(w);
                 return w.ToString();
@@ -32,23 +34,28 @@ namespace WpfApplication1
         }
 
         public MainWindow()
+            : this(loadSchema(FILE))
         {
-            loadSchema(FILE);
+        }
+
+        public MainWindow(XmlSchema schema)
+        {
+            Schema = schema;
 
             InitializeComponent();
 
             DataContext = this;
         }
 
-        private void loadSchema(string filepath)
+        private static XmlSchema loadSchema(string filepath)
         {
             using (var stream = File.OpenRead(filepath))
             {
-                Schema = XmlSchema.Read(stream, validationCallback);
+                return XmlSchema.Read(stream, validationCallback);
             }
         }
 
-        private void validationCallback(object sender, ValidationEventArgs e)
+        private static void validationCallback(object sender, ValidationEventArgs e)
         {
             Console.WriteLine(e.Message);
         }
@@ -85,10 +92,6 @@ namespace WpfApplication1
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             updateTargets();
-            using (var stream = File.OpenWrite(FILE))
-            {
-                Schema.Write(stream);
-            }
         }
 
         private void addAttr_Click(object sender, RoutedEventArgs e)

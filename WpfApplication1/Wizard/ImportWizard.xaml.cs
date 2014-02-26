@@ -13,7 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Schema;
 
-namespace WpfApplication1
+namespace SchemaEditor
 {
     /// <summary>
     /// Interaction logic for ImportWizard.xaml

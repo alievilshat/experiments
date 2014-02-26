@@ -9,7 +9,7 @@ using System.Xml;
 using System.Xml.Schema;
 using Npgsql;
 
-namespace WpfApplication1
+namespace SchemaEditor
 {
     /// <summary>
     /// Interaction logic for ImportTables.xaml

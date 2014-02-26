@@ -1,4 +1,4 @@
-﻿namespace WpfApplication1 {
+﻿namespace SchemaEditor {
     
     
     // Diese Klasse ermöglicht die Behandlung bestimmter Ereignisse der Einstellungsklasse:

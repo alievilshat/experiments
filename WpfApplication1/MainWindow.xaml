@@ -1,11 +1,11 @@
-﻿<Window x:Class="WpfApplication1.MainWindow"
+﻿<Window x:Class="SchemaEditor.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:xs="clr-namespace:System.Xml.Schema;assembly=System.Xml"
         xmlns:xl="clr-namespace:System.Xml;assembly=System.Xml"
-        xmlns:l="clr-namespace:WpfApplication1"
+        xmlns:l="clr-namespace:SchemaEditor"
         xmlns:wpg="clr-namespace:WPG;assembly=WPG"
-        Title="MainWindow"
+        Title="Schema"
         Closing="Window_Closing">
     <Window.Resources>
         <l:UnionConverter x:Key="unionConverter" />

@@ -13,7 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Npgsql;
 
-namespace WpfApplication1
+namespace SchemaEditor
 {
     /// <summary>
     /// Interaction logic for ConnectionSettings.xaml

@@ -8,7 +8,7 @@ using System.Xml;
 using System.Xml.Schema;
 using Npgsql;
 
-namespace WpfApplication1
+namespace SchemaEditor
 {
     /// <summary>
     /// Interaktionslogik für Query.xaml

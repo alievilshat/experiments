@@ -3,7 +3,7 @@ using System.Xml.Linq;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace WpfApplication1
+namespace SchemaEditor
 
 {
     public class CsvToXmlConverter

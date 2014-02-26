@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace WpfApplication1
+namespace SchemaEditor
 {
     class CsvReader
     {

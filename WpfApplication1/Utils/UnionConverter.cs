@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
 
-namespace WpfApplication1
+namespace SchemaEditor
 {
     class UnionConverter : IMultiValueConverter
     {
