@@ -3,10 +3,12 @@ using System.Collections;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Linq;
 using System.Xml.Linq;
 using System.Xml.Schema;
 using Microsoft.Win32;
 using WPG.Data;
+using System.Xml;
 
 namespace SchemaEditor
 {
@@ -180,7 +182,7 @@ namespace SchemaEditor
                     var source = dialog.FileName;
                     var csvtext = File.ReadAllText(source);
                     var xsd = XsdInferrer.InferXsdFromCsv(csvtext);
-
+                    addAnnotations(Schema, "Csv");
                     importItems(parent, xsd);
                 }
             }
@@ -205,7 +207,7 @@ namespace SchemaEditor
                 {
                     var source = XDocument.Load(dialog.FileName);
                     var xsd = XsdInferrer.InferXsdFromXml(source);
-                     
+                    addAnnotations(Schema, "Xml");
                     importItems(parent, xsd);
                 }
             }
@@ -261,6 +263,7 @@ namespace SchemaEditor
                     using (var stream = File.Open(source, FileMode.Open))
                     {
                         var xsd = XmlSchema.Read(stream, validationCallback);
+                        addAnnotations(Schema, "Xsd");
                         importItems(parent, xsd);
                     }
                 }
@@ -291,6 +294,32 @@ namespace SchemaEditor
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void addAnnotations(XmlSchema schema, string filetype)
+        {
+            var root = schema.Items.OfType<XmlSchemaElement>().FirstOrDefault();
+            if (root == null)
+                return;
+            var annotation = new XmlSchemaAnnotation();
+            root.Annotation = annotation;
+            var info = new XmlSchemaAppInfo();
+            annotation.Items.Add(info);
+
+            XmlDocument xmldocument = new XmlDocument();
+            var createNode = (Func<string, string, XmlElement>)((name, value) =>
+            {
+                var res = xmldocument.CreateElement(name);
+                res.InnerText = value;
+                return res;
+            });
+
+            info.Markup = new[] {
+                createNode("Type","File"),
+                createNode("ContextType",filetype),
+                createNode("location",""),
+                createNode("Context","local")
+            };
         }
     }
 }
