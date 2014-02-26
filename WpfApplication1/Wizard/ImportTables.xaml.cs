@@ -126,6 +126,7 @@ namespace SchemaEditor
             });
 
             info.Markup = new[] {
+                createNode("Type", "Database"),
                 createNode("Server", _connectionSettings.Server),
                 createNode("port", _connectionSettings.Port.ToString()),
                 createNode("username", _connectionSettings.Login),
