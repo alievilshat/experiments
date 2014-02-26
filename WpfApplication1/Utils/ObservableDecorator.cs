@@ -6,7 +6,7 @@ using System.Reflection;
 using WPG;
 using System;
 
-namespace WpfApplication1
+namespace SchemaEditor
 {
     public class ObservableDecorator : DynamicObject, INotifyPropertyChanged, ITypeDecorator
     {
