@@ -7,7 +7,7 @@ using System.Windows.Data;
 
 namespace SchemaEditor
 {
-    class UnionConverter : IMultiValueConverter
+    public class UnionConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
@@ -20,7 +20,7 @@ namespace SchemaEditor
         }
     }
 
-    class UnionCollection : IEnumerable, INotifyCollectionChanged
+    public class UnionCollection : IEnumerable, INotifyCollectionChanged
     {
         IEnumerable[] _sources;
         public event NotifyCollectionChangedEventHandler CollectionChanged;

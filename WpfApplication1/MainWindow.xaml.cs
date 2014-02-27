@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Linq;
+using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
 using Microsoft.Win32;
 using WPG.Data;
-using System.Xml;
 
 namespace SchemaEditor
 {
@@ -182,7 +182,7 @@ namespace SchemaEditor
                     var source = dialog.FileName;
                     var csvtext = File.ReadAllText(source);
                     var xsd = XsdInferrer.InferXsdFromCsv(csvtext);
-                    addAnnotations(Schema, "Csv");
+                    addAnnotations(xsd, "Csv");
                     importItems(parent, xsd);
                 }
             }
@@ -207,7 +207,7 @@ namespace SchemaEditor
                 {
                     var source = XDocument.Load(dialog.FileName);
                     var xsd = XsdInferrer.InferXsdFromXml(source);
-                    addAnnotations(Schema, "Xml");
+                    addAnnotations(xsd, "Xml");
                     importItems(parent, xsd);
                 }
             }
@@ -263,7 +263,7 @@ namespace SchemaEditor
                     using (var stream = File.Open(source, FileMode.Open))
                     {
                         var xsd = XmlSchema.Read(stream, validationCallback);
-                        addAnnotations(Schema, "Xsd");
+                        addAnnotations(xsd, "Xml");
                         importItems(parent, xsd);
                     }
                 }
@@ -317,8 +317,8 @@ namespace SchemaEditor
             info.Markup = new[] {
                 createNode("Type","File"),
                 createNode("ContextType",filetype),
-                createNode("location",""),
-                createNode("Context","local")
+                createNode("Location",""),
+                createNode("Context","Local")
             };
         }
     }

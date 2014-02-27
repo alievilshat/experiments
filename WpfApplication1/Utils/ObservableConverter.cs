@@ -9,7 +9,7 @@ using System.Windows.Data;
 
 namespace SchemaEditor
 {
-    class ObservableConverter : IValueConverter
+    public class ObservableConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

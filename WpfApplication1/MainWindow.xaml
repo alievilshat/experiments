@@ -9,7 +9,8 @@
         Closing="Window_Closing">
     <Window.Resources>
         <l:UnionConverter x:Key="unionConverter" />
-        
+        <l:ObservableConverter x:Key="observable" />
+
         <HierarchicalDataTemplate DataType="{x:Type xs:XmlSchemaElement}">
             <HierarchicalDataTemplate.ItemsSource>
                 <MultiBinding Converter="{StaticResource unionConverter}">
