@@ -106,7 +106,7 @@ namespace SchemaEditor
             ConnectionSetting.Default.Timeout=Timeout;
             ConnectionSetting.Default.Encription = Encription;
             ConnectionSetting.Default.Save();
-            this.NavigationService.Navigate(new ImportType(this));
+            this.NavigationService.Navigate(new DatabaseImportType(this));
             
         }
 

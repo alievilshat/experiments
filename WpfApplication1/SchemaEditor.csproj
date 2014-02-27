@@ -78,12 +78,21 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>ConnectionSetting.settings</DependentUpon>
     </Compile>
-    <Compile Include="Wizard\ConnectionSettings.xaml.cs">
+    <Compile Include="Wizard\Database\ConnectionSettings.xaml.cs">
       <DependentUpon>ConnectionSettings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Wizard\IConnectionSettings.cs" />
-    <Compile Include="Wizard\ImportTables.xaml.cs">
+    <Compile Include="Wizard\File\FileLocation.xaml.cs">
+      <DependentUpon>FileLocation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Wizard\File\FileType.xaml.cs">
+      <DependentUpon>FileType.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Wizard\Database\IConnectionSettings.cs" />
+    <Compile Include="Wizard\Database\ImportTables.xaml.cs">
       <DependentUpon>ImportTables.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Wizard\File\Schemalcation.xaml.cs">
+      <DependentUpon>Schemalcation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Wizard\ImportType.xaml.cs">
       <DependentUpon>ImportType.xaml</DependentUpon>
@@ -100,17 +109,35 @@
     <Compile Include="Utils\TypeExtensions.cs" />
     <Compile Include="Utils\UnionConverter.cs" />
     <Compile Include="Utils\XsdInferrer.cs" />
-    <Compile Include="Wizard\Query.xaml.cs">
+    <Compile Include="Wizard\Database\DatabaseImportType.xaml.cs">
+      <DependentUpon>DatabaseImportType.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Wizard\Database\Query.xaml.cs">
       <DependentUpon>Query.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Wizard\Webservice\WebServiceCall.xaml.cs">
+      <DependentUpon>WebServiceCall.xaml</DependentUpon>
     </Compile>
     <Compile Include="XMLSchema1.cs">
       <DependentUpon>XMLSchema1.xsd</DependentUpon>
     </Compile>
-    <Page Include="Wizard\ConnectionSettings.xaml">
+    <Page Include="Wizard\Database\ConnectionSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Wizard\ImportTables.xaml">
+    <Page Include="Wizard\File\FileLocation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Wizard\File\FileType.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Wizard\Database\ImportTables.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Wizard\File\Schemalcation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -134,7 +161,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Wizard\Query.xaml">
+    <Page Include="Wizard\Database\DatabaseImportType.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Wizard\Database\Query.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Wizard\Webservice\WebServiceCall.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -183,6 +218,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

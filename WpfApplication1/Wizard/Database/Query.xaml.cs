@@ -56,15 +56,13 @@ namespace SchemaEditor
             {
                 var wizard = (ImportWizard)Window.GetWindow(this);
                 wizard.Schema = retrieveQueryResult();
-              
-                
+
                 wizard.DialogResult = true;
                 wizard.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                
             }
         }
         private void addAnnotations(XmlSchema schema)

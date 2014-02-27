@@ -22,15 +22,12 @@
             <TextBlock DataContext="{Binding Converter={StaticResource observable}}" Text="{Binding Name}">
                 <TextBlock.ContextMenu>
                     <ContextMenu Name="Designer_menu">
-                        <MenuItem Header="Add Attribute" Name="addAttr" Click="addAttr_Click" />
-                        <MenuItem Header="Add Element" Name="addElem" Click="addElem_Click" />
+                        <MenuItem Header="Add Attribute" Click="addAttr_Click" />
+                        <MenuItem Header="Add Element" Click="addElem_Click" />
                         <Separator />
-                        <MenuItem Header="Import Database Tables" Name="importTables" Click="importTables_Click" />
-                        <MenuItem Header="Import XSD" Name="importXSD" Click="importXSD_Click" />
-                        <MenuItem Header="Import XML" Name="importXML" Click="importXML_Click" />
-                        <MenuItem Header="Import CSV" Name="importCSV" Click="importXML_Click" />
+                        <MenuItem Header="Import Wizard" Click="importWizard_Click" />
                         <Separator />
-                        <MenuItem Header="Remove" Name="deleteElem" Click="deleteElem_Click" />
+                        <MenuItem Header="Remove" Click="deleteElem_Click" />
                     </ContextMenu>
                 </TextBlock.ContextMenu>
             </TextBlock>
