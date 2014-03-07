@@ -23,6 +23,7 @@ namespace Mapper
     {
         public Transformation()
         {
+            DataContext = this;
             InitializeComponent();
         }
 
@@ -58,10 +59,8 @@ namespace Mapper
 
         private void transformation_Loaded(object sender, RoutedEventArgs e)
         {
-            //Source.LayoutUpdated += (o, a) => StartPoint = getLocation(Source);
-            //Target.LayoutUpdated += (o, a) => EndPoint = getLocation(Target);
-            StartPoint = new Point(10, 10);
-            EndPoint = new Point(100, 100);
+            Source.LayoutUpdated += (o, a) => StartPoint = getLocation(Source);
+            Target.LayoutUpdated += (o, a) => EndPoint = getLocation(Target);
         }
 
         private Point getLocation(TreeViewItem element)

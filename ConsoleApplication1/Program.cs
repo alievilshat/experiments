@@ -10,9 +10,11 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            var a = int.Parse(Console.ReadLine());
-            var b = int.Parse(Console.ReadLine());
-            Console.WriteLine(a + b);
+            int i = (int)(DateTime.Now.Ticks & 0x7FFFFFFF);
+            var t = new TimeSpan(0x7FFFFFFF);
+            var j = new TimeSpan(0, 1, 0);
+            Console.WriteLine(j.Ticks);
+
         }
     }
 }

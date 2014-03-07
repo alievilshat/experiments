@@ -101,7 +101,7 @@ namespace SchemaEditor
             var parent = (XmlSchemaElement)schemaTree.SelectedItem;
             if (parent != null)
             {
-                var xmlSchemaAttribute = new XmlSchemaAttribute { Name = "New Attribute" };
+                var xmlSchemaAttribute = new XmlSchemaAttribute { Name = "new_attribute" };
                 addAttribute(parent, xmlSchemaAttribute);
             }
         }
@@ -122,7 +122,7 @@ namespace SchemaEditor
             var parent = (XmlSchemaElement)schemaTree.SelectedItem;
             if (parent != null)
             {
-                var xmlElement = new XmlSchemaElement { Name = "New Element" };
+                var xmlElement = new XmlSchemaElement { Name = "new_element" };
                 addChildElement(parent, xmlElement);
             }
         }
