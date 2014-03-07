@@ -4,6 +4,5 @@
              StartupUri="MainWindow.xaml"
              xmlns:l="clr-namespace:SchemaEditor">
     <Application.Resources>
-        <l:ObservableConverter x:Key="observable" />
     </Application.Resources>
 </Application>
