@@ -167,55 +167,8 @@ namespace SchemaEditor
             }
         }
 
-        private void importCSV_Click(object sender, RoutedEventArgs e)
-        {
-            var parent = (XmlSchemaElement)schemaTree.SelectedItem;
-            try
-            {
-                var dialog = new OpenFileDialog()
-                {
-                    Title = "Choose Csv File",
-                    Filter = "Csv files (*.csv)|*.csv|Text files (*.txt)|*.txt|All files|*.*"
-                };
-                if (dialog.ShowDialog().GetValueOrDefault())
-                {
-                    var source = dialog.FileName;
-                    var csvtext = File.ReadAllText(source);
-                    var xsd = XsdInferrer.InferXsdFromCsv(csvtext);
-                    addAnnotations(xsd, "Csv");
-                    importItems(parent, xsd);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-        }
-
-        private void importXML_Click(object sender, RoutedEventArgs e)
-        {
-            var parent = (XmlSchemaElement)schemaTree.SelectedItem;
-            try
-            {
-                var dialog = new OpenFileDialog()
-                {
-                    Title = "Choose Csv File",
-                    Filter = "Xml files (*.xml, *.xls)|*.xml;*.xls|All files|*.*"
-                };
-                if (dialog.ShowDialog().GetValueOrDefault())
-                {
-                    var source = XDocument.Load(dialog.FileName);
-                    var xsd = XsdInferrer.InferXsdFromXml(source);
-                    addAnnotations(xsd, "Xml");
-                    importItems(parent, xsd);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
+    
+      
 
         private void importItems(XmlSchemaElement parent, XmlSchema xsd)
         {
@@ -247,43 +200,15 @@ namespace SchemaEditor
             attributesCollection.Remove(attribute);
         }
 
-        private void importXSD_Click(object sender, RoutedEventArgs e)
-        {
-            var parent = (XmlSchemaElement)schemaTree.SelectedItem;
-            try
-            {
-                var dialog = new OpenFileDialog()
-                {
-                    Title = "Choose XSD File",
-                    Filter = "Xsd files (*.xsd)|*.xsd|All files|*.*"
-                };
-                if (dialog.ShowDialog().GetValueOrDefault())
-                {
-                    var source = dialog.FileName;
-                    using (var stream = File.Open(source, FileMode.Open))
-                    {
-                        var xsd = XmlSchema.Read(stream, validationCallback);
-                        addAnnotations(xsd, "Xml");
-                        importItems(parent, xsd);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void importTables_Click(object sender, RoutedEventArgs e)
+    
+        private void importWizard_Click(object sender, RoutedEventArgs e)
         {
             var parent = (XmlSchemaElement)schemaTree.SelectedItem;
 
             try
             {
                 var wizard = new ImportWizard();
-                var settings = new ConnectionSettings();
-
-                wizard.Navigate(settings);
+                wizard.Navigate(new ImportType());
 
                 if (wizard.ShowDialog().GetValueOrDefault())
                 {
@@ -294,32 +219,6 @@ namespace SchemaEditor
             {
                 MessageBox.Show(ex.Message);
             }
-        }
-
-        private void addAnnotations(XmlSchema schema, string filetype)
-        {
-            var root = schema.Items.OfType<XmlSchemaElement>().FirstOrDefault();
-            if (root == null)
-                return;
-            var annotation = new XmlSchemaAnnotation();
-            root.Annotation = annotation;
-            var info = new XmlSchemaAppInfo();
-            annotation.Items.Add(info);
-
-            XmlDocument xmldocument = new XmlDocument();
-            var createNode = (Func<string, string, XmlElement>)((name, value) =>
-            {
-                var res = xmldocument.CreateElement(name);
-                res.InnerText = value;
-                return res;
-            });
-
-            info.Markup = new[] {
-                createNode("Type","File"),
-                createNode("ContextType",filetype),
-                createNode("Location",""),
-                createNode("Context","Local")
-            };
         }
     }
 }

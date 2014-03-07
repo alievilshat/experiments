@@ -15,25 +15,21 @@ using System.Windows.Shapes;
 namespace SchemaEditor
 {
     /// <summary>
-    /// Interaktionslogik für ImportType.xaml
+    /// Interaktionslogik für FileType.xaml
     /// </summary>
-    public partial class ImportType : Page
+    public partial class FileType : Page
     {
-        public ImportType()
+        public FileType()
         {
             InitializeComponent();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
-
         {
-            if (Database.IsChecked.GetValueOrDefault())
-                this.NavigationService.Navigate(new ConnectionSettings());
-            else if (Webservice.IsChecked.GetValueOrDefault())
-                this.NavigationService.Navigate(new WebServiceCall());
+            if (xsd.IsChecked.GetValueOrDefault())
+                this.NavigationService.Navigate(new Schemalcation());
             else
-                this.NavigationService.Navigate(new FileType());
-
+                this.NavigationService.Navigate(new FileLocation(xml.IsChecked.GetValueOrDefault() ? "xml" : "csv"));
         }
     }
 }

@@ -9,6 +9,7 @@
     <Page.Resources>
         <Style TargetType="TextBox">
             <Setter Property="Margin" Value="5" />
+            <Setter Property="Height" Value="18" />
         </Style>
     </Page.Resources>
     
@@ -16,7 +17,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
-            </Grid.ColumnDefinitions>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -35,8 +36,8 @@
         <Label Content="Timeout" Grid.Row="4"/>
         <Grid Grid.Column="1" Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <TextBox Text="{Binding Server}"/>
             <TextBox Grid.Column="1" Text="{Binding Port}"/>

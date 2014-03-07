@@ -17,23 +17,23 @@ namespace SchemaEditor
     /// <summary>
     /// Interaktionslogik für ImportType.xaml
     /// </summary>
-    public partial class ImportType : Page
+    public partial class DatabaseImportType : Page
     {
-        public ImportType()
+        private IConnectionSettings _connectionSettings;
+
+        public DatabaseImportType(IConnectionSettings connectionSettings)
         {
+            this._connectionSettings = connectionSettings;
             InitializeComponent();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
-
         {
-            if (Database.IsChecked.GetValueOrDefault())
-                this.NavigationService.Navigate(new ConnectionSettings());
-            else if (Webservice.IsChecked.GetValueOrDefault())
-                this.NavigationService.Navigate(new WebServiceCall());
-            else
-                this.NavigationService.Navigate(new FileType());
-
+            if (Query.IsChecked==true)
+                 this.NavigationService.Navigate(new Query(_connectionSettings));
+            else 
+            if (ImportTables.IsChecked==true)
+                this.NavigationService.Navigate(new ImportTables(_connectionSettings));
         }
     }
 }
