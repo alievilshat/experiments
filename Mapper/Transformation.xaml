@@ -5,14 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:uc="clr-namespace:Mapper"
              mc:Ignorable="d"
-             Loaded="transformation_Loaded">
-    
+             Loaded="transformation_Loaded"
+             x:Name="tr">
+
     <Canvas Name="canvas">
-        <Line Stroke="LightGray" StrokeThickness="2" 
-              X1="{Binding StartPoint.X}"
-              Y1="{Binding StartPoint.Y}"
-              X2="{Binding EndPoint.X}"
-              Y2="{Binding EndPoint.Y}"
-              />
+        <Path Data="{Binding PathCoordinates, ElementName=tr}" Stroke="LightGray" StrokeThickness="2" />
     </Canvas>
 </UserControl>

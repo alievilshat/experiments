@@ -34,6 +34,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql, Version=2.0.14.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Npgsql.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -47,18 +55,83 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WPG, Version=4.0.5168.41668, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\WPG.dll</HintPath>
+    </Reference>
+    <Reference Include="WPGBrushEditor">
+      <HintPath>lib\WPGBrushEditor.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Context.cs" />
+    <Compile Include="Controls\Schema.xaml.cs">
+      <DependentUpon>Schema.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SchemaDesigner\ConnectionSetting.cs" />
+    <Compile Include="SchemaDesigner\ConnectionSetting.Designer.cs">
+      <DependentUpon>ConnectionSetting.settings</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="SchemaDesigner\Wizard\Database\ConnectionSettings.xaml.cs">
+      <DependentUpon>ConnectionSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SchemaDesigner\Wizard\Database\DatabaseImportType.xaml.cs">
+      <DependentUpon>DatabaseImportType.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SchemaDesigner\Wizard\Database\IConnectionSettings.cs" />
+    <Compile Include="SchemaDesigner\Wizard\Database\ImportTables.xaml.cs">
+      <DependentUpon>ImportTables.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SchemaDesigner\Wizard\Database\Query.xaml.cs">
+      <DependentUpon>Query.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SchemaDesigner\Wizard\File\FileLocation.xaml.cs">
+      <DependentUpon>FileLocation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SchemaDesigner\Wizard\File\FileType.xaml.cs">
+      <DependentUpon>FileType.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SchemaDesigner\Wizard\File\Schemalcation.xaml.cs">
+      <DependentUpon>Schemalcation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SchemaDesigner\Wizard\ImportType.xaml.cs">
+      <DependentUpon>ImportType.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SchemaDesigner\Wizard\ImportWizard.xaml.cs">
+      <DependentUpon>ImportWizard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SchemaDesigner\SchemaDesigner.xaml.cs">
+      <DependentUpon>SchemaDesigner.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SchemaDesigner\Wizard\Webservice\WebServiceCall.xaml.cs">
+      <DependentUpon>WebServiceCall.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIUtils\NodeToLocationConverter.cs" />
     <Compile Include="Transformation.xaml.cs">
       <DependentUpon>Transformation.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIUtils\ConcatConverter.cs" />
+    <Compile Include="Utils\CsvReader.cs" />
+    <Compile Include="Utils\CsvToXmlConverter.cs" />
+    <Compile Include="Utils\Observable\ObservableCollectionDecorator.cs" />
+    <Compile Include="Utils\Observable\ObservableConverter.cs" />
+    <Compile Include="Utils\Observable\ObservableDecorator.cs" />
+    <Compile Include="Utils\Observable\ObservableDecoratorExtensions.cs" />
+    <Compile Include="Utils\TypeExtensions.cs" />
+    <Compile Include="UIUtils\UnionConverter.cs" />
     <Compile Include="Utils\WPFExtensions.cs" />
-    <Compile Include="XsltNodeTemplateSelector.cs" />
+    <Compile Include="Utils\XsdInferrer.cs" />
+    <Compile Include="UIUtils\XsltNodeTemplateSelector.cs" />
+    <Page Include="Controls\Schema.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -71,6 +144,50 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="SchemaDesigner\Wizard\Database\ConnectionSettings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SchemaDesigner\Wizard\Database\DatabaseImportType.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SchemaDesigner\Wizard\Database\ImportTables.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SchemaDesigner\Wizard\Database\Query.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SchemaDesigner\Wizard\File\FileLocation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SchemaDesigner\Wizard\File\FileType.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SchemaDesigner\Wizard\File\Schemalcation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SchemaDesigner\Wizard\ImportType.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SchemaDesigner\Wizard\ImportWizard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SchemaDesigner\SchemaDesigner.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SchemaDesigner\Wizard\Webservice\WebServiceCall.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Transformation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -94,20 +211,36 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Content Include="target.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="SchemaDesigner\ConnectionSetting.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>ConnectionSetting.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="source.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="lib\Mono.Security.dll" />
+    <Content Include="lib\Npgsql.dll" />
+    <Content Include="lib\WPG.dll" />
     <Content Include="transformation.xsl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

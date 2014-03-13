@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<xs:schema xmlns="http://tempuri.org/source.xsd" xmlns:mstns="http://tempuri.org/source.xsd" elementFormDefault="qualified" targetNamespace="http://tempuri.org/source.xsd" id="source" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="source">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="dbquery">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" />
+              <xs:element name="manufacturercode" />
+              <xs:element name="brandname" />
+              <xs:element name="name" />
+              <xs:element name="imageid" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -21,5 +21,14 @@ namespace Mapper
             while (target != null && !(target is T));
             return target as T;
         }
+
+        public static IEnumerable<DependencyObject> GetChildren(this DependencyObject node)
+        {
+            yield return node;
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(node); i++)
+            {
+                foreach (var r in VisualTreeHelper.GetChild(node, i).GetChildren()) yield return r;
+            }
+        }
     }
 }

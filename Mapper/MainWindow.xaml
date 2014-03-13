@@ -1,8 +1,10 @@
 ﻿<Window x:Class="Mapper.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:uc="clr-namespace:Mapper"
         xmlns:sxml="clr-namespace:System.Xml;assembly=System.Xml"
+        Closing="Window_Closing"
         Title="MainWindow">
     
     <Window.Resources>
@@ -15,90 +17,79 @@
         </Style>
 
         <uc:XsltNodeTemplateSelector x:Key="templateselector" />
+        <uc:ConcatConverter x:Key="concatConverter" />
+        <sys:String x:Key="seperator">/</sys:String>
+        <sys:String x:Key="arrow">--></sys:String>
 
-        <DataTemplate x:Key="xslDefaultTemplate">
+        <DataTemplate x:Key="unknownNodeTemplate">
             <ItemsControl ItemsSource="{Binding XPath=*}" ItemTemplateSelector="{StaticResource templateselector}" />
         </DataTemplate>
+
+        <DataTemplate x:Key="resultNodeTemplate">
+            <ItemsControl ItemsSource="{Binding XPath=*}" ItemTemplateSelector="{StaticResource templateselector}">
+                <uc:Context.TargetContext>
+                    <MultiBinding Converter="{StaticResource concatConverter}">
+                        <Binding Path="(uc:Context.TargetContext)" RelativeSource="{RelativeSource AncestorType=FrameworkElement}" />
+                        <Binding Source="{StaticResource seperator}" />
+                        <Binding Path="LocalName" />
+                    </MultiBinding>
+                </uc:Context.TargetContext>
+            </ItemsControl>
+        </DataTemplate>
         
-        <DataTemplate x:Key="xslRootTemplate">
+        <DataTemplate x:Key="root_template">
             <StackPanel>
-                <TextBlock>Root</TextBlock>
                 <ItemsControl ItemsSource="{Binding XPath=*}" ItemTemplateSelector="{StaticResource templateselector}" />
             </StackPanel>
         </DataTemplate>
 
-        <DataTemplate x:Key="xslTemplate">
+        <DataTemplate x:Key="template">
             <StackPanel>
-                <TextBlock>Template</TextBlock>
-                <ItemsControl ItemsSource="{Binding XPath=*}" ItemTemplateSelector="{StaticResource templateselector}" />
+                <ItemsControl  ItemsSource="{Binding XPath=*}" ItemTemplateSelector="{StaticResource templateselector}" />
             </StackPanel>
         </DataTemplate>
 
-        <DataTemplate x:Key="xslValueOf">
+        <DataTemplate x:Key="for-each">
             <StackPanel>
-                <TextBlock>ValueOf</TextBlock>
-                <ItemsControl ItemsSource="{Binding XPath=*}" ItemTemplateSelector="{StaticResource templateselector}" />
+                <ItemsControl ItemsSource="{Binding XPath=*}" 
+                    ItemTemplateSelector="{StaticResource templateselector}">
+                    <uc:Context.SourceContext>
+                        <MultiBinding Converter="{StaticResource concatConverter}">
+                            <Binding Path="(uc:Context.SourceContext)" RelativeSource="{RelativeSource AncestorType=FrameworkElement}" />
+                            <Binding Source="{StaticResource seperator}" />
+                            <Binding XPath="@select" />
+                        </MultiBinding>
+                    </uc:Context.SourceContext>
+                </ItemsControl>
             </StackPanel>
         </DataTemplate>
 
-        <DataTemplate x:Key="xslForEach">
+        <DataTemplate x:Key="value-of">
             <StackPanel>
-                <TextBlock>ForEach</TextBlock>
+                <uc:Transformation Source="{Binding ElementName=sourceSchema}" Target="{Binding ElementName=targetSchema}">
+                    <uc:Transformation.SourcePath>
+                        <MultiBinding Converter="{StaticResource concatConverter}">
+                            <Binding Path="(uc:Context.SourceContext)" RelativeSource="{RelativeSource Self}" />
+                            <Binding Source="{StaticResource seperator}" />
+                            <Binding XPath="@select" />
+                        </MultiBinding>
+                    </uc:Transformation.SourcePath>
+                    <uc:Transformation.TargetPath>
+                        <Binding Path="(uc:Context.TargetContext)" RelativeSource="{RelativeSource Self}" />
+                    </uc:Transformation.TargetPath>
+                </uc:Transformation>
+
                 <ItemsControl ItemsSource="{Binding XPath=*}" ItemTemplateSelector="{StaticResource templateselector}" />
             </StackPanel>
         </DataTemplate>
 
     </Window.Resources>
-    
-    <DockPanel x:Name="canvas" ClipToBounds="True" Background="Transparent" Focusable="True">
-        <ScrollViewer DockPanel.Dock="Left" FlowDirection="RightToLeft" Grid.Column="0" Grid.Row="0">
-            <TreeView x:Name="sourceTreeView" 
-                    ItemContainerStyle="{StaticResource ExpandedStyle}" FlowDirection="LeftToRight">
-                <TreeView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Margin="0, 10, 20, 10" />
-                    </ItemsPanelTemplate>
-                </TreeView.ItemsPanel>
-                <TreeViewItem Header="root">
-                    <TreeViewItem Header="item1" />
-                    <TreeViewItem x:Name="sourcenode">
-                        <TreeViewItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="item2" />
-                                <Thumb Height="0" />
-                            </StackPanel>
-                        </TreeViewItem.Header>
-                    </TreeViewItem>
-                    <TreeViewItem Header="item3" />
-                </TreeViewItem>
-            </TreeView>
-        </ScrollViewer>
 
-        <ScrollViewer DockPanel.Dock="Right">
-            <TreeView x:Name="destinationTreeView" FlowDirection="RightToLeft"
-                    ItemContainerStyle="{StaticResource ExpandedStyle}">
-                <TreeView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Margin="0, 10, 20, 10" />
-                    </ItemsPanelTemplate>
-                </TreeView.ItemsPanel>
-                <TreeViewItem Header="root">
-                    <TreeViewItem x:Name="targetnode">
-                        <TreeViewItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="item1" />
-                                <Thumb Height="0" />
-                            </StackPanel>
-                        </TreeViewItem.Header>
-                    </TreeViewItem>
-                    <TreeViewItem Header="item2" />
-                    <TreeViewItem Header="item3" />
-                </TreeViewItem>
-            </TreeView>
-        </ScrollViewer>
-        <!--<StackPanel>
-            <uc:Transformation Source="{Binding ElementName=sourcenode}" Target="{Binding ElementName=targetnode}"  />
-        </StackPanel>-->
+
+    <DockPanel ClipToBounds="True" Background="Transparent" Focusable="True">
+
+        <uc:SchemaControl x:Name="sourceSchema" DockPanel.Dock="Left" Schema="{Binding SourceSchema, Mode=TwoWay}" />
+        <uc:SchemaControl x:Name="targetSchema" DockPanel.Dock="Right" FlowDirection="RightToLeft" Schema="{Binding TargetSchema, Mode=TwoWay}" />
 
         <ItemsControl x:Name="items" DataContext="{Binding Stylesheet}" ItemTemplateSelector="{StaticResource templateselector}">
             <ItemsControl.ItemsSource>

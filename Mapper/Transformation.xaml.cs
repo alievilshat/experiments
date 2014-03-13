@@ -1,18 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Xml.Schema;
 
 namespace Mapper
 {
@@ -23,83 +16,106 @@ namespace Mapper
     {
         public Transformation()
         {
-            DataContext = this;
             InitializeComponent();
         }
 
-        public TreeViewItem Source
-        {
-            get { return (TreeViewItem)GetValue(SourceProperty); }
-            set { SetValue(SourceProperty, value); }
-        }
-        public static readonly DependencyProperty SourceProperty = DependencyProperty.Register("Source", typeof(TreeViewItem), typeof(Transformation), null);
-
-        public TreeViewItem Target
-        {
-            get { return (TreeViewItem)GetValue(TargetProperty); }
-            set { SetValue(TargetProperty, value); }
-        }
-        public static readonly DependencyProperty TargetProperty = DependencyProperty.Register("Target", typeof(TreeViewItem), typeof(Transformation), null);
-
-
         private static Point EMPTY = new Point();
-        public Point StartPoint
-        {
-            get { return (Point)GetValue(StartPointProperty); }
-            set { SetValue(StartPointProperty, value); }
-        }
-        public static DependencyProperty StartPointProperty = DependencyProperty.Register("StartPoint", typeof(Point), typeof(MainWindow), new PropertyMetadata(EMPTY));
-
-        public Point EndPoint
-        {
-            get { return (Point)GetValue(EndPointProperty); }
-            set { SetValue(EndPointProperty, value); }
-        }
-        public static DependencyProperty EndPointProperty = DependencyProperty.Register("EndPoint", typeof(Point), typeof(MainWindow), new PropertyMetadata(EMPTY));
 
         private void transformation_Loaded(object sender, RoutedEventArgs e)
         {
-            Source.LayoutUpdated += (o, a) => StartPoint = getLocation(Source);
-            Target.LayoutUpdated += (o, a) => EndPoint = getLocation(Target);
+            LayoutUpdated += (o, a) => updatePath();
+            updatePath();
         }
 
-        private Point getLocation(TreeViewItem element)
+        private Point prevStartPoint = EMPTY;
+        private Point prevEndPoint = EMPTY;
+
+        private void updatePath()
         {
-            if (element == null)
+            var startPoint = getNodeLocation(Source, SourcePath);
+            var endPoint = getNodeLocation(Target, TargetPath);
+
+            if (prevStartPoint == startPoint && prevEndPoint == endPoint)
+                return;
+
+            prevStartPoint = startPoint;
+            prevEndPoint = endPoint;
+
+            PathFigure pathFigure = new PathFigure();
+            pathFigure.StartPoint = startPoint;
+            pathFigure.Segments.Add(new LineSegment { Point = new Point(getThumbLocation(Source).X, startPoint.Y) });
+            pathFigure.Segments.Add(new LineSegment { Point = new Point(getThumbLocation(Target).X, endPoint.Y) });
+            pathFigure.Segments.Add(new LineSegment { Point = endPoint });
+
+            PathGeometry pathGeometry = new PathGeometry();
+            pathGeometry.Figures = new PathFigureCollection();
+            pathGeometry.Figures.Add(pathFigure);
+            PathCoordinates = pathGeometry;
+        }
+
+        private Point getNodeLocation(SchemaControl control, string path)
+        {
+            if (control == null)
                 return EMPTY;
 
-            var c = (FrameworkElement)element.FindAncestor<ItemsControl>().ItemContainerGenerator.ContainerFromItem(element);
-            Thumb anchor = getAnchor(c);
-            var transformer = canvas.TransformToVisual(anchor);
+            var parts = path.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
+
+            var node = control.GetChildren().OfType<TreeViewItem>().Skip(1).First();
+            foreach (var p in parts)
+                node = node.GetChildren().OfType<TreeViewItem>().First(i => string.Compare(i.DataContext.As<XmlSchemaElement>().Name, p, true) == 0);
+
+            return getThumbLocation(node);
+        }
+
+        private Point getThumbLocation(FrameworkElement node)
+        {
+            var thumb = node.GetChildren().OfType<Thumb>().First();
+            var transformer = thumb.TransformToVisual(canvas);
             var res = transformer.Transform(new Point(0, 0));
             return res;
         }
 
-        Dictionary<FrameworkElement, Thumb> thumbcache = new Dictionary<FrameworkElement, Thumb>();
-        private Thumb getAnchor(FrameworkElement treeViewItem)
+
+        public SchemaControl Source
         {
-            Thumb res;
-            if (thumbcache.TryGetValue(treeViewItem, out res))
-                return res;
-
-            var thumb = findThumb(treeViewItem);
-            thumbcache.Add(treeViewItem, thumb);
-            return thumb;
+            get { return (SchemaControl)GetValue(SourceProperty); }
+            set { SetValue(SourceProperty, value); }
         }
+        public static readonly DependencyProperty SourceProperty = DependencyProperty.Register("Source", typeof(SchemaControl), typeof(Transformation), null);
 
-        private Thumb findThumb(FrameworkElement element)
+
+        public string SourcePath
         {
-            if (element.GetType() == typeof(Thumb))
-                return (Thumb)element;
-
-            foreach (var e in LogicalTreeHelper.GetChildren(element).OfType<FrameworkElement>())
-            {
-                var r = findThumb(e);
-                if (r != null)
-                    return r;
-            }
-
-            return null;
+            get { return (string)GetValue(SourcePathProperty); }
+            set { SetValue(SourcePathProperty, value); }
         }
+        public static readonly DependencyProperty SourcePathProperty =
+            DependencyProperty.Register("SourcePath", typeof(string), typeof(Transformation), null);
+
+
+        public SchemaControl Target
+        {
+            get { return (SchemaControl)GetValue(TargetProperty); }
+            set { SetValue(TargetProperty, value); }
+        }
+        public static readonly DependencyProperty TargetProperty = DependencyProperty.Register("Target", typeof(SchemaControl), typeof(Transformation), null);
+
+
+        public string TargetPath
+        {
+            get { return (string)GetValue(TargetPathProperty); }
+            set { SetValue(TargetPathProperty, value); }
+        }
+        public static readonly DependencyProperty TargetPathProperty =
+            DependencyProperty.Register("TargetPath", typeof(string), typeof(Transformation), null);
+
+
+        public PathGeometry PathCoordinates
+        {
+            get { return (PathGeometry)GetValue(PathCoordinatesProperty); }
+            set { SetValue(PathCoordinatesProperty, value); }
+        }
+        public static readonly DependencyProperty PathCoordinatesProperty =
+            DependencyProperty.Register("PathCoordinates", typeof(PathGeometry), typeof(Transformation), null);
     }
 }

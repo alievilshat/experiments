@@ -15,30 +15,28 @@ namespace Mapper
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            if (item is XmlNode)
+            try
             {
-                var node = (XmlNode)item;
-                switch (node.LocalName)
+                if (item is XmlNode)
                 {
-                    case "template":
+                    var node = (XmlNode)item;
+                    if (node.NamespaceURI != xsl)
+                        return getTemplate(container, "resultNodeTemplate");
+
+                    if (node.LocalName == "template")
+                    {
                         var match = node.Attributes["match"];
                         if (match != null && match.Value == "/")
-                            return getTemplate(container, "xslRootTemplate");
-                        else
-                            return getTemplate(container, "xslTemplate");
-
-                    case "value-of":
-                        return getTemplate(container, "xslValueOf");
-
-                    case "for-each":
-                        return getTemplate(container, "xslForEach");
-
-                    default:
-                        return getTemplate(container, "xslDefaultTemplate");
-                        break;
+                            return getTemplate(container, "root_template");
+                    }
+                    return getTemplate(container, node.LocalName);
                 }
+                return base.SelectTemplate(item, container);
             }
-            return base.SelectTemplate(item, container);
+            catch (ResourceReferenceKeyNotFoundException)
+            {
+                return getTemplate(container, "unknownNodeTemplate");
+            }
         }
 
         private static DataTemplate getTemplate(DependencyObject element, string template)
