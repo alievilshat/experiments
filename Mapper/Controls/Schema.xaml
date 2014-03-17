@@ -63,7 +63,7 @@
 
     <ScrollViewer DockPanel.Dock="Right" FlowDirection="{Binding ScrollViewFlowDirection, ElementName=sc}">
         <StackPanel Orientation="Horizontal">
-            <Thumb Width="0" Height="0" />
+            <Thumb x:Name="port" x:FieldModifier="public" Width="0" Height="0" />
             <TreeView x:Name="schemaTree" Padding="0, 5, 10, 5"
                         FlowDirection="{Binding TreeViewFlowDirection, ElementName=sc}"
                         Grid.Column="0" ItemsSource="{Binding Schema.Items, Converter={StaticResource observable}, ElementName=sc}">

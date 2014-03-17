@@ -6,12 +6,10 @@
       <xsl:for-each select="dbquery">
         <record>
           <ID>
-            <xsl:if test="id">
-              <xsl:value-of select="id" />
-            </xsl:if>
+              #<xsl:value-of select="id" />
           </ID>
           <product_code>
-            <xsl:value-of select="manufacturercode" />
+            <xsl:value-of select="manufacturercode" />-<xsl:value-of select="id" />
           </product_code>
           <family_code>
             <xsl:value-of select="manufacturercode" />

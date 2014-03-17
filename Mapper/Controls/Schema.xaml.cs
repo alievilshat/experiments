@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Xml.Schema;
 
 namespace Mapper
@@ -30,6 +31,7 @@ namespace Mapper
                     }
                 });
             InitializeComponent();
+            Port = port;
         }
 
         private void OpenDesigner_Click(object sender, RoutedEventArgs e)
@@ -88,5 +90,16 @@ namespace Mapper
         }
         public static readonly DependencyProperty TreeViewFlowDirectionProperty =
             DependencyProperty.Register("TreeViewFlowDirection", typeof(FlowDirection), typeof(SchemaControl), new PropertyMetadata(FlowDirection.LeftToRight));
+
+
+        public Thumb Port
+        {
+            get { return (Thumb)GetValue(PortProperty); }
+            set { SetValue(PortProperty, value); }
+        }
+        public static readonly DependencyProperty PortProperty =
+            DependencyProperty.Register("Port", typeof(Thumb), typeof(SchemaControl), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        
     }
 }

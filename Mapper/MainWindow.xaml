@@ -17,7 +17,14 @@
         </Style>
 
         <uc:XsltNodeTemplateSelector x:Key="templateselector" />
+        
         <uc:ConcatConverter x:Key="concatConverter" />
+        <uc:ContentToDocumentConverter x:Key="contentConverter" />
+        <uc:ContentPathsConverter x:Key="sourcePathsConverter" />
+        <uc:ThumbsPathConverter x:Key="thumbsPathConverter" />
+        <uc:NodePortFinderConverter x:Key="sourceNodePortFinder" />
+        <uc:NodePortFinderConverter x:Key="targetNodePortFinder" />
+        
         <sys:String x:Key="seperator">/</sys:String>
         <sys:String x:Key="arrow">--></sys:String>
 
@@ -64,7 +71,7 @@
             </StackPanel>
         </DataTemplate>
 
-        <DataTemplate x:Key="value-of">
+        <!--<DataTemplate x:Key="value-of">
             <StackPanel>
                 <uc:Transformation Source="{Binding ElementName=sourceSchema}" Target="{Binding ElementName=targetSchema}">
                     <uc:Transformation.SourcePath>
@@ -81,6 +88,68 @@
 
                 <ItemsControl ItemsSource="{Binding XPath=*}" ItemTemplateSelector="{StaticResource templateselector}" />
             </StackPanel>
+        </DataTemplate>-->
+
+        <DataTemplate x:Key="mixed-value-of">
+            <uc:BlockControl>
+                <uc:Context.TargetContext>
+                    <MultiBinding Converter="{StaticResource concatConverter}">
+                        <Binding Path="(uc:Context.TargetContext)" RelativeSource="{RelativeSource AncestorType=FrameworkElement}" />
+                        <Binding Source="{StaticResource seperator}" />
+                        <Binding Path="LocalName" />
+                    </MultiBinding>
+                </uc:Context.TargetContext>
+                <uc:BlockControl.HeaderContent>
+                    <Grid>
+                        <TextBlock Text="Converter" Padding="7, 3" />
+                        <!--SOURCE CONNECTORS-->
+                        <ItemsControl>
+                            <ItemsControl.ItemsSource>
+                                <MultiBinding Converter="{StaticResource sourcePathsConverter}">
+                                    <Binding Path="(uc:Context.SourceContext)" RelativeSource="{RelativeSource Self}" />
+                                    <Binding />
+                                </MultiBinding>
+                            </ItemsControl.ItemsSource>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Canvas>
+                                        <Path Stroke="LightGray" StrokeThickness="2">
+                                            <Path.Data>
+                                                <MultiBinding Converter="{StaticResource thumbsPathConverter}" ConverterParameter="-*">
+                                                    <Binding RelativeSource="{RelativeSource AncestorType=Canvas}" />
+                                                    <Binding Converter="{StaticResource sourceNodePortFinder}" ConverterParameter="source" />
+                                                    <Binding Path="Port" ElementName="sourceSchema" />
+                                                    <Binding Path="LeftPort" RelativeSource="{RelativeSource AncestorType=uc:BlockControl}" />
+                                                </MultiBinding>
+                                            </Path.Data>
+                                        </Path>
+                                    </Canvas>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <!--TARGET CONNECTOR-->
+                        <Canvas>
+                            <Path Stroke="LightGray" StrokeThickness="2">
+                                <Path.Data>
+                                    <MultiBinding Converter="{StaticResource thumbsPathConverter}" ConverterParameter="-*">
+                                        <Binding RelativeSource="{RelativeSource AncestorType=Canvas}" />
+                                        <Binding Path="(uc:Context.TargetContext)" RelativeSource="{RelativeSource Self}" Converter="{StaticResource targetNodePortFinder}" ConverterParameter="target" />
+                                        <Binding Path="Port" ElementName="targetSchema" />
+                                        <Binding Path="RightPort" RelativeSource="{RelativeSource AncestorType=uc:BlockControl}" />
+                                    </MultiBinding>
+                                </Path.Data>
+                            </Path>
+                        </Canvas>
+                    </Grid>
+                </uc:BlockControl.HeaderContent>
+                <uc:BlockControl.BlockContent>
+                    <Grid>
+                        <ContentControl HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" 
+                                        Content="{Binding XPath=., Converter={StaticResource contentConverter}}" />
+                    </Grid>
+                </uc:BlockControl.BlockContent>
+            </uc:BlockControl>
+            
         </DataTemplate>
 
     </Window.Resources>
@@ -90,7 +159,7 @@
 
         <uc:SchemaControl x:Name="sourceSchema" DockPanel.Dock="Left" Schema="{Binding SourceSchema, Mode=TwoWay}" />
         <uc:SchemaControl x:Name="targetSchema" DockPanel.Dock="Right" FlowDirection="RightToLeft" Schema="{Binding TargetSchema, Mode=TwoWay}" />
-
+        
         <ItemsControl x:Name="items" DataContext="{Binding Stylesheet}" ItemTemplateSelector="{StaticResource templateselector}">
             <ItemsControl.ItemsSource>
                 <Binding XPath="//xsl:template"/>

@@ -24,6 +24,9 @@ namespace Mapper
 
             DataContext = this;
             InitializeComponent();
+
+            FindResource("sourceNodePortFinder").As<NodePortFinderConverter>().Schema = sourceSchema;
+            FindResource("targetNodePortFinder").As<NodePortFinderConverter>().Schema = targetSchema;
         }
 
         private XmlSchema loadSchema(string filename)

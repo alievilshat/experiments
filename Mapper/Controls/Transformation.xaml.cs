@@ -23,29 +23,38 @@ namespace Mapper
 
         private void transformation_Loaded(object sender, RoutedEventArgs e)
         {
-            LayoutUpdated += (o, a) => updatePath();
+            Source.LayoutUpdated += (o, a) => updatePath();
+            Target.LayoutUpdated += (o, a) => updatePath();
             updatePath();
         }
 
-        private Point prevStartPoint = EMPTY;
-        private Point prevEndPoint = EMPTY;
+        private Point? prevStartPoint = EMPTY;
+        private Point? prevEndPoint = EMPTY;
 
         private void updatePath()
         {
             var startPoint = getNodeLocation(Source, SourcePath);
             var endPoint = getNodeLocation(Target, TargetPath);
 
+            if (!startPoint.HasValue || !endPoint.HasValue)
+            {
+                PathCoordinates = null;
+                prevStartPoint = null;
+                prevEndPoint = null;
+                return;
+            }
+
             if (prevStartPoint == startPoint && prevEndPoint == endPoint)
                 return;
 
-            prevStartPoint = startPoint;
-            prevEndPoint = endPoint;
+            prevStartPoint = startPoint.Value;
+            prevEndPoint = endPoint.Value;
 
             PathFigure pathFigure = new PathFigure();
-            pathFigure.StartPoint = startPoint;
-            pathFigure.Segments.Add(new LineSegment { Point = new Point(getThumbLocation(Source).X, startPoint.Y) });
-            pathFigure.Segments.Add(new LineSegment { Point = new Point(getThumbLocation(Target).X, endPoint.Y) });
-            pathFigure.Segments.Add(new LineSegment { Point = endPoint });
+            pathFigure.StartPoint = startPoint.Value;
+            pathFigure.Segments.Add(new LineSegment { Point = new Point(getThumbLocation(Source).X, startPoint.Value.Y) });
+            pathFigure.Segments.Add(new LineSegment { Point = new Point(getThumbLocation(Target).X, endPoint.Value.Y) });
+            pathFigure.Segments.Add(new LineSegment { Point = endPoint.Value });
 
             PathGeometry pathGeometry = new PathGeometry();
             pathGeometry.Figures = new PathFigureCollection();
@@ -53,16 +62,19 @@ namespace Mapper
             PathCoordinates = pathGeometry;
         }
 
-        private Point getNodeLocation(SchemaControl control, string path)
+        private Point? getNodeLocation(SchemaControl control, string path)
         {
             if (control == null)
                 return EMPTY;
 
             var parts = path.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
 
-            var node = control.GetChildren().OfType<TreeViewItem>().Skip(1).First();
+            var node = control.GetChildrenBFS().OfType<TreeViewItem>().Skip(1).First();
             foreach (var p in parts)
-                node = node.GetChildren().OfType<TreeViewItem>().First(i => string.Compare(i.DataContext.As<XmlSchemaElement>().Name, p, true) == 0);
+                node = node.GetChildrenBFS().OfType<TreeViewItem>().First(i => string.Compare(i.DataContext.As<XmlSchemaElement>().Name, p, true) == 0);
+
+            if (!node.IsVisible)
+                return null;
 
             return getThumbLocation(node);
         }

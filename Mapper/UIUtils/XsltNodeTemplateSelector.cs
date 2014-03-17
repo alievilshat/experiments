@@ -20,6 +20,13 @@ namespace Mapper
                 if (item is XmlNode)
                 {
                     var node = (XmlNode)item;
+
+                    var children = node.ChildNodes.Cast<XmlNode>();
+                    if (children.Any(i => i.LocalName == "value-of"))
+                    {
+                        return getTemplate(container, "mixed-value-of");
+                    }
+
                     if (node.NamespaceURI != xsl)
                         return getTemplate(container, "resultNodeTemplate");
 

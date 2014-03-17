@@ -68,7 +68,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\BlockControl.xaml.cs">
+      <DependentUpon>BlockControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Context.cs" />
+    <Compile Include="Controls\Buttons\CloseButton.xaml.cs">
+      <DependentUpon>CloseButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Buttons\ExpanderButton.xaml.cs">
+      <DependentUpon>ExpanderButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Schema.xaml.cs">
       <DependentUpon>Schema.xaml</DependentUpon>
     </Compile>
@@ -112,13 +121,18 @@
     <Compile Include="SchemaDesigner\Wizard\Webservice\WebServiceCall.xaml.cs">
       <DependentUpon>WebServiceCall.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIUtils\ContentPathsConverter.cs" />
+    <Compile Include="UIUtils\ContentToDocumentConverter.cs" />
+    <Compile Include="UIUtils\NodePortFinderConverter.cs" />
     <Compile Include="UIUtils\NodeToLocationConverter.cs" />
-    <Compile Include="Transformation.xaml.cs">
+    <Compile Include="Controls\Transformation.xaml.cs">
       <DependentUpon>Transformation.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIUtils\ConcatConverter.cs" />
+    <Compile Include="UIUtils\ThumbsPathConverter.cs" />
     <Compile Include="Utils\CsvReader.cs" />
     <Compile Include="Utils\CsvToXmlConverter.cs" />
+    <Compile Include="Utils\GenericEventArgs.cs" />
     <Compile Include="Utils\Observable\ObservableCollectionDecorator.cs" />
     <Compile Include="Utils\Observable\ObservableConverter.cs" />
     <Compile Include="Utils\Observable\ObservableDecorator.cs" />
@@ -128,6 +142,22 @@
     <Compile Include="Utils\WPFExtensions.cs" />
     <Compile Include="Utils\XsdInferrer.cs" />
     <Compile Include="UIUtils\XsltNodeTemplateSelector.cs" />
+    <Page Include="Controls\BlockControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Buttons\ButtonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Buttons\CloseButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Buttons\ExpanderButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\Schema.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -188,7 +218,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Transformation.xaml">
+    <Page Include="Controls\Transformation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
