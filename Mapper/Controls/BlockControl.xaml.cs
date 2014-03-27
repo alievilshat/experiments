@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -25,7 +26,7 @@ namespace Mapper
         void BlockControl_LayoutUpdated(object sender, System.EventArgs e)
         {
             if (ignore) { ignore = false; return; }
-            LeftPort = null; 
+            LeftPort = null;
             LeftPort = leftPort;
             RightPort = null;
             RightPort = rightPort;
@@ -88,7 +89,7 @@ namespace Mapper
         {
             if (!expander.IsExpanded) return;
             var val = content.Width + e.HorizontalChange;
-            if (val > 0)
+            if (val > 120)
                 content.Width = val;
         }
 
@@ -96,7 +97,7 @@ namespace Mapper
         {
             if (!expander.IsExpanded) return;
             var val = content.Height + e.VerticalChange;
-            if (val > 0)
+            if (val > 20)
                 content.Height = val;
         }
     }

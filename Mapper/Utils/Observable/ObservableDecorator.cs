@@ -13,6 +13,8 @@ namespace Mapper
         protected readonly object _target;
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public object Target { get { return _target; } }
+
         protected ObservableDecorator(object target)
         {
             this._target = target;

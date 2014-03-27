@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Xml.Schema;
 
 namespace Mapper
@@ -12,6 +13,13 @@ namespace Mapper
     /// </summary>
     public partial class SchemaControl : UserControl
     {
+        public bool DragDropEnabled { get; set; }
+
+        public event DragEventHandler NodeDragEnter;
+        public event DragEventHandler NodeDragOver;
+        public event DragEventHandler NodeDragLeave;
+        public event DragEventHandler NodeDragDrop;
+
         public SchemaControl()
         {
             DependencyPropertyDescriptor
@@ -64,7 +72,6 @@ namespace Mapper
             }
         }
 
-
         public XmlSchema Schema
         {
             get { return (XmlSchema)GetValue(SchemaProperty); }
@@ -100,6 +107,58 @@ namespace Mapper
         public static readonly DependencyProperty PortProperty =
             DependencyProperty.Register("Port", typeof(Thumb), typeof(SchemaControl), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
-        
+        private void XmlElement_Loaded(object sender, RoutedEventArgs e)
+        {
+            UpdateLayout();
+        }
+
+        private void onEvent(DragEventHandler eventHandler, object sender, DragEventArgs e)
+        {
+            if (eventHandler != null)
+                eventHandler(sender, e);
+        }
+
+        private void Node_DragEnter(object sender, DragEventArgs e)
+        {
+            onEvent(NodeDragEnter, sender, e);
+        }
+
+        private void Node_DragOver(object sender, DragEventArgs e)
+        {
+            onEvent(NodeDragOver, sender, e);
+        }
+
+        private void Node_DragLeave(object sender, DragEventArgs e)
+        {
+            onEvent(NodeDragLeave, sender, e);
+        }
+
+        private void Node_Drop(object sender, DragEventArgs e)
+        {
+            onEvent(NodeDragDrop, sender, e);
+        }
+
+        private void Node_PreviewMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (DragDropEnabled && e.LeftButton == MouseButtonState.Pressed)
+            {
+                var item = e.OriginalSource as TextBlock;
+
+                if (item == null || item.DataContext == null)
+                    return;
+
+                var data = getDataFromSchemaNodeDataContext(item);
+
+                var dragData = new DataObject(data);
+                DragDrop.DoDragDrop(item, dragData, DragDropEffects.Copy);
+            }
+        }
+
+        private static XmlSchemaElement getDataFromSchemaNodeDataContext(FrameworkElement dst)
+        {
+            if (dst.DataContext is ObservableDecorator)
+                return ((ObservableDecorator)dst.DataContext).Target as XmlSchemaElement;
+            return dst.DataContext as XmlSchemaElement;
+        }
     }
 }

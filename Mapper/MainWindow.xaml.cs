@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Xml;
 using System.Xml.Schema;
+using Microsoft.Win32;
 
 namespace Mapper
 {
@@ -13,61 +14,181 @@ namespace Mapper
     /// </summary>
     public partial class MainWindow : Window
     {
-        public XmlDataProvider Stylesheet { get; set; }
+        private const string SOURCE_SCHEMA = "source";
+        private const string TARGET_SCHEMA = "target";
+        private const string XSL = "xsl";
+        private const string XSL_NAMESPACE = "http://www.w3.org/1999/XSL/Transform";
+
+        public MapperViewModel Model { get; set; }
+
+        private string _currentFilePath;
 
         public MainWindow()
         {
-            SourceSchema = loadSchema("source.xsd");
-            TargetSchema = loadSchema("target.xsd");
-
-            loadStylesheet();
-
-            DataContext = this;
+            Model = new MapperViewModel();
             InitializeComponent();
-
-            FindResource("sourceNodePortFinder").As<NodePortFinderConverter>().Schema = sourceSchema;
-            FindResource("targetNodePortFinder").As<NodePortFinderConverter>().Schema = targetSchema;
+            loadDefaultTemplates();
         }
 
-        private XmlSchema loadSchema(string filename)
+        #region New Handler
+        private void New_Click(object sender, RoutedEventArgs e)
         {
-            using (var stream = File.OpenText(filename))
+            loadDefaultTemplates();
+        }
+
+        private void loadDefaultTemplates()
+        {
+            _currentFilePath = null;
+
+            Model.SourceSchema = getDefaultSchema(SOURCE_SCHEMA);
+            Model.TargetSchema = getDefaultSchema(TARGET_SCHEMA);
+            Model.Transformation = getDefaultTransformation();
+        }
+        #endregion
+
+        #region Open File Handler
+        private void Open_Click(object sender, RoutedEventArgs e)
+        {
+            LoadModel();
+        }
+
+        public void LoadModel()
+        {
+            var dialog = new OpenFileDialog
             {
-                return XmlSchema.Read(stream, (o, e) => Console.WriteLine(e.Message));
+                Title = "Open Transformation Script",
+                Filter = "*.xsl|*.xsl"
+            };
+            if (dialog.ShowDialog().GetValueOrDefault())
+            {
+                _currentFilePath = dialog.FileName;
+
+                Model.SourceSchema = loadSchema(_currentFilePath, SOURCE_SCHEMA);
+                Model.TargetSchema = loadSchema(_currentFilePath, TARGET_SCHEMA);
+                Model.Transformation = loadTransformation(_currentFilePath);
             }
         }
 
-        private void loadStylesheet()
+        private string getSchemaPath(string _currentFilePath, string suffix)
         {
-            Stylesheet = new XmlDataProvider();
-            Stylesheet.Document = new XmlDocument();
-            Stylesheet.Document.LoadXml(File.ReadAllText("transformation.xsl"));
-            Stylesheet.XmlNamespaceManager = new XmlNamespaceManager(Stylesheet.Document.NameTable);
-            Stylesheet.XmlNamespaceManager.AddNamespace("xsl", "http://www.w3.org/1999/XSL/Transform");
+            return Path.Combine(
+                Path.GetDirectoryName(_currentFilePath), 
+                Path.GetFileNameWithoutExtension(_currentFilePath) + "_" + suffix + ".xsd"
+            );
         }
 
-        public XmlSchema SourceSchema
+        private XmlSchema loadSchema(string filename, string suffix)
         {
-            get { return (XmlSchema)GetValue(SourceSchemaProperty); }
-            set { SetValue(SourceSchemaProperty, value); }
-        }
-        public static readonly DependencyProperty SourceSchemaProperty =
-            DependencyProperty.Register("SourceSchema", typeof(XmlSchema), typeof(MainWindow), new PropertyMetadata(null));
+            try
+            {
+                var path = getSchemaPath(filename, suffix);
 
-        public XmlSchema TargetSchema
-        {
-            get { return (XmlSchema)GetValue(TargetSchemaProperty); }
-            set { SetValue(TargetSchemaProperty, value); }
-        }
-        public static readonly DependencyProperty TargetSchemaProperty =
-            DependencyProperty.Register("TargetSchema", typeof(XmlSchema), typeof(MainWindow), new PropertyMetadata(null));
+                if (!File.Exists(path))
+                    throw new Exception("File " + path + " does not exist.");
 
-        private void saveSchema(XmlSchema schema, string filename)
+                using (var stream = File.OpenText(path))
+                {
+                    return XmlSchema.Read(stream, (o, e) => Console.WriteLine(e.Message));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return getDefaultSchema(suffix);
+            }
+        }
+
+        private XmlDataProvider loadTransformation(string filename)
         {
-            using (var w = File.OpenWrite(filename))
+            var transformation = getDefaultTransformation();
+            try
+            {
+                transformation.Document.LoadXml(File.ReadAllText(filename));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return transformation;
+        }
+        #endregion
+
+        #region Save File Handler
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            Save();
+        }
+
+        private void SaveAs_Click(object sender, RoutedEventArgs e)
+        {
+            _currentFilePath = Save(null);
+        }
+
+        public void Save()
+        {
+            _currentFilePath = Save(_currentFilePath);
+        }
+
+        public string Save(string path)
+        {
+            if (path == null)
+            {
+                var dialog = new SaveFileDialog
+                {
+                    Title = "Save Transformation Script",
+                    Filter = "*.xsl|*.xsl"
+                };
+                if (dialog.ShowDialog().GetValueOrDefault())
+                {
+                    path = dialog.FileName;
+                }
+                else
+                    return path;
+            }
+            try
+            {
+                saveSchema(Model.SourceSchema, path, SOURCE_SCHEMA);
+                saveSchema(Model.TargetSchema, path, TARGET_SCHEMA);
+                saveTransformation(path);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                path = Save(null);
+            }
+            return path;
+        }
+
+        private void saveTransformation(string path)
+        {
+            using (var stream = createNewFile(path))
+            {
+                XmlWriter writer = XmlWriter.Create(stream, new XmlWriterSettings { Indent = true });
+                Model.Transformation.Document.Save(writer);
+            }
+        }
+
+        private void saveSchema(XmlSchema schema, string transformationPath, string suffix)
+        {
+            var schemaPath = getSchemaPath(transformationPath, suffix);
+            using (var w = createNewFile(schemaPath))
             {
                 schema.Write(w);
             }
+        }
+
+        private static FileStream createNewFile(string path)
+        {
+            if (File.Exists(path))
+                return File.Open(path, FileMode.Truncate);
+            return File.Open(path, FileMode.Create);
+        }
+        #endregion
+
+        #region Close Handler
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
@@ -79,9 +200,7 @@ namespace Mapper
                     return;
 
                 case MessageBoxResult.Yes:
-                    saveSchema(SourceSchema, "source.xsd");
-                    saveSchema(TargetSchema, "target.xsd");
-                    Stylesheet.Document.Save("transformation.xsl");
+                    Save();
                     break;
 
                 default:
@@ -91,5 +210,25 @@ namespace Mapper
                     break;
             }
         }
+        #endregion
+        
+        #region Default Templates
+        public XmlSchema getDefaultSchema(string root)
+        {
+            var schema = new XmlSchema();
+            schema.Items.Add(new XmlSchemaElement() { Name = root });
+            return schema;
+        }
+
+        private static XmlDataProvider getDefaultTransformation()
+        {
+            var transformation = new XmlDataProvider();
+            transformation.Document = new XmlDocument();
+            transformation.XmlNamespaceManager = new XmlNamespaceManager(transformation.Document.NameTable);
+            transformation.XmlNamespaceManager.AddNamespace(XSL, XSL_NAMESPACE);
+            transformation.Document.AppendChild(transformation.Document.CreateElement(XSL, "stylesheet", XSL_NAMESPACE));
+            return transformation;
+        }
+        #endregion
     }
 }

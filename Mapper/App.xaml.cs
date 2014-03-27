@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel;
+using System.IO;
 using System.Windows;
+using System.Windows.Data;
+using System.Xml;
+using System.Xml.Schema;
 
 namespace Mapper
 {
@@ -13,5 +13,6 @@ namespace Mapper
     /// </summary>
     public partial class App : Application
     {
+        
     }
 }

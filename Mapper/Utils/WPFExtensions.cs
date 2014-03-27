@@ -48,7 +48,6 @@ namespace Mapper
                 for (int i = 0; i < VisualTreeHelper.GetChildrenCount(n); i++)
                     queue.Enqueue(VisualTreeHelper.GetChild(n, i));
                 
-
                 yield return n;
             }
 

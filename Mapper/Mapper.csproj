@@ -81,6 +81,9 @@
     <Compile Include="Controls\Schema.xaml.cs">
       <DependentUpon>Schema.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SchemaDesigner\ConnectionSetting.cs" />
     <Compile Include="SchemaDesigner\ConnectionSetting.Designer.cs">
       <DependentUpon>ConnectionSetting.settings</DependentUpon>
@@ -122,7 +125,6 @@
       <DependentUpon>WebServiceCall.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIUtils\ContentPathsConverter.cs" />
-    <Compile Include="UIUtils\ContentToDocumentConverter.cs" />
     <Compile Include="UIUtils\NodePortFinderConverter.cs" />
     <Compile Include="UIUtils\NodeToLocationConverter.cs" />
     <Compile Include="Controls\Transformation.xaml.cs">
@@ -141,7 +143,17 @@
     <Compile Include="UIUtils\UnionConverter.cs" />
     <Compile Include="Utils\WPFExtensions.cs" />
     <Compile Include="Utils\XsdInferrer.cs" />
-    <Compile Include="UIUtils\XsltNodeTemplateSelector.cs" />
+    <Compile Include="ViewModels\IMapperHost.cs" />
+    <Compile Include="ViewModels\MapperViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="ViewModels\Xslt\XsltContentNodeViewModel.cs" />
+    <Compile Include="ViewModels\Xslt\XsltForEachViewModel.cs" />
+    <Compile Include="ViewModels\Xslt\XsltMixedContentViewModel.cs" />
+    <Compile Include="ViewModels\Xslt\XsltRootTemplateNodeViewModel.cs" />
+    <Compile Include="ViewModels\Xslt\XsltStylesheetViewModel.cs" />
+    <Compile Include="ViewModels\Xslt\XsltTemplateNodeViewModel.cs" />
+    <Compile Include="ViewModels\Xslt\XsltUnknownNodeViewModel.cs" />
+    <Compile Include="ViewModels\Xslt\XsltViewModelBase.cs" />
     <Page Include="Controls\BlockControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -163,6 +175,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MapperControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -170,8 +186,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="MapperControl.xaml.cs">
+      <DependentUpon>MapperControl.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="SchemaDesigner\Wizard\Database\ConnectionSettings.xaml">
@@ -241,7 +257,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Content Include="target.xsd">
+    <Content Include="transformation_target.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -254,7 +270,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>ConnectionSetting.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="source.xsd">
+    <Content Include="transformation_source.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

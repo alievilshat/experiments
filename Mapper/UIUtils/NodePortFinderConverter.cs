@@ -8,13 +8,13 @@ using System.Xml.Schema;
 
 namespace Mapper
 {
-    class NodePortFinderConverter : IValueConverter
+    class NodePortFinderConverter : IMultiValueConverter
     {
         public SchemaControl Schema { get; set; }
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            return getNodeLocation(value.As<string>());
+            return getNodeLocation((string)values.FirstOrDefault());
         }
 
         private Thumb getNodeLocation(string path)
@@ -24,10 +24,18 @@ namespace Mapper
 
             var parts = path.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 
-            var node = Schema.GetChildrenBFS().OfType<TreeViewItem>().Skip(1).First();
+            var node = Schema.GetChildrenBFS().OfType<TreeViewItem>().FirstOrDefault();
+            if (node == null)
+                return null;
+
             foreach (var p in parts)
+            {
                 node = node.GetChildrenBFS().OfType<TreeViewItem>()
-                    .First(i => string.Compare(i.DataContext.As<XmlSchemaElement>().Name, p, true) == 0);
+                    .FirstOrDefault(i => string.Compare(i.DataContext.As<XmlSchemaElement>().Name, p, true) == 0);
+
+                if (node == null)
+                    return null;
+            }
 
             if (!node.IsVisible)
                 return null;
@@ -35,7 +43,7 @@ namespace Mapper
             return node.GetChildren().OfType<Thumb>().FirstOrDefault();
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
