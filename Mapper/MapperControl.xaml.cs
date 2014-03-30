@@ -46,6 +46,8 @@ namespace Mapper
         private void schemaNodeDragEnter(object sender, DragEventArgs e)
         {
             var dst = (FrameworkElement)sender;
+            if (dst.DataContext == null)
+                return;
 
             acceptDragAndDrop = e.Data.GetDataPresent(typeof(XmlSchemaElement))
                 && getRoot(((dynamic)dst.DataContext).Target) != getRoot((XmlSchemaElement)e.Data.GetData(typeof(XmlSchemaElement)));
@@ -55,7 +57,7 @@ namespace Mapper
                 dst.FindAncestor<TreeViewItem>().IsSelected = true;
             }
 
-            schemaNodeDragDrop(sender, e);
+            schemaNodeDragOver(sender, e);
         }
 
         private XmlSchemaObject getRoot(XmlSchemaObject element)
@@ -76,7 +78,7 @@ namespace Mapper
 
         private void schemaNodeDragDrop(object sender, DragEventArgs e)
         {
-            // TODO: UDPATE MODEL
+
         }
     }
 }
