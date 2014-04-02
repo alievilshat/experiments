@@ -107,8 +107,8 @@ namespace Mapper
 
             foreach (var p in parts)
             {
-                node = node.GetChildrenBFS().OfType<FrameworkElement>()
-                    .FirstOrDefault(i => string.Compare(i.DataContext.As<XmlSchemaElement>().Name, p, true) == 0);
+                node = node.GetChildrenBFS().OfType<FrameworkElement>().Where(i => i.DataContext is XmlSchemaElement)
+                    .FirstOrDefault(i => string.Compare(((XmlSchemaElement)i.DataContext).Name, p, true) == 0);
 
                 if (node == null)
                     return null;

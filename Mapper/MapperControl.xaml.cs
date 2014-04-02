@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Xml.Schema;
 
@@ -43,21 +44,24 @@ namespace Mapper
 
         private bool acceptDragAndDrop = false;
 
-        private void schemaNodeDragEnter(object sender, DragEventArgs e)
+        private void schemaDragEnter(object sender, DragEventArgs e)
         {
-            var dst = (FrameworkElement)sender;
+            var dst = (FrameworkElement)e.OriginalSource;
             if (dst.DataContext == null)
                 return;
 
+            if (dst.DataContext.As<XmlSchemaElement>() == null)
+                return;
+
             acceptDragAndDrop = e.Data.GetDataPresent(typeof(XmlSchemaElement))
-                && getRoot(((dynamic)dst.DataContext).Target) != getRoot((XmlSchemaElement)e.Data.GetData(typeof(XmlSchemaElement)));
+                && getRoot(dst.DataContext.CastAs<XmlSchemaElement>()) != getRoot(e.Data.GetData(typeof(XmlSchemaElement)).CastAs<XmlSchemaElement>());
 
             if (acceptDragAndDrop)
             {
                 dst.FindAncestor<TreeViewItem>().IsSelected = true;
             }
 
-            schemaNodeDragOver(sender, e);
+            schemaDragOver(sender, e);
         }
 
         private XmlSchemaObject getRoot(XmlSchemaObject element)
@@ -67,7 +71,7 @@ namespace Mapper
             return getRoot(element.Parent);
         }
 
-        private void schemaNodeDragOver(object sender, DragEventArgs e)
+        private void schemaDragOver(object sender, DragEventArgs e)
         {
             if (!acceptDragAndDrop)
             {
@@ -76,9 +80,20 @@ namespace Mapper
             }
         }
 
-        private void schemaNodeDragDrop(object sender, DragEventArgs e)
+        private void sourceSchemaDrop(object sender, DragEventArgs e)
         {
+            var source = e.Data.GetData(typeof(XmlSchemaElement)).CastAs<XmlSchemaElement>();
+            var target = e.OriginalSource.CastAs<FrameworkElement>().DataContext.CastAs<XmlSchemaElement>();
 
+            Model.AddTransformation(target, source);
+        }
+
+        private void targetSchemaDrop(object sender, DragEventArgs e)
+        {
+            var source = e.Data.GetData(typeof(XmlSchemaElement)).CastAs<XmlSchemaElement>();
+            var target = e.OriginalSource.CastAs<FrameworkElement>().DataContext.CastAs<XmlSchemaElement>();
+
+            Model.AddTransformation(source, target);
         }
     }
 }

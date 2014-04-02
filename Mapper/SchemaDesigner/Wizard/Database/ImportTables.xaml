@@ -30,7 +30,9 @@
         <ListBox ItemsSource="{Binding Tables}" AlternationCount="2">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <CheckBox Content="{Binding Name}" IsChecked="{Binding Selected}" Margin="5" />
+                    <CheckBox IsChecked="{Binding Selected}" Margin="5">
+                        <TextBlock Text="{Binding Name}"></TextBlock>
+                    </CheckBox>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

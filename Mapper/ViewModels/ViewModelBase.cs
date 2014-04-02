@@ -9,6 +9,8 @@ namespace Mapper
 {
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
+        public const string XSL_NAMESPACE = "http://www.w3.org/1999/XSL/Transform";
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected bool ThrowOnInvalidPropertyName;
 

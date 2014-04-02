@@ -94,11 +94,15 @@
         <TabItem Header="Design">
             <DockPanel ClipToBounds="True" Background="Transparent" Focusable="True" IsVisibleChanged="DesignPanel_IsVisibleChanged">
                 <l:SchemaControl x:Name="sourceSchema" DragDropEnabled="True" DockPanel.Dock="Left" Schema="{Binding SourceSchema, Mode=TwoWay}"
-                                 DragEnter="schemaNodeDragEnter"
-                                 DragOver="schemaNodeDragOver"
-                                 DragLeave="schemaNodeDragOver"
-                                 Drop="schemaNodeDragDrop"/>
-                <l:SchemaControl x:Name="targetSchema" DragDropEnabled="True" DockPanel.Dock="Right" FlowDirection="RightToLeft" Schema="{Binding TargetSchema, Mode=TwoWay}" />
+                                 DragEnter="schemaDragEnter"
+                                 DragOver="schemaDragOver"
+                                 DragLeave="schemaDragOver"
+                                 Drop="sourceSchemaDrop"/>
+                <l:SchemaControl x:Name="targetSchema" DragDropEnabled="True" DockPanel.Dock="Right" FlowDirection="RightToLeft" Schema="{Binding TargetSchema, Mode=TwoWay}"
+                                 DragEnter="schemaDragEnter"
+                                 DragOver="schemaDragOver"
+                                 DragLeave="schemaDragOver"
+                                 Drop="targetSchemaDrop" />
                 <ItemsControl DataContext="{Binding TransformationViewModel}" ItemsSource="{Binding Children}" />
             </DockPanel>
         </TabItem>

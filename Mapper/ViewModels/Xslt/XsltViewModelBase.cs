@@ -10,8 +10,6 @@ namespace Mapper
 {
     public class XsltViewModelBase : ViewModelBase
     {
-        public const string XSL_NAMESPACE = "http://www.w3.org/1999/XSL/Transform";
-
         private XmlNode _node;
         public XmlNode Node
         {

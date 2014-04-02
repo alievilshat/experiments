@@ -81,6 +81,8 @@
     <Compile Include="Controls\Schema.xaml.cs">
       <DependentUpon>Schema.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Logic\NodePath.cs" />
+    <Compile Include="Logic\NodeProperties.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -142,9 +144,11 @@
     <Compile Include="Utils\TypeExtensions.cs" />
     <Compile Include="UIUtils\UnionConverter.cs" />
     <Compile Include="Utils\WPFExtensions.cs" />
+    <Compile Include="Utils\XmlSchemaExtensions.cs" />
     <Compile Include="Utils\XsdInferrer.cs" />
     <Compile Include="ViewModels\IMapperHost.cs" />
     <Compile Include="ViewModels\MapperViewModel.cs" />
+    <Compile Include="Logic\TransformationBuilder.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\Xslt\XsltContentNodeViewModel.cs" />
     <Compile Include="ViewModels\Xslt\XsltForEachViewModel.cs" />

@@ -6,6 +6,7 @@ using System.Windows.Data;
 using System.Xml;
 using System.Xml.Schema;
 using Microsoft.Win32;
+using Mapper.Properties;
 
 namespace Mapper
 {
@@ -27,7 +28,12 @@ namespace Mapper
         {
             Model = new MapperViewModel();
             InitializeComponent();
-            loadDefaultTemplates();
+            if (Settings.Default.LastOpenFile != null && File.Exists(Settings.Default.LastOpenFile))
+            {
+                loadFiles(Settings.Default.LastOpenFile);
+            }
+            else
+                loadDefaultTemplates();
         }
 
         #region New Handler
@@ -61,12 +67,17 @@ namespace Mapper
             };
             if (dialog.ShowDialog().GetValueOrDefault())
             {
-                _currentFilePath = dialog.FileName;
-
-                Model.SourceSchema = loadSchema(_currentFilePath, SOURCE_SCHEMA);
-                Model.TargetSchema = loadSchema(_currentFilePath, TARGET_SCHEMA);
-                Model.Transformation = loadTransformation(_currentFilePath);
+                loadFiles(dialog.FileName);
             }
+        }
+
+        private void loadFiles(string filepath)
+        {
+            _currentFilePath = filepath;
+
+            Model.SourceSchema = loadSchema(_currentFilePath, SOURCE_SCHEMA);
+            Model.TargetSchema = loadSchema(_currentFilePath, TARGET_SCHEMA);
+            Model.Transformation = loadTransformation(_currentFilePath);
         }
 
         private string getSchemaPath(string _currentFilePath, string suffix)
@@ -193,6 +204,9 @@ namespace Mapper
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
+            Settings.Default.LastOpenFile = _currentFilePath;
+            Settings.Default.Save();
+
             var res = MessageBox.Show("Do you want to save the changes?", "Save", MessageBoxButton.YesNoCancel);
             switch (res)
             {

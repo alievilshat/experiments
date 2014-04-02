@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Linq;
 using System.Xml;
 using System.Xml.Schema;
 
@@ -96,6 +98,12 @@ namespace Mapper
             t.Document.LoadXml(text);
 
             Transformation = t;
+        }
+
+        internal void AddTransformation(XmlSchemaElement source, XmlSchemaElement target)
+        {
+            var builder = new TransformationBuilder(Transformation.Document);
+            builder.BuildTransform(source, target);
         }
     }
 }
