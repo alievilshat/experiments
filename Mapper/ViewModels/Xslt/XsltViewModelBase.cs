@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,11 @@ namespace Mapper
             if (_node != null)
             {
                 Children = new ObservableCollection<XsltViewModelBase>(_node.ChildNodes.Cast<XmlNode>().Select(i => createViewModel(i)));
+                
+                //_node.ChildNodes.AsObservable().As<INotifyCollectionChanged>().CollectionChanged += (o, e)
+                //    {
+
+                //    }
             }
             OnPropertyChanged("Node"); 
         }
