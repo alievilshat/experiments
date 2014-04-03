@@ -20,7 +20,7 @@
     </UserControl.Resources>
 
     <Canvas x:Name="canvas" x:FieldModifier="public" Width="0" Height="0">
-        <Canvas x:Name="container" Canvas.Left="0" Canvas.Top="0">
+        <Canvas x:Name="container" Canvas.Left="{Binding Left, Mode=TwoWay}" Canvas.Top="{Binding Top, Mode=TwoWay}">
             <StackPanel Orientation="Horizontal">
                 <Thumb x:Name="leftPort" x:FieldModifier="public" Height="2" Width="2" />
                 <Border x:Name="border" Background="#EFEFEF" MinWidth="120" MinHeight="27">

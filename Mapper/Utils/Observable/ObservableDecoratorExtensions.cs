@@ -16,5 +16,10 @@ namespace Mapper
                 return ObservableCollectionDecorator.Get(obj);
             return ObservableDecorator.Get(obj);
         }
+
+        public static ObservableCollectionDecorator AsObservableCollection(this object obj)
+        {
+            return ObservableCollectionDecorator.Get(obj);
+        }
     }
 }

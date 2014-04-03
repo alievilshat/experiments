@@ -56,7 +56,6 @@ namespace Mapper
         public static readonly DependencyProperty BlockContentProperty =
             DependencyProperty.Register("BlockContent", typeof(object), typeof(BlockControl), new PropertyMetadata(null));
 
-
         public Thumb LeftPort
         {
             get { return (Thumb)GetValue(LeftPortProperty); }

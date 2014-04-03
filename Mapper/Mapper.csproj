@@ -126,14 +126,13 @@
     <Compile Include="SchemaDesigner\Wizard\Webservice\WebServiceCall.xaml.cs">
       <DependentUpon>WebServiceCall.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UIUtils\ContentPathsConverter.cs" />
-    <Compile Include="UIUtils\NodePortFinderConverter.cs" />
-    <Compile Include="UIUtils\NodeToLocationConverter.cs" />
-    <Compile Include="Controls\Transformation.xaml.cs">
-      <DependentUpon>Transformation.xaml</DependentUpon>
+    <Compile Include="Controls\Connector.xaml.cs">
+      <DependentUpon>Connector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UIUtils\ConcatConverter.cs" />
     <Compile Include="UIUtils\ThumbsPathConverter.cs" />
+    <Compile Include="UIUtils\UnionConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Utils\CsvReader.cs" />
     <Compile Include="Utils\CsvToXmlConverter.cs" />
     <Compile Include="Utils\GenericEventArgs.cs" />
@@ -142,7 +141,7 @@
     <Compile Include="Utils\Observable\ObservableDecorator.cs" />
     <Compile Include="Utils\Observable\ObservableDecoratorExtensions.cs" />
     <Compile Include="Utils\TypeExtensions.cs" />
-    <Compile Include="UIUtils\UnionConverter.cs" />
+    <Compile Include="Utils\Reference.cs" />
     <Compile Include="Utils\WPFExtensions.cs" />
     <Compile Include="Utils\XmlSchemaExtensions.cs" />
     <Compile Include="Utils\XsdInferrer.cs" />
@@ -238,7 +237,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\Transformation.xaml">
+    <Page Include="Controls\Connector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -28,16 +28,38 @@ namespace Mapper
                 return null;
 
             var canvas = (Canvas)values[0];
-            var thumbs = new Queue<Thumb>(values.Skip(1).OfType<Thumb>());
-            if (thumbs.Any(i => !i.IsVisible))
+            var thumbs = values.Skip(1).Select(i => i.As<Thumb>()).ToArray();
+            var points = new LinkedList<Point>();
+
+            if (thumbs.Any(i => i == null || !i.IsVisible))
                 return null;
-            var type = new Queue<char>(parameter.ToString().ToCharArray());
+
+            var first = points.AddFirst(getPoint(thumbs[0], canvas));
+            var last = points.AddLast(getPoint(thumbs[thumbs.Length - 1], canvas));
+
+            switch ((string)parameter)
+            {
+                case "-*":
+                    points.AddAfter(first, new Point(getPoint(thumbs[1], canvas).X, first.Value.Y));
+                    break;
+                case "*-":
+                    points.AddBefore(last, new Point(getPoint(thumbs[1], canvas).X, last.Value.Y));
+                    break;
+                case "-*-":
+                    points.AddAfter(first, new Point(getPoint(thumbs[1], canvas).X, first.Value.Y));
+                    points.AddBefore(last, new Point(getPoint(thumbs[2], canvas).X, last.Value.Y));
+                    break;
+                default:
+                    throw new NotSupportedException("Parameter " + parameter + " is not supported");
+            }
+            
 
             PathFigure pathFigure = new PathFigure();
-            pathFigure.StartPoint = getPoint(canvas, thumbs.Dequeue(), '*');
-            while(thumbs.Count > 0)
+            pathFigure.StartPoint = points.First();
+
+            foreach (var p in points.Skip(1))
             {
-                pathFigure.Segments.Add(new LineSegment { Point = getPoint(canvas, thumbs.Dequeue(), type.Dequeue()) });
+                pathFigure.Segments.Add(new LineSegment { Point = p });
             }
 
             PathGeometry pathGeometry = new PathGeometry();
@@ -46,24 +68,10 @@ namespace Mapper
             return pathGeometry;
         }
 
-        Point Z = new Point(1, 1);
-        Point previousPoint;
-        private Point getPoint(Canvas canvas, Thumb thumb, char t)
+        private Point getPoint(Thumb thumb, Canvas canvas)
         {
-            var p = thumb.TranslatePoint(Z, canvas);
-
-            switch (t)
-            {
-                case '-':
-                    previousPoint = new Point(p.X, previousPoint.Y);
-                    break;
-
-                case '*':
-                default:
-                    previousPoint = p;
-                    break;
-            }
-            return previousPoint;
+            Point Z = new Point(1, 1);
+            return thumb.TranslatePoint(Z, canvas);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

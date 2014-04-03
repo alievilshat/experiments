@@ -103,7 +103,8 @@ namespace Mapper
         internal void AddTransformation(XmlSchemaElement source, XmlSchemaElement target)
         {
             var builder = new TransformationBuilder(Transformation.Document);
-            builder.BuildTransform(source, target);
+            var node = builder.BuildTransform(source, target);
+            node.AsObservable().Update("ChildNodes");
         }
     }
 }

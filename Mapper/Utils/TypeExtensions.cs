@@ -20,6 +20,10 @@ namespace Mapper
                     return null;
                 }
             }
+            if (obj is Reference<T>)
+            {
+                return ((Reference<T>)obj).Target;
+            }
 
             return obj as T;
         }

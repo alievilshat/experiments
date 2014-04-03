@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,102 +21,68 @@ namespace Mapper
             set { _contentTextBox = value; OnPropertyChanged("ContentTextBox"); }
         }
 
-        private ObservableCollection<string> _sourcePaths;
-        public ObservableCollection<string> SourcePaths
-        {
-            get { return _sourcePaths; }
-            set { _sourcePaths = value; OnPropertyChanged("SourcePaths"); }
-        }
-
-        public ObservableCollection<Thumb> _sourcePorts;
-        public ObservableCollection<Thumb> SourcePorts
+        private IEnumerable<string> _sourcePaths;
+        public IEnumerable<Reference<Thumb>> _sourcePorts;
+        public IEnumerable<Reference<Thumb>> SourcePorts
         {
             get { return _sourcePorts; }
             set { _sourcePorts = value; OnPropertyChanged("SourcePorts"); }
         }
 
         private string _targetPath;
-        public string TargetPath
-        {
-            get { return _targetPath; }
-            set { _targetPath = value; OnPropertyChanged("TargetPath"); }
-        }
-
-        private Thumb _targetPort;
-
-        public Thumb TargetPort
+        private Reference<Thumb> _targetPort;
+        public Reference<Thumb> TargetPort
         {
             get { return _targetPort; }
             set { _targetPort = value; OnPropertyChanged("TargetPort"); }
         }
 
-
         public XsltMixedContentViewModel()
         {
             ContentTextBox = createContentTextBox();
-            SourcePaths = new ObservableCollection<string>();
+        }
+
+        protected override void OnLayoutUpdated(object sender, EventArgs e)
+        {
+            base.OnLayoutUpdated(sender, e);
+
+            updateTargetPort();
+            updateSourcePorts();
         }
 
         protected override void OnNodeChanged()
         {
             updateContentTextBox();
-            updateSourcePaths();
-            updateTargetPath();
+
+            // Target path
+            _targetPath = GetTargetContext(Node); 
+
+            // Source paths
+            var context = getSourceContext(Node);
+            _sourcePaths = Node.ChildNodes.Cast<XmlNode>().Select(i => getXslPathAttribute(i)).Where(a => a != null).Select(a => context + "/" + a.Value).ToArray();
 
             base.OnNodeChanged();
         }
 
         private void updateTargetPath()
         {
-            var path = new Stack<string>(20);
-            var n = Node;
-            while (!(n is XmlDocument))
-            {
-                if (n.NamespaceURI != XSL_NAMESPACE)
-                    path.Push(n.LocalName);
-                n = n.ParentNode;
-            }
-            TargetPath = "/" + string.Join("/", path);
-
-            MapperViewModel.LayoutUpdated += (o, e) => updateTargetPort();
         }
 
         private void updateTargetPort()
         {
-            var port = getNodePort(MapperViewModel.Host.TargetSchemaControl, TargetPath);
-            if (port != TargetPort)
-                TargetPort = port;
+            var port = GetNodePort(MapperViewModel.Host.TargetSchemaControl, _targetPath);
+            if (port != TargetPort.As<Thumb>())
+                TargetPort = new Reference<Thumb>(port);
         }
 
-        private void updateSourcePaths()
+        private void updateSourcePorts()
         {
-            //throw new System.NotImplementedException();
-        }
+            var sourcePorts = _sourcePaths.Select(i => GetNodePort(MapperViewModel.Host.SourceSchemaControl, i));
 
-        private Thumb getNodePort(FrameworkElement schema, string path)
-        {
-            if (schema == null || path == null)
-                return null;
-
-            var parts = path.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-
-            var node = schema.GetChildrenBFS().OfType<FrameworkElement>().FirstOrDefault(i => i.DataContext is XmlSchemaElement);
-            if (node == null)
-                return null;
-
-            foreach (var p in parts)
+            if (SourcePorts == null || !sourcePorts.SequenceEqual(SourcePorts.Select(i => i.Target)))
             {
-                node = node.GetChildrenBFS().OfType<FrameworkElement>().Where(i => i.DataContext is XmlSchemaElement)
-                    .FirstOrDefault(i => string.Compare(((XmlSchemaElement)i.DataContext).Name, p, true) == 0);
-
-                if (node == null)
-                    return null;
+                SourcePorts = sourcePorts.Select(i => new Reference<Thumb>(i));
             }
-
-            if (!node.IsVisible)
-                return null;
-
-            return node.GetChildren().OfType<Thumb>().FirstOrDefault();
         }
 
         private void updateContentTextBox()

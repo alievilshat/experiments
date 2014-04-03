@@ -59,7 +59,7 @@ namespace Mapper
                 return null;
 
             ObservableDecorator res;
-            if (wrappers.TryGetValue(target, out res))
+            if (wrappers.TryGetValue(target, out res) && res is ObservableCollectionDecorator)
                 return (ObservableCollectionDecorator)res;
 
             res = new ObservableCollectionDecorator(target);
