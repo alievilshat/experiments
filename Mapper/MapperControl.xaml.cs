@@ -32,14 +32,28 @@ namespace Mapper
 
         private void DesignPanel_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if ((bool)e.NewValue)
-                Model.UpdateModel();
+            try
+            {
+                if ((bool)e.NewValue)
+                    Model.UpdateModel();
+            }
+            catch (Exception ex)
+            {
+                Model.AddMessage(ex.ToString());
+            }
         }
 
         private void SourceTextBox_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if ((bool)e.NewValue)
-                Model.UpdateSourceTextBox();
+            try
+            {
+                if ((bool)e.NewValue)
+                    Model.UpdateSourceTextBox();
+            }
+            catch (Exception ex)
+            {
+                Model.AddMessage(ex.ToString());
+            }
         }
 
         private bool acceptDragAndDrop = false;

@@ -7,6 +7,11 @@ using System.Xml;
 using System.Xml.Schema;
 using Microsoft.Win32;
 using Mapper.Properties;
+using System.Xml.Linq;
+using DatabaseImporterWebService;
+using DatabaseImporterWebService.ProcessManagement;
+using System.Threading;
+using System.Windows.Controls.Primitives;
 
 namespace Mapper
 {
@@ -225,7 +230,42 @@ namespace Mapper
             }
         }
         #endregion
-        
+
+        #region Run Handler
+        int nextjobid = 0;
+        private void Run_Click(object sender, RoutedEventArgs e)
+        {
+            var id = nextjobid++;
+
+            var doc = XDocument.Parse(Model.Transformation.Document.InnerXml);
+            var executor = new StandaloneScriptsExecutor(id, doc);
+
+            new Thread(() =>
+            {
+                try
+                {
+                    AsyncProcessInfo info;
+                    while ((info = AsyncProcessManager.GetProcessInfo(id)) == null || !info.Completed)
+                    {
+                        if (info != null)
+                            Dispatcher.InvokeAsync(() => 
+                                Model.AddMessage(info.Total > 0 ? "{0} ({1}/{2})" : "{0}", info.StatusText, info.Processed, info.Total));
+
+                        AsyncProcessManager.Wait(id, 1000);
+                    }
+                    Dispatcher.InvokeAsync(() => Model.AddMessage(info.StatusText));
+                }
+                catch (Exception ex)
+                {
+                    Dispatcher.InvokeAsync(() => Model.AddMessage("ERROR: {0}\n{1}", ex.Message, ex.ToString()));
+                }
+
+            }).Start();
+
+            AsyncProcessManager.StartAsyncProcess(executor);
+        }
+        #endregion
+
         #region Default Templates
         public XmlSchema getDefaultSchema(string root)
         {
@@ -244,5 +284,32 @@ namespace Mapper
             return transformation;
         }
         #endregion
+
+        #region Message Panel Handlers
+        private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
+        {
+             var val = messagePanel.Height - e.VerticalChange;
+             if (val >= 0)
+                 messagePanel.Height = val;
+        }
+
+        double messagePanelHeight = 100;
+        private void Thumb_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (messagePanel.Height > 0)
+            {
+                messagePanelHeight = messagePanel.Height;
+                messagePanel.Height = 0;
+            }
+            else
+                messagePanel.Height = messagePanelHeight;
+        }
+
+        private void Clear_Click(object sender, RoutedEventArgs e)
+        {
+            Model.Messages.Clear();
+        }
+        #endregion
+
     }
 }

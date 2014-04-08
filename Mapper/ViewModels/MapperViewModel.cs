@@ -7,6 +7,7 @@ using System.Windows.Documents;
 using System.Linq;
 using System.Xml;
 using System.Xml.Schema;
+using System.Collections.ObjectModel;
 
 namespace Mapper
 {
@@ -15,9 +16,36 @@ namespace Mapper
         public event EventHandler LayoutUpdated;
 
         public MapperViewModel()
-        { }
+        {
+            Messages = new ObservableCollection<string>();
+            Messages.CollectionChanged += (o, e) => HasMessages = Messages.Count > 0;
+        }
 
         public IMapperHost Host { get; set; }
+
+        public ObservableCollection<string> Messages { get; set; }
+
+        private bool _hasMessages;
+        public bool HasMessages 
+        {
+            get { return _hasMessages; }
+            set { _hasMessages = value; OnPropertyChanged("HasMessages"); }
+        }
+
+        public void AddMessage(string text)
+        {
+            if (string.IsNullOrEmpty(text) || Messages.LastOrDefault() == text)
+                return;
+
+            Messages.Add(text);
+            if (Messages.Count > 100)
+                Messages.RemoveAt(0);
+        }
+
+        public void AddMessage(string format, params object[] args)
+        {
+            AddMessage(string.Format(format, args));
+        }
 
         private XmlSchema _sourceSchema;
         public XmlSchema SourceSchema
