@@ -65,6 +65,7 @@ namespace Mapper
                 MessageBox.Show(ex.Message);
             }
         }
+
         private void addAnnotations(XmlSchema schema)
         {
             var root = schema.Items.OfType<XmlSchemaElement>().FirstOrDefault();
@@ -92,6 +93,16 @@ namespace Mapper
                 createNode("database", _connectionSettings.Database),
                 createNode("query", QueryText.Text)
             };
+
+            root.MaxOccursString = "unbounded";
+            var items = root.SchemaType.As<XmlSchemaComplexType>().Particle.As<XmlSchemaGroupBase>().Items;
+            if (items == null)
+                return;
+
+            foreach (var i in items.Cast<XmlSchemaElement>())
+            {
+                i.MaxOccursString = "unbounded";
+            }
         }
     }
 }

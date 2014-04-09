@@ -134,6 +134,16 @@ namespace Mapper
                 createNode("password", _connectionSettings.LoginPassword),
                 createNode("database", _connectionSettings.Database)
             };
+
+            root.MaxOccursString = "unbounded";
+            var items = root.SchemaType.As<XmlSchemaComplexType>().Particle.As<XmlSchemaGroupBase>().Items;
+            if (items == null)
+                return;
+
+            foreach (var i in items.Cast<XmlSchemaElement>())
+            {
+                i.MaxOccursString = "unbounded";
+            }
         }
     }
 }
