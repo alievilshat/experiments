@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mapper", "Mapper\Mapper.csproj", "{799B0F01-CE10-4FBE-A310-9CF7FCCBC378}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseImporterWebService", "D:\Work\Navitas\Naiton\svn\NaitonProject2014\NaitonWebServices\DatabaseImporterWebService\DatabaseImporterWebService.csproj", "{D159720E-476C-4F9C-A8F7-735B2853F105}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseImporterWebService", "..\svn\NaitonProject2014\NaitonWebServices\DatabaseImporterWebService\DatabaseImporterWebService.csproj", "{D159720E-476C-4F9C-A8F7-735B2853F105}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

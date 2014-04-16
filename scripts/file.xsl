@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bodyview="http://www.navitas.nl/2014/Mapper/dbaccess/bodyview" xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:user="http://www.navitas.nl/2014/Mapper/scripts">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bodyview="http://www.navitas.nl/2014/Mapper/dbaccess/bodyview" xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:user="http://www.navitas.nl/2014/Mapper/scripts" xmlns:m="http://www.navitas.nl/2014/Mapper">
   <xsl:template match="/">
     <target>
       <bodyview3>
-        <xsl:for-each select="bodyview:query(&quot;select * from str_files where object ilike 'Product' and objectid in (select id from str_product where not deleted and producttype = 0 and (parentid is null or parentid in (select id from str_product where not deleted and producttype = 0)))&quot;)">
+        <xsl:for-each select="bodyview:query(&quot;select * from v_files where object ilike 'Product' and objectid in (select id from str_product where not deleted and producttype = 0 and (parentid is null or parentid in (select id from str_product where not deleted and producttype = 0)))&quot;)">
           <file>
-            <fileid m:left="-51" m:top="161" xmlns:m="http://www.navitas.nl/2014/Mapper">
+            <fileid m:left="-51" m:top="161">
               <xsl:value-of select="id" />
             </fileid>
-            <filetypeid m:left="-99" m:top="334" xmlns:m="http://www.navitas.nl/2014/Mapper">4</filetypeid>
-            <filename m:left="-118" m:top="230" xmlns:m="http://www.navitas.nl/2014/Mapper">
+            <filetypeid m:left="-99" m:top="334">4</filetypeid>
+            <filename m:left="-118" m:top="230">
               <xsl:value-of select="filename" />
             </filename>
-            <extention m:left="28" m:top="262" xmlns:m="http://www.navitas.nl/2014/Mapper">
+            <extention m:left="28" m:top="262">
               <xsl:value-of select="user:formantContentType(contenttype)" />
             </extention>
-            <file m:left="-51" m:top="351" xmlns:m="http://www.navitas.nl/2014/Mapper">http://www.bodylab.nl/_images/original/<xsl:value-of select="id" /><xsl:value-of select="contenttype" /></file>
+            <file m:left="-51" m:top="351">http://www.bodylab.nl/_images/original/<xsl:value-of select="id" /><xsl:value-of select="contenttype" />|http://www.worldofchemicals.com/Woclite/tmp/chem/no_image.gif</file>
           </file>
         </xsl:for-each>
       </bodyview3>

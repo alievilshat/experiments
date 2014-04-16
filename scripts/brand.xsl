@@ -5,7 +5,7 @@
       <bodyview3>
         <xsl:for-each select="bodyview:table('str_brand')">
           <brand>
-            <brandid m:left="-118" m:top="162" xmlns:m="http://www.navitas.nl/2014/Mapper">
+            <brandid m:left="-130" m:top="40" xmlns:m="http://www.navitas.nl/2014/Mapper">
               <xsl:value-of select="id" />
             </brandid>
             <brandname m:left="18" m:top="180" xmlns:m="http://www.navitas.nl/2014/Mapper">
