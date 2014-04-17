@@ -1,0 +1,33 @@
+ SELECT b.brandid AS id,
+    b.brandname AS name,
+        CASE
+            WHEN (length(btrim(trbn.translation)) > 0) THEN (trbn.translation)::character varying
+            ELSE b.brandname
+        END AS translationname,
+        CASE
+            WHEN (length(btrim(trbfn.translation)) > 0) THEN (trbfn.translation)::character varying
+            ELSE b.fullname
+        END AS translationfullname,
+    b.description,
+    b.largedescription,
+        CASE
+            WHEN (length(btrim(trmk.translation)) > 0) THEN trmk.translation
+            ELSE b.metakeywords
+        END AS metakeywords,
+        CASE
+            WHEN (length(btrim(trmd.translation)) > 0) THEN trmd.translation
+            ELSE b.metadescription
+        END AS metadescription,
+        CASE
+            WHEN (length(btrim(trmt.translation)) > 0) THEN trmt.translation
+            ELSE b.metatitle
+        END AS metatitle,
+    brandbusiness.iswebsite
+   FROM ((((((brand b
+   JOIN brandbusiness ON ((b.brandid = brandbusiness.brandid)))
+   LEFT JOIN translation trbn ON (((((trbn.languageid = (currentsettings()).languageid) AND ((trbn.tablename)::text = 'brand'::text)) AND (trbn.rowid = b.brandid)) AND ((trbn.fieldname)::text = 'brandname'::text))))
+   LEFT JOIN translation trbfn ON (((((trbfn.languageid = (currentsettings()).languageid) AND ((trbfn.tablename)::text = 'brand'::text)) AND (trbfn.rowid = b.brandid)) AND ((trbfn.fieldname)::text = 'fullname'::text))))
+   LEFT JOIN translation trmk ON (((((trmk.languageid = (currentsettings()).languageid) AND ((trmk.tablename)::text = 'brand'::text)) AND (trmk.rowid = b.brandid)) AND ((trmk.fieldname)::text = 'metakeywords'::text))))
+   LEFT JOIN translation trmd ON (((((trmd.languageid = (currentsettings()).languageid) AND ((trmd.tablename)::text = 'brand'::text)) AND (trmd.rowid = b.brandid)) AND ((trmd.fieldname)::text = 'metadescription'::text))))
+   LEFT JOIN translation trmt ON (((((trmt.languageid = (currentsettings()).languageid) AND ((trmt.tablename)::text = 'brand'::text)) AND (trmt.rowid = b.brandid)) AND ((trmt.fieldname)::text = 'metatitle'::text))))
+  WHERE (brandbusiness.businessid = (currentsettings()).businessid);

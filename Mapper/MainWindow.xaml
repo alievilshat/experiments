@@ -2,9 +2,9 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:l="clr-namespace:Mapper"
-        Title="Mapper"
         Closing="Window_Closing"
-        x:Name="window">
+        x:Name="window"
+        Title="{Binding WindowTitle, RelativeSource={RelativeSource Self}}">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
     </Window.Resources>

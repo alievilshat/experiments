@@ -1,0 +1,33 @@
+ SELECT c.categoryid AS id,
+    c.parentid,
+    c.categoryname AS name,
+        CASE
+            WHEN (length(btrim(trcn.translation)) > 0) THEN (trcn.translation)::character varying
+            ELSE c.categoryname
+        END AS translationname,
+    c.description,
+    COALESCE(c.sequence, 0) AS sequence,
+    c.largedescription,
+        CASE
+            WHEN (length(btrim(trmk.translation)) > 0) THEN trmk.translation
+            ELSE c.metakeywords
+        END AS metakeywords,
+        CASE
+            WHEN (length(btrim(trmd.translation)) > 0) THEN trmd.translation
+            ELSE c.metadescription
+        END AS metadescription,
+        CASE
+            WHEN (length(btrim(trmt.translation)) > 0) THEN trmt.translation
+            ELSE c.metatitle
+        END AS metatitle,
+    cb.iswebsite,
+    c.imageid AS imageid1,
+    c.image2id AS imageid2,
+    c.image3id AS imageid3
+   FROM (((((category c
+   JOIN categorybusiness cb ON ((c.categoryid = cb.categoryid)))
+   LEFT JOIN translation trcn ON (((((trcn.languageid = (currentsettings()).languageid) AND ((trcn.tablename)::text = 'category'::text)) AND (trcn.rowid = c.categoryid)) AND ((trcn.fieldname)::text = 'categoryname'::text))))
+   LEFT JOIN translation trmk ON (((((trmk.languageid = (currentsettings()).languageid) AND ((trmk.tablename)::text = 'category'::text)) AND (trmk.rowid = c.categoryid)) AND ((trmk.fieldname)::text = 'metakeywords'::text))))
+   LEFT JOIN translation trmd ON (((((trmd.languageid = (currentsettings()).languageid) AND ((trmd.tablename)::text = 'category'::text)) AND (trmd.rowid = c.categoryid)) AND ((trmd.fieldname)::text = 'metadescription'::text))))
+   LEFT JOIN translation trmt ON (((((trmt.languageid = (currentsettings()).languageid) AND ((trmt.tablename)::text = 'category'::text)) AND (trmt.rowid = c.categoryid)) AND ((trmt.fieldname)::text = 'metatitle'::text))))
+  WHERE ((NOT c.inactive) AND (cb.businessid = (currentsettings()).businessid));

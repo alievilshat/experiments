@@ -108,6 +108,9 @@
                     <xs:element minOccurs="0" name="product_search_vector_col" type="xs:string" />
                     <xs:element minOccurs="0" name="popularity" type="xs:int" />
                     <xs:element minOccurs="0" name="validationperiod" type="xs:int" />
+                    <xs:element name="title" />
+                    <xs:element name="metakeywords" />
+                    <xs:element name="metadescription" />
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>

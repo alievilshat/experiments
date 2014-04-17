@@ -1,17 +1,17 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
+using System.Threading;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Xml;
-using System.Xml.Schema;
-using Microsoft.Win32;
-using Mapper.Properties;
 using System.Xml.Linq;
+using System.Xml.Schema;
 using DatabaseImporterWebService;
 using DatabaseImporterWebService.ProcessManagement;
-using System.Threading;
-using System.Windows.Controls.Primitives;
+using Mapper.Properties;
+using Microsoft.Win32;
 
 namespace Mapper
 {
@@ -27,7 +27,30 @@ namespace Mapper
 
         public MapperViewModel Model { get; set; }
 
-        private string _currentFilePath;
+        public string WindowTitle
+        {
+            get { return (string)GetValue(WindowTitleProperty); }
+            set { SetValue(WindowTitleProperty, value); }
+        }
+        public static readonly DependencyProperty WindowTitleProperty =
+            DependencyProperty.Register("WindowTitle", typeof(string), typeof(MainWindow), new PropertyMetadata(string.Empty));
+
+        public string CurrentFilePath
+        {
+            get { return (string)GetValue(CurrentFilePathProperty); }
+            set { SetValue(CurrentFilePathProperty, value); }
+        }
+        public static readonly DependencyProperty CurrentFilePathProperty =
+            DependencyProperty.Register("CurrentFilePath", typeof(string), typeof(MainWindow), new PropertyMetadata(null, CurrentFilePathChanged));
+
+        private static void CurrentFilePathChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var s = (MainWindow)d;
+            s.WindowTitle = string.IsNullOrEmpty(s.CurrentFilePath)
+                ? "Mapper"
+                : "Mapper [" + Path.GetFileName(s.CurrentFilePath) + "]";
+        }
+
 
         public MainWindow()
         {
@@ -49,7 +72,7 @@ namespace Mapper
 
         private void loadDefaultTemplates()
         {
-            _currentFilePath = null;
+            CurrentFilePath = null;
 
             Model.SourceSchema = getDefaultSchema(SOURCE_SCHEMA);
             Model.TargetSchema = getDefaultSchema(TARGET_SCHEMA);
@@ -78,11 +101,11 @@ namespace Mapper
 
         private void loadFiles(string filepath)
         {
-            _currentFilePath = filepath;
+            CurrentFilePath = filepath;
 
-            Model.SourceSchema = loadSchema(_currentFilePath, SOURCE_SCHEMA);
-            Model.TargetSchema = loadSchema(_currentFilePath, TARGET_SCHEMA);
-            Model.Transformation = loadTransformation(_currentFilePath);
+            Model.SourceSchema = loadSchema(CurrentFilePath, SOURCE_SCHEMA);
+            Model.TargetSchema = loadSchema(CurrentFilePath, TARGET_SCHEMA);
+            Model.Transformation = loadTransformation(CurrentFilePath);
         }
 
         private string getSchemaPath(string _currentFilePath, string suffix)
@@ -137,12 +160,12 @@ namespace Mapper
 
         private void SaveAs_Click(object sender, RoutedEventArgs e)
         {
-            _currentFilePath = Save(null);
+            CurrentFilePath = Save(null);
         }
 
         public void Save()
         {
-            _currentFilePath = Save(_currentFilePath);
+            CurrentFilePath = Save(CurrentFilePath);
         }
 
         public string Save(string path)
@@ -209,24 +232,29 @@ namespace Mapper
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-            Settings.Default.LastOpenFile = _currentFilePath;
+            Settings.Default.LastOpenFile = CurrentFilePath;
             Settings.Default.Save();
 
+            if (!ensureSaveChanges())
+                e.Cancel = true;
+        }
+
+        private bool ensureSaveChanges()
+        {
             var res = MessageBox.Show("Do you want to save the changes?", "Save", MessageBoxButton.YesNoCancel);
             switch (res)
             {
                 case MessageBoxResult.No:
-                    return;
+                    return true;
 
                 case MessageBoxResult.Yes:
                     Save();
-                    break;
+                    return true;
 
                 default:
                 case MessageBoxResult.None:
                 case MessageBoxResult.Cancel:
-                    e.Cancel = true;
-                    break;
+                    return false;
             }
         }
         #endregion
