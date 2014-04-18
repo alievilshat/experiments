@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="target">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" maxOccurs="unbounded" name="bodyview3">
+          <xs:annotation>
+            <xs:appinfo>
+              <Type>Database</Type>
+              <Server>85.92.146.196</Server>
+              <port>5432</port>
+              <username>postgres</username>
+              <password>Banek12</password>
+              <database>bodyview3</database>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+              <xs:element maxOccurs="unbounded" name="productbusiness">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" name="productbusinessid" type="xs:int" />
+                    <xs:element minOccurs="0" name="productid" type="xs:int" />
+                    <xs:element minOccurs="0" name="salesprice" type="xs:decimal" />
+                    <xs:element minOccurs="0" name="buyprice" type="xs:decimal" />
+                    <xs:element minOccurs="0" name="userid" type="xs:int" />
+                    <xs:element minOccurs="0" name="obsolete" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="onechoice" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="specialoffer" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="recommended" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="batchnumber" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="expiredate" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="sourcetype" type="xs:int" />
+                    <xs:element minOccurs="0" name="sourceid" type="xs:int" />
+                    <xs:element minOccurs="0" name="autoobsolete" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="creationdate" type="xs:dateTime" />
+                    <xs:element minOccurs="0" name="templateid" type="xs:int" />
+                    <xs:element minOccurs="0" name="isdisallowedrobot" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="iswebsite" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="paymentgatewaypercentageofordersum" type="xs:int" />
+                    <xs:element minOccurs="0" name="businessid" type="xs:int" />
+                    <xs:element msdata:DataType="System.Int32[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" minOccurs="0" name="discountgroupids" type="xs:anyType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
