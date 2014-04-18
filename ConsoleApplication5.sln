@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mapper", "Mapper\Mapper.csproj", "{799B0F01-CE10-4FBE-A310-9CF7FCCBC378}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseImporterWebService", "..\svn\NaitonProject2014\NaitonWebServices\DatabaseImporterWebService\DatabaseImporterWebService.csproj", "{D159720E-476C-4F9C-A8F7-735B2853F105}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseImporterWebService", "D:\Work\Navitas\Naiton\svn\NaitonProject2014\NaitonWebServices\DatabaseImporterWebService\DatabaseImporterWebService.csproj", "{D159720E-476C-4F9C-A8F7-735B2853F105}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServiceUtils", "D:\Work\Navitas\Naiton\svn\NaitonProject2014\NaitonWebServices\Utils\WebServiceUtils.csproj", "{F2F50A54-A3CD-4E49-80AC-0E1A8479ADCC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +31,14 @@ Global
 		{D159720E-476C-4F9C-A8F7-735B2853F105}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D159720E-476C-4F9C-A8F7-735B2853F105}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{D159720E-476C-4F9C-A8F7-735B2853F105}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F2F50A54-A3CD-4E49-80AC-0E1A8479ADCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2F50A54-A3CD-4E49-80AC-0E1A8479ADCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2F50A54-A3CD-4E49-80AC-0E1A8479ADCC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F2F50A54-A3CD-4E49-80AC-0E1A8479ADCC}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F2F50A54-A3CD-4E49-80AC-0E1A8479ADCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2F50A54-A3CD-4E49-80AC-0E1A8479ADCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2F50A54-A3CD-4E49-80AC-0E1A8479ADCC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F2F50A54-A3CD-4E49-80AC-0E1A8479ADCC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
