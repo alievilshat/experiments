@@ -20,6 +20,9 @@
         <DataTemplate DataType="{x:Type l:XsltUnknownNodeViewModel}">
             <ItemsControl ItemsSource="{Binding Children}" />
         </DataTemplate>
+        
+        <DataTemplate DataType="{x:Type l:XsltSkipNodeViewModel}">
+        </DataTemplate>
 
         <DataTemplate DataType="{x:Type l:XsltContentNodeViewModel}">
             <ItemsControl ItemsSource="{Binding Children}" />

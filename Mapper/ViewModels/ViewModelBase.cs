@@ -10,6 +10,7 @@ namespace Mapper
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
         public const string XSL_NAMESPACE = "http://www.w3.org/1999/XSL/Transform";
+        public const string MSXSL_NAMESPACE = "urn:schemas-microsoft-com:xslt";
         public const string MAPPER_NAMESPACE = "http://www.navitas.nl/2014/Mapper";
 
         public event PropertyChangedEventHandler PropertyChanged;

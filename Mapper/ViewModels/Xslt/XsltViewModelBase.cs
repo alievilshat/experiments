@@ -59,7 +59,11 @@ namespace Mapper
         private static XsltViewModelBase createViewModelForNode(XmlNode node)
         {
             var children = node.ChildNodes.Cast<XmlNode>();
-            if (children.Any(i => i.LocalName == "value-of"))
+            if (node is XmlDeclaration
+                || node.NamespaceURI == MSXSL_NAMESPACE)
+                return new XsltSkipNodeViewModel();
+
+            if (children.Any(i => i.LocalName == "value-of") || children.All(i => i is XmlText))
             {
                 return new XsltMixedContentViewModel();
             }

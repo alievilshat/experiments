@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -16,10 +17,28 @@ namespace Mapper
     /// </summary>
     public partial class ImportTables : Page
     {
-        public class TableItem
+        public class TableItem : ViewModelBase
         {
-            public string Name { get; set; }
-            public bool Selected { get; set; }
+            private string _name;
+            public string Name 
+            {
+                get { return _name; }
+                set { _name = value; OnPropertyChanged("Name"); }
+            }
+
+            private bool _selected;
+            public bool Selected 
+            {
+                get { return _selected; }
+                set { _selected = value; OnPropertyChanged("Selected"); }
+            }
+
+            private bool _visible;
+            public bool Visible 
+            {
+                get { return _visible; }
+                set { _visible = value; OnPropertyChanged("Visible"); }
+            }
         }
 
         private IConnectionSettings _connectionSettings;
@@ -32,6 +51,13 @@ namespace Mapper
             InitializeComponent();
         }
 
+        public string FilterText
+        {
+            get { return (string)GetValue(FilterTextProperty); }
+            set { SetValue(FilterTextProperty, value); }
+        }
+        public static readonly DependencyProperty FilterTextProperty =
+            DependencyProperty.Register("FilterText", typeof(string), typeof(ImportTables), new PropertyMetadata("", FilterChanged));
 
         public List<TableItem> Tables 
         {
@@ -39,9 +65,22 @@ namespace Mapper
             set { SetValue(TablesProperty, value); }
         }
         public static readonly DependencyProperty TablesProperty =
-            DependencyProperty.Register("Tables", typeof(List<TableItem>), typeof(ImportTables), new UIPropertyMetadata(null));
+            DependencyProperty.Register("Tables", typeof(List<TableItem>), typeof(ImportTables), new UIPropertyMetadata(null, FilterChanged));
 
+        private static void FilterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var sender = (ImportTables)d;
+            var tables = sender.Tables;
+            var filter = sender.FilterText;
 
+            if (tables == null)
+                return;
+
+            foreach (var t in tables)
+            {
+                t.Visible = string.IsNullOrEmpty(filter) || t.Name.Contains(filter);
+            }
+        }
   
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {

@@ -17,17 +17,23 @@
                 <Trigger Property="ItemsControl.AlternationIndex" Value="1">
                     <Setter Property="Background" Value="#19000000"></Setter>
                 </Trigger>
+                <DataTrigger Binding="{Binding Visible}" Value="False">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
             </Style.Triggers>
         </Style>
     </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ListBox ItemsSource="{Binding Tables}" AlternationCount="2">
+        <TextBox Grid.Row="0" Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" />
+        
+        <ListBox Grid.Row="1" ItemsSource="{Binding Tables}" AlternationCount="2">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <CheckBox IsChecked="{Binding Selected}" Margin="5">
@@ -37,6 +43,6 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <Button Content="Ok"  Grid.Column="1"   Grid.Row="6"  Click="Button_Click" Width="150" HorizontalAlignment="Right" Margin="5" />
+        <Button Content="Ok"  Grid.Column="1" Grid.Row="2"  Click="Button_Click" Width="150" HorizontalAlignment="Right" Margin="5" />
     </Grid>
 </Page>

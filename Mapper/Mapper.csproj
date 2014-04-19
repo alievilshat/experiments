@@ -153,6 +153,7 @@
     <Compile Include="ViewModels\Xslt\XsltForEachViewModel.cs" />
     <Compile Include="ViewModels\Xslt\XsltMixedContentViewModel.cs" />
     <Compile Include="ViewModels\Xslt\XsltRootTemplateNodeViewModel.cs" />
+    <Compile Include="ViewModels\Xslt\XsltSkipNodeViewModel.cs" />
     <Compile Include="ViewModels\Xslt\XsltStylesheetViewModel.cs" />
     <Compile Include="ViewModels\Xslt\XsltTemplateNodeViewModel.cs" />
     <Compile Include="ViewModels\Xslt\XsltUnknownNodeViewModel.cs" />
