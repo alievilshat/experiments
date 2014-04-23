@@ -37,38 +37,6 @@ namespace Mapper
 
         public bool DragDropEnabled { get; set; }
 
-        //public event DragEventHandler NodeDragEnter
-        //{
-        //    add { AddHandler(NodeDragEnterEvent, value); }
-        //    remove { RemoveHandler(NodeDragEnterEvent, value); }
-        //}
-        //public static readonly RoutedEvent NodeDragEnterEvent =
-        //    EventManager.RegisterRoutedEvent("NodeDragEnter", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(SchemaControl));
-
-        //public event DragEventHandler NodeDragOver
-        //{
-        //    add { AddHandler(NodeDragOverEvent, value); }
-        //    remove { RemoveHandler(NodeDragOverEvent, value); }
-        //}
-        //public static readonly RoutedEvent NodeDragOverEvent =
-        //    EventManager.RegisterRoutedEvent("NodeDragOver", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(SchemaControl));
-
-        //public event DragEventHandler NodeDragLeave
-        //{
-        //    add { AddHandler(NodeDragLeaveEvent, value); }
-        //    remove { RemoveHandler(NodeDragLeaveEvent, value); }
-        //}
-        //public static readonly RoutedEvent NodeDragLeaveEvent =
-        //    EventManager.RegisterRoutedEvent("NodeDragLeave", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(SchemaControl));
-
-        //public event DragEventHandler NodeDragDrop
-        //{
-        //    add { AddHandler(NodeDragDropEvent, value); }
-        //    remove { RemoveHandler(NodeDragDropEvent, value); }
-        //}
-        //public static readonly RoutedEvent NodeDragDropEvent =
-        //    EventManager.RegisterRoutedEvent("NodeDragDrop", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(SchemaControl));
-
         private void OpenDesigner_Click(object sender, RoutedEventArgs e)
         {
             var w = new StringWriter();
@@ -138,26 +106,6 @@ namespace Mapper
         {
             UpdateLayout();
         }
-
-        //private void Node_DragEnter(object sender, DragEventArgs e)
-        //{
-        //    onEvent(NodeDragEnterEvent, sender, e);
-        //}
-
-        //private void Node_DragOver(object sender, DragEventArgs e)
-        //{
-        //    onEvent(NodeDragOverEvent, sender, e);
-        //}
-
-        //private void Node_DragLeave(object sender, DragEventArgs e)
-        //{
-        //    onEvent(NodeDragLeaveEvent, sender, e);
-        //}
-
-        //private void Node_Drop(object sender, DragEventArgs e)
-        //{
-        //    onEvent(NodeDragDropEvent, sender, e);
-        //}
 
         private void Node_PreviewMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {

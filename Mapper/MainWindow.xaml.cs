@@ -265,8 +265,7 @@ namespace Mapper
         {
             var id = nextjobid++;
 
-            var doc = XDocument.Parse(Model.Transformation.Document.InnerXml);
-            var executor = new StandaloneScriptsExecutor(id, doc);
+            var executor = new StandaloneScriptsExecutor(id, Model.SourceSchema, Model.TargetSchema, Model.Transformation.Document);
 
             new Thread(() =>
             {

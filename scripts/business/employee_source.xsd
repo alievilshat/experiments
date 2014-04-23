@@ -3,7 +3,7 @@
   <xs:element name="source">
     <xs:complexType>
       <xs:sequence>
-        <xs:element msdata:IsDataSet="true" msdata:UseCurrentLocale="true" maxOccurs="unbounded" name="bodyview" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xs:element xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" maxOccurs="unbounded" name="bodyview">
           <xs:annotation>
             <xs:appinfo>
               <Type>Database</Type>

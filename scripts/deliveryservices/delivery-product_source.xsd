@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="source">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element msdata:IsDataSet="true" msdata:UseCurrentLocale="true" maxOccurs="unbounded" name="bodyview" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+          <xs:annotation>
+            <xs:appinfo>
+              <Type>Database</Type>
+              <Server>85.92.146.196</Server>
+              <port>5432</port>
+              <username>postgres</username>
+              <password>Banek12</password>
+              <database>bodyview</database>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+              <xs:element maxOccurs="unbounded" name="str_deliveryservice">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" name="id" type="xs:int" />
+                    <xs:element minOccurs="0" name="deliverycompanyid" type="xs:int" />
+                    <xs:element minOccurs="0" name="deliverytypeid" type="xs:int" />
+                    <xs:element minOccurs="0" name="deliveryzoneid" type="xs:int" />
+                    <xs:element minOccurs="0" name="maxweight" type="xs:decimal" />
+                    <xs:element minOccurs="0" name="deliverydays">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="50" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="price" type="xs:decimal" />
+                    <xs:element minOccurs="0" name="isactive" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="businessid" type="xs:int" />
+                    <xs:element minOccurs="0" name="servicename">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="128" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="maxsalesprice" type="xs:decimal" />
+                    <xs:element minOccurs="0" name="clientnr">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="50" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="ibannumber">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="50" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
