@@ -28,6 +28,7 @@
               <xsl:value-of select="password" />
             </password>
             <persontypeid m:left="-12" m:top="596">1</persontypeid>
+            <currencyid m:left="-58" m:top="510">1</currencyid>
           </person>
         </xsl:for-each>
       </bodyview3>
