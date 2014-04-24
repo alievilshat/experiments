@@ -1,0 +1,252 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="source">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" maxOccurs="unbounded" name="bodyview">
+          <xs:annotation>
+            <xs:appinfo>
+              <Type>Database</Type>
+              <Server>85.92.146.196</Server>
+              <port>5432</port>
+              <username>postgres</username>
+              <password>Banek12</password>
+              <database>bodyview</database>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+              <xs:element maxOccurs="unbounded" name="str_client">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" name="id" type="xs:int" />
+                    <xs:element minOccurs="0" name="companyid" type="xs:int" />
+                    <xs:element minOccurs="0" name="discountgroupid" type="xs:int" />
+                    <xs:element minOccurs="0" name="title">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="128" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="firstname">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="255" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="infix">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="16" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="lastname">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="255" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="sex" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="initials">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="16" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="phoneprivate">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="128" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="phonebusiness">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="255" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="fax">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="255" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="phonemobile">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="255" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="policyid" type="xs:int" />
+                    <xs:element minOccurs="0" name="email">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="255" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="clienttypeid" type="xs:int" />
+                    <xs:element minOccurs="0" name="taxnumber">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="50" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="commersechamber">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="50" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="allownewsletter" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="system" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="storeid" type="xs:int" />
+                    <xs:element minOccurs="0" name="paymenttype" type="xs:int" />
+                    <xs:element minOccurs="0" name="paymentdays" type="xs:int" />
+                    <xs:element minOccurs="0" name="creditline" type="xs:decimal" />
+                    <xs:element minOccurs="0" name="externalkey" type="xs:int" />
+                    <xs:element minOccurs="0" name="inactived" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="aboutid" type="xs:int" />
+                    <xs:element minOccurs="0" name="billingaddress">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="256" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="billinghousenumber">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="50" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="billinghousenumberadd">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="50" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="billingzipcode">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="50" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="billingcity">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="255" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="birthdate" type="xs:dateTime" />
+                    <xs:element minOccurs="0" name="billingcountryid" type="xs:int" />
+                    <xs:element minOccurs="0" name="isanothershipping" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="deliveryhousenumberadd">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="50" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="deliveryzipcode">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="50" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="deliverycountryid" type="xs:int" />
+                    <xs:element minOccurs="0" name="iswebregistered" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="password">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="50" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="billingstate">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="50" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="deliverycity">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="255" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="deliveryhousenumber">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="50" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="deliveryaddress">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="256" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="deliverystate">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="50" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="businessid" type="xs:int" />
+                    <xs:element minOccurs="0" name="url">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="256" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="authorizationrequired" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="isdeleted" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="directorid" type="xs:int" />
+                    <xs:element minOccurs="0" name="financialsid" type="xs:int" />
+                    <xs:element minOccurs="0" name="allowemailbilling" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="isvatrequired" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="isccrequired" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="isactivated" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="deliveryrecipient">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="255" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="numberofemployee" type="xs:int" />
+                    <xs:element minOccurs="0" name="isprospect" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="paymentperiodid" type="xs:int" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

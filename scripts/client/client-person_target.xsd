@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="target">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element msdata:IsDataSet="true" msdata:UseCurrentLocale="true" maxOccurs="unbounded" name="bodyview3" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+          <xs:annotation>
+            <xs:appinfo>
+              <Type>Database</Type>
+              <Server>85.92.146.196</Server>
+              <port>5432</port>
+              <username>postgres</username>
+              <password>Banek12</password>
+              <database>bodyview3</database>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+              <xs:element maxOccurs="unbounded" name="address">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" name="addressid" type="xs:int" />
+                    <xs:element minOccurs="0" name="recipient">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="255" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="streetaddress">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="255" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="housenumber">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="100" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="housenumberadd">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="100" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="zipcode">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="255" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="city">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="255" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="state">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="255" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="countryid" type="xs:int" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element maxOccurs="unbounded" name="person">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" name="personid" type="xs:int" />
+                    <xs:element minOccurs="0" name="companyid" type="xs:int" />
+                    <xs:element minOccurs="0" name="discountgroupid" type="xs:int" />
+                    <xs:element minOccurs="0" name="title">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="128" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="firstname">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="255" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="infix">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="16" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="lastname">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="255" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="gender" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="phoneprivate">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="128" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="phonebusiness">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="255" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="fax">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="255" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="phonemobile">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="255" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="email">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="255" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="allownewsletter" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="clientpaymentdays" type="xs:int" />
+                    <xs:element minOccurs="0" name="clientcreditline" type="xs:decimal" />
+                    <xs:element minOccurs="0" name="externalkey" type="xs:int" />
+                    <xs:element minOccurs="0" name="heardaboutusvia" type="xs:string" />
+                    <xs:element minOccurs="0" name="dateofbirth" type="xs:dateTime" />
+                    <xs:element minOccurs="0" name="password">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="50" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="businessid" type="xs:int" />
+                    <xs:element minOccurs="0" name="clientallowemailbilling" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="inactive" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="clientpaymentperiodid" type="xs:int" />
+                    <xs:element minOccurs="0" name="languageid" type="xs:int" />
+                    <xs:element minOccurs="0" name="roleid" type="xs:int" />
+                    <xs:element minOccurs="0" name="currencyid" type="xs:int" />
+                    <xs:element minOccurs="0" name="stockid" type="xs:int" />
+                    <xs:element minOccurs="0" name="billingaddressid" type="xs:int" />
+                    <xs:element msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" minOccurs="0" name="sessionkey" type="xs:string" />
+                    <xs:element minOccurs="0" name="persontypeid" type="xs:int" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

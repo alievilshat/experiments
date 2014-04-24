@@ -26,6 +26,7 @@
                     <xs:element minOccurs="0" name="salesprice" type="xs:decimal" />
                     <xs:element minOccurs="0" name="buypricepercent" type="xs:decimal" />
                     <xs:element minOccurs="0" name="salespricepercent" type="xs:decimal" />
+                    <xs:element name="countryid" />
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>

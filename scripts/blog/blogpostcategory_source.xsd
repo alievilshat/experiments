@@ -20,20 +20,8 @@
               <xs:element maxOccurs="unbounded" name="query">
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element minOccurs="0" name="id" type="xs:int" />
-                    <xs:element minOccurs="0" name="name">
-                      <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                          <xs:maxLength value="50" />
-                        </xs:restriction>
-                      </xs:simpleType>
-                    </xs:element>
-                    <xs:element minOccurs="0" name="description" type="xs:string" />
-                    <xs:element minOccurs="0" name="ismanual" type="xs:boolean" />
-                    <xs:element minOccurs="0" name="sequence" type="xs:int" />
-                    <xs:element minOccurs="0" name="paymentgatewayid" type="xs:int" />
-                    <xs:element minOccurs="0" name="businessid" type="xs:int" />
-                    <xs:element minOccurs="0" name="countryid" type="xs:int" />
+                    <xs:element minOccurs="0" name="postvalueid" type="xs:int" />
+                    <xs:element minOccurs="0" name="categoryid" type="xs:int" />
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
