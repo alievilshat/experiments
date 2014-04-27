@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="target">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" maxOccurs="unbounded" name="mrep3">
+          <xs:annotation>
+            <xs:appinfo>
+              <Type>Database</Type>
+              <Server>85.92.146.196</Server>
+              <port>5432</port>
+              <username>postgres</username>
+              <password>Banek12</password>
+              <database>mrep3</database>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+              <xs:element maxOccurs="unbounded" name="featurevalue">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" name="featurevalueid" type="xs:int" />
+                    <xs:element minOccurs="0" name="featureid" type="xs:int" />
+                    <xs:element minOccurs="0" name="optionvalue">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="255" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="isdefault" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="productid" type="xs:int" />
+                    <xs:element minOccurs="0" name="groupid" type="xs:int" />
+                    <xs:element minOccurs="0" name="fileid" type="xs:int" />
+                    <xs:element minOccurs="0" name="pricefactorrelative" type="xs:decimal" />
+                    <xs:element minOccurs="0" name="pricefactorabsolute" type="xs:decimal" />
+                    <xs:element minOccurs="0" name="sequenceid" type="xs:int" />
+                    <xs:element minOccurs="0" name="inputproductid" type="xs:int" />
+                    <xs:element minOccurs="0" name="inputquantity" type="xs:int" />
+                    <xs:element minOccurs="0" name="inactive" type="xs:boolean" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="target">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" maxOccurs="unbounded" name="mrep3">
+          <xs:annotation>
+            <xs:appinfo>
+              <Type>Database</Type>
+              <Server>85.92.146.196</Server>
+              <port>5432</port>
+              <username>postgres</username>
+              <password>Banek12</password>
+              <database>mrep3</database>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+              <xs:element maxOccurs="unbounded" name="categoryfeature">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" name="categoryfeatureid" type="xs:int" />
+                    <xs:element minOccurs="0" name="categoryid" type="xs:int" />
+                    <xs:element minOccurs="0" name="featureid" type="xs:int" />
+                    <xs:element minOccurs="0" name="featuregroupid" type="xs:int" />
+                    <xs:element minOccurs="0" name="overview" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="manditory" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="sequenceid" type="xs:int" />
+                    <xs:element minOccurs="0" name="isvariant" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="relatedcategoryfeatureid" type="xs:int" />
+                    <xs:element minOccurs="0" name="description" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

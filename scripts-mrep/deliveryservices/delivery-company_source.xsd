@@ -3,7 +3,7 @@
   <xs:element name="source">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" maxOccurs="unbounded" name="bodyview">
+        <xs:element xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" maxOccurs="unbounded" name="mrep">
           <xs:annotation>
             <xs:appinfo>
               <Type>Database</Type>
@@ -11,7 +11,7 @@
               <port>5432</port>
               <username>postgres</username>
               <password>Banek12</password>
-              <database>bodyview</database>
+              <database>mrep</database>
             </xs:appinfo>
           </xs:annotation>
           <xs:complexType>

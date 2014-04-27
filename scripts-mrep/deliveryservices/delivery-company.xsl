@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bodyview="http://www.navitas.nl/2014/Mapper/dbaccess/bodyview" xmlns:m="http://www.navitas.nl/2014/Mapper">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:mrep="http://www.navitas.nl/2014/Mapper/dbaccess/mrep" xmlns:m="http://www.navitas.nl/2014/Mapper">
   <xsl:template match="/">
     <target>
-      <bodyview3>
-        <xsl:for-each select="bodyview:table('str_deliverycompany')">
+      <mrep3>
+        <xsl:for-each select="mrep:table('str_deliverycompany')">
           <company>
             <companyid m:left="-104" m:top="161">pk:company(delivery-<xsl:value-of select="id" />)</companyid>
             <companyname m:left="19" m:top="385">
@@ -24,7 +24,7 @@
             </companycode>
           </company>
         </xsl:for-each>
-      </bodyview3>
+      </mrep3>
     </target>
   </xsl:template>
 </xsl:stylesheet>

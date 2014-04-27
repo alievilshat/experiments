@@ -3,7 +3,7 @@
   <xs:element name="source">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" maxOccurs="unbounded" name="bodyview">
+        <xs:element xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" maxOccurs="unbounded" name="mrep">
           <xs:annotation>
             <xs:appinfo>
               <Type>Database</Type>
@@ -11,52 +11,51 @@
               <port>5432</port>
               <username>postgres</username>
               <password>Banek12</password>
-              <database>bodyview</database>
+              <database>mrep</database>
             </xs:appinfo>
           </xs:annotation>
           <xs:complexType>
             <xs:choice minOccurs="0" maxOccurs="unbounded">
-              <xs:element maxOccurs="unbounded" name="str_deliverycompany">
+              <xs:element maxOccurs="unbounded" name="str_files">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element minOccurs="0" name="id" type="xs:int" />
-                    <xs:element minOccurs="0" name="companyname" type="xs:string" />
-                    <xs:element minOccurs="0" name="fax" type="xs:string" />
-                    <xs:element minOccurs="0" name="phone" type="xs:string" />
-                    <xs:element minOccurs="0" name="email" type="xs:string" />
-                    <xs:element minOccurs="0" name="comment" type="xs:string" />
-                    <xs:element minOccurs="0" name="adress" type="xs:string" />
-                    <xs:element minOccurs="0" name="targetdirectory" type="xs:string" />
-                    <xs:element minOccurs="0" name="pollingdirectory" type="xs:string" />
-                    <xs:element minOccurs="0" name="clientnr">
+                    <xs:element minOccurs="0" name="object" type="xs:string" />
+                    <xs:element minOccurs="0" name="objectid" type="xs:int" />
+                    <xs:element minOccurs="0" name="filename">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="255" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="dateupload" type="xs:dateTime" />
+                    <xs:element minOccurs="0" name="filesize" type="xs:int" />
+                    <xs:element minOccurs="0" name="contenttype">
                       <xs:simpleType>
                         <xs:restriction base="xs:string">
                           <xs:maxLength value="50" />
                         </xs:restriction>
                       </xs:simpleType>
                     </xs:element>
-                    <xs:element minOccurs="0" name="ibannumber">
+                    <xs:element minOccurs="0" name="usertype">
                       <xs:simpleType>
                         <xs:restriction base="xs:string">
                           <xs:maxLength value="50" />
                         </xs:restriction>
                       </xs:simpleType>
                     </xs:element>
-                    <xs:element minOccurs="0" name="traceurl">
+                    <xs:element minOccurs="0" name="isdefault" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="variantid" type="xs:int" />
+                    <xs:element minOccurs="0" name="alttext">
                       <xs:simpleType>
                         <xs:restriction base="xs:string">
-                          <xs:maxLength value="2048" />
+                          <xs:maxLength value="50" />
                         </xs:restriction>
                       </xs:simpleType>
                     </xs:element>
-                    <xs:element minOccurs="0" name="listseparator">
-                      <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                          <xs:maxLength value="1" />
-                        </xs:restriction>
-                      </xs:simpleType>
-                    </xs:element>
-                    <xs:element minOccurs="0" name="cashregister" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="fileobjecttypeid" type="xs:int" />
+                    <xs:element minOccurs="0" name="websiteid" type="xs:int" />
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
