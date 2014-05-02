@@ -3,7 +3,7 @@
   <xs:element name="source">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" maxOccurs="unbounded" name="mrep">
+        <xs:element msdata:IsDataSet="true" msdata:UseCurrentLocale="true" maxOccurs="unbounded" name="dubaiprint" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
           <xs:annotation>
             <xs:appinfo>
               <Type>Database</Type>
@@ -11,15 +11,15 @@
               <port>5432</port>
               <username>postgres</username>
               <password>Banek12</password>
-              <database>mrep</database>
+              <database>dubaiprint</database>
             </xs:appinfo>
           </xs:annotation>
           <xs:complexType>
             <xs:choice minOccurs="0" maxOccurs="unbounded">
-              <xs:element maxOccurs="unbounded" name="str_documenttemplate">
+              <xs:element maxOccurs="unbounded" name="template">
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element minOccurs="0" name="id" type="xs:int" />
+                    <xs:element minOccurs="0" name="templateid" type="xs:int" />
                     <xs:element minOccurs="0" name="templatename">
                       <xs:simpleType>
                         <xs:restriction base="xs:string">
@@ -27,15 +27,30 @@
                         </xs:restriction>
                       </xs:simpleType>
                     </xs:element>
-                    <xs:element minOccurs="0" name="templatebody" type="xs:string" />
-                    <xs:element minOccurs="0" name="systemtype" type="xs:int" />
+                    <xs:element minOccurs="0" name="templatetypeid" type="xs:int" />
                     <xs:element minOccurs="0" name="orientation" type="xs:int" />
                     <xs:element minOccurs="0" name="width" type="xs:decimal" />
                     <xs:element minOccurs="0" name="height" type="xs:decimal" />
-                    <xs:element minOccurs="0" name="margin-bottom" type="xs:decimal" />
-                    <xs:element minOccurs="0" name="margin-top" type="xs:decimal" />
-                    <xs:element minOccurs="0" name="margin-left" type="xs:decimal" />
-                    <xs:element minOccurs="0" name="margin-right" type="xs:decimal" />
+                    <xs:element minOccurs="0" name="marginbottom" type="xs:decimal" />
+                    <xs:element minOccurs="0" name="margintop" type="xs:decimal" />
+                    <xs:element minOccurs="0" name="marginleft" type="xs:decimal" />
+                    <xs:element minOccurs="0" name="marginright" type="xs:decimal" />
+                    <xs:element minOccurs="0" name="externalkey" type="xs:int" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element maxOccurs="unbounded" name="templatedetails">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" name="templatedetailsid" type="xs:int" />
+                    <xs:element minOccurs="0" name="businessid" type="xs:int" />
+                    <xs:element minOccurs="0" name="templateid" type="xs:int" />
+                    <xs:element minOccurs="0" name="templatesubject" type="xs:string" />
+                    <xs:element minOccurs="0" name="templatebody" type="xs:string" />
+                    <xs:element minOccurs="0" name="languageid" type="xs:int" />
+                    <xs:element minOccurs="0" name="senderemail" type="xs:string" />
+                    <xs:element minOccurs="0" name="employeeid" type="xs:int" />
+                    <xs:element minOccurs="0" name="datechanged" type="xs:dateTime" />
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>

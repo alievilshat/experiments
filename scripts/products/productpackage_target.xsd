@@ -16,12 +16,15 @@
           </xs:annotation>
           <xs:complexType>
             <xs:choice minOccurs="0" maxOccurs="unbounded">
-              <xs:element maxOccurs="unbounded" name="templatedefaultvalue">
+              <xs:element maxOccurs="unbounded" name="productpackage">
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element minOccurs="0" name="insertfield" type="xs:string" />
-                    <xs:element minOccurs="0" name="defaultvalue" type="xs:string" />
-                    <xs:element minOccurs="0" name="templatedefaultvalueid" type="xs:int" />
+                    <xs:element minOccurs="0" name="parentproductid" type="xs:int" />
+                    <xs:element minOccurs="0" name="productid" type="xs:int" />
+                    <xs:element minOccurs="0" name="quantity" type="xs:decimal" />
+                    <xs:element minOccurs="0" name="sequenceid" type="xs:int" />
+                    <xs:element minOccurs="0" name="isdefault" type="xs:boolean" />
+                    <xs:element minOccurs="0" name="packageproductid" type="xs:int" />
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>

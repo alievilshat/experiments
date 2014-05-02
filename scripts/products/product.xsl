@@ -3,7 +3,7 @@
   <xsl:template match="/">
     <target>
       <bodyview3>
-        <xsl:for-each select="bodyview:query('select p.*, ws.title, ws.metakeywords, ws.metadescription from str_product p left join cms_websiteitems ws on ws.productid = p.id and ws.websiteid = 6 where not p.deleted and p.producttype = 0 and p.categoryid != 0 and (p.parentid is null or p.parentid in (select id from str_product where not deleted and producttype = 0 and categoryid != 0))')">
+        <xsl:for-each select="bodyview:query('select p.*, ws.title, ws.metakeywords, ws.metadescription from str_product p left join cms_websiteitems ws on ws.productid = p.id and ws.websiteid = 6 where not p.deleted and p.categoryid != 0 and (p.parentid is null or p.parentid in (select id from str_product where not deleted and categoryid != 0))')">
           <product>
             <productid m:left="-156" m:top="66">
               <xsl:value-of select="id" />
@@ -35,7 +35,7 @@
             <measurementid m:left="-344" m:top="180">
               <xsl:value-of select="measurementid" />
             </measurementid>
-            <obsolete m:left="-128" m:top="504">
+            <obsolete m:left="-6" m:top="743">
               <xsl:value-of select="obsolete" />
             </obsolete>
             <standalone m:left="96" m:top="354">
@@ -65,14 +65,14 @@
             <weight m:left="-510" m:top="198">
               <xsl:value-of select="weight" />
             </weight>
-            <taxcategoryid>1</taxcategoryid>
-            <metatitle>
+            <taxcategoryid m:left="84" m:top="391">1</taxcategoryid>
+            <metatitle m:left="-14" m:top="704">
               <xsl:value-of select="title" />
             </metatitle>
-            <metadescription>
+            <metadescription m:left="-11" m:top="571">
               <xsl:value-of select="metadescription" />
             </metadescription>
-            <metakeywords>
+            <metakeywords m:left="-9" m:top="620">
               <xsl:value-of select="metakeywords" />
             </metakeywords>
           </product>

@@ -3,7 +3,7 @@
   <xsl:template match="/">
     <target>
       <mrep3>
-        <xsl:for-each select="mrep:query('select p.*, ws.title, ws.metakeywords, ws.metadescription from str_product p left join cms_websiteitems ws on ws.productid = p.id and ws.websiteid = 2 where not p.deleted and p.true and p.categoryid != 0 and (p.parentid is null or p.parentid in (select id from str_product where not deleted and true and categoryid != 0))')">
+        <xsl:for-each select="mrep:query('select p.*, ws.title, ws.metakeywords, ws.metadescription from str_product p left join cms_websiteitems ws on ws.productid = p.id and ws.websiteid = 2 where not p.deleted and true and p.categoryid != 0 and categoryid != 1 and (p.parentid is null or p.parentid in (select id from str_product where not deleted and true and categoryid != 0 and categoryid != 1))')">
           <product>
             <productid m:left="-156" m:top="66">
               <xsl:value-of select="id" />

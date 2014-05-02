@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
@@ -22,15 +23,18 @@ namespace Mapper
             LayoutUpdated += BlockControl_LayoutUpdated;
         }
 
-        bool ignore = false;
+        long lastLayoutUpdate;
+        long updatePeriod = TimeSpan.FromSeconds(1).Ticks;
         void BlockControl_LayoutUpdated(object sender, System.EventArgs e)
         {
-            if (ignore) { ignore = false; return; }
+            var now = DateTime.Now.Ticks;
+            if (now - lastLayoutUpdate < updatePeriod) return;
+            lastLayoutUpdate = now;
+
             LeftPort = null;
             LeftPort = leftPort;
             RightPort = null;
             RightPort = rightPort;
-            ignore = true;
         }
 
         private void ExpanderHeaderDoubleClick(object sender, MouseButtonEventArgs e)

@@ -3,7 +3,7 @@
   <xs:element name="target">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" maxOccurs="unbounded" name="mrep3">
+        <xs:element msdata:IsDataSet="true" msdata:UseCurrentLocale="true" maxOccurs="unbounded" name="mrep3" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
           <xs:annotation>
             <xs:appinfo>
               <Type>Database</Type>
@@ -36,6 +36,21 @@
                     <xs:element minOccurs="0" name="marginleft" type="xs:decimal" />
                     <xs:element minOccurs="0" name="marginright" type="xs:decimal" />
                     <xs:element minOccurs="0" name="externalkey" type="xs:int" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element maxOccurs="unbounded" name="templatedetails">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" name="templatedetailsid" type="xs:int" />
+                    <xs:element minOccurs="0" name="businessid" type="xs:int" />
+                    <xs:element minOccurs="0" name="templateid" type="xs:int" />
+                    <xs:element minOccurs="0" name="templatesubject" type="xs:string" />
+                    <xs:element minOccurs="0" name="templatebody" type="xs:string" />
+                    <xs:element minOccurs="0" name="languageid" type="xs:int" />
+                    <xs:element minOccurs="0" name="senderemail" type="xs:string" />
+                    <xs:element minOccurs="0" name="employeeid" type="xs:int" />
+                    <xs:element minOccurs="0" name="datechanged" type="xs:dateTime" />
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>

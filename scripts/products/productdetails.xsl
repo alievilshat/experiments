@@ -3,7 +3,7 @@
   <xsl:template match="/">
     <target>
       <bodyview3>
-        <xsl:for-each select="bodyview:query('select * from str_productdetails where productid in (select id from str_product where not deleted and producttype = 0 and categoryid != 0 and (parentid is null or parentid in (select id from str_product where not deleted and producttype = 0 and categoryid != 0)))')">
+        <xsl:for-each select="bodyview:query('select * from str_productdetails where productid in (select id from str_product where not deleted and categoryid != 0 and (parentid is null or parentid in (select id from str_product where not deleted and categoryid != 0)))')">
           <productdetails>
             <productdetailsid m:left="-20" m:top="168" xmlns:m="http://www.navitas.nl/2014/Mapper">
               <xsl:value-of select="id" />
