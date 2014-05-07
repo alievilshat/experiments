@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="target">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="root">
+          <xs:annotation>
+            <xs:appinfo>
+              <Type>File</Type>
+              <ContentType>csv</ContentType>
+              <location>
+              </location>
+              <Context>local</Context>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="record">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Ref_Nr_Zending" type="xs:string" />
+                    <xs:element name="Ref_Nr_Afzender" type="xs:string" />
+                    <xs:element name="Ref_Nr_Klant" type="xs:string" />
+                    <xs:element name="Naam_contract" type="xs:string" />
+                    <xs:element name="Producten_en_aanvullende_diensten" type="xs:string" />
+                    <xs:element name="ProductCode" type="xs:string" />
+                    <xs:element name="Leveringscode" type="xs:string" />
+                    <xs:element name="Remboursbedrag" type="xs:string" />
+                    <xs:element name="Rembours_kenmerk" type="xs:string" />
+                    <xs:element name="Afzender_account_IBAN" type="xs:string" />
+                    <xs:element name="Verzekerd_bedrag" type="xs:string" />
+                    <xs:element name="Barcode" type="xs:string" />
+                    <xs:element name="Barcode_hoofdcolli" type="xs:string" />
+                    <xs:element name="Postkamer" type="xs:string" />
+                    <xs:element name="Inhoud" type="xs:string" />
+                    <xs:element name="Naam_kostenplaats" type="xs:string" />
+                    <xs:element name="Gewicht_zending" type="xs:string" />
+                    <xs:element name="Aantal_zendingen" type="xs:string" />
+                    <xs:element name="Aantal_colli" type="xs:string" />
+                    <xs:element name="Opmerking_zending" type="xs:string" />
+                    <xs:element name="Ref_nr_geaddresseerde" type="xs:string" />
+                    <xs:element name="Naam_1_geaddresseerde" type="xs:string" />
+                    <xs:element name="Naam_2_geadresseerde" type="xs:string" />
+                    <xs:element name="Naam_3_geadresseerde" type="xs:string" />
+                    <xs:element name="Straat_geadresseerde" type="xs:string" />
+                    <xs:element name="Huisnummmer_geadresseerde" type="xs:string" />
+                    <xs:element name="Huisnummer_toevoeging_van_geaddresseerde" type="xs:string" />
+                    <xs:element name="Postcode_geadresseerde" type="xs:string" />
+                    <xs:element name="Plaats_geadresseerde" type="xs:string" />
+                    <xs:element name="Land_geadresseerde" type="xs:string" />
+                    <xs:element name="Telefoon_geadresseerde" type="xs:string" />
+                    <xs:element name="Mobiele_telefoon_geadresseerde" type="xs:string" />
+                    <xs:element name="Fax_geadresseerde" type="xs:string" />
+                    <xs:element name="Email_geadresseerde" type="xs:string" />
+                    <xs:element name="BTW_nr_geadresseerde" type="xs:string" />
+                    <xs:element name="Opmerking_geadresseerde" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,10 +1,51 @@
-﻿<Window x:Class="TestWPF.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525"
-        DataContext="{Binding RelativeSource={RelativeSource Self}}" Keyboard.KeyDown="KeyDown" Loaded="Window_Loaded" >
-    <StackPanel>
-        <TextBlock Text="{Binding StartPoint}"  />
-        <TextBlock Text="{Binding Data}" TextWrapping="Wrap"  />
-    </StackPanel>
-</Window>
+﻿<nc:ScriptButtonControl
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        xmlns:n="clr-namespace:NaitonStore;assembly=Naiton2014"
+        xmlns:nc="clr-namespace:NaitonControls;assembly=NaitonControls">
+    <nc:ScriptButtonControl.Resources>
+        <nc:CodeBlock x:Key="code">
+            <![CDATA[
+                using System;
+                using Syste.Linq;
+                using System.Windows;
+                using System.Windows.Controls;
+                using NaitonControls;
+                
+                public class Handler
+                {
+                    public IEnumerable<string> Result { get; set; }
+            
+                    public void ButtonClick(object sender, RoutedEventArgs args)
+                    {
+                            try
+                            {
+                                var btn = (dynamic)sender;
+                                var window = btn.FindResource("Form");
+            
+                                Result = btn.DataContext.Host.dgvPickListDetails.Rows.Cast<DataGridViewRow>().Select(i => i["deliveryid"].ToString());
+            
+                                window.DataContext = this;
+                                window.Show();
+                            }
+                            catch (Exception ex)
+                            {
+                                Result = ex.Message;
+                            }
+                    }
+                }
+            ]]>
+        </nc:CodeBlock>
+        <Window x:Key="Form" Width="200" Height="100">
+            <Grid>
+                <ListBox ItemsSource="{Binding Result}" />
+            </Grid>
+        </Window>
+    </nc:ScriptButtonControl.Resources>
+    <Button Background="WhiteSmoke" BorderThickness="0" Click="{nc:Handler ButtonClick, Code={StaticResource code}}" x:Name="btn">
+        <StackPanel Orientation="Horizontal">
+            <Image Source="{n:ImageResource delivery_1}" Height="25" />
+            <TextBlock VerticalAlignment="Center" Padding="10">Export</TextBlock>
+        </StackPanel>
+    </Button>
+</nc:ScriptButtonControl>
