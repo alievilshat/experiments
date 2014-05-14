@@ -6,7 +6,7 @@
         <xs:element name="root">
           <xs:annotation>
             <xs:appinfo>
-              <Type>File</Type>
+              <Type>Instant</Type>
               <ContentType>csv</ContentType>
               <location>
               </location>
