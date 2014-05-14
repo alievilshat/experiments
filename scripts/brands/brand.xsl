@@ -3,7 +3,7 @@
   <xsl:template match="/">
     <target>
       <bodyview3>
-        <xsl:for-each select="bodyview:table('str_brand')">
+        <xsl:for-each select="bodyview:query('select b.*, w.metakeywords, w.metadescription, w.title, w.imageid  from str_brand b inner join cms_websiteitems w on w.brandid = b.id  where w.languageid = 1 and w.websiteid = 6')">
           <brand>
             <brandid m:left="-130" m:top="40" xmlns:m="http://www.navitas.nl/2014/Mapper">
               <xsl:value-of select="id" />
@@ -26,15 +26,27 @@
             <supportphone m:left="-116" m:top="262" xmlns:m="http://www.navitas.nl/2014/Mapper">
               <xsl:value-of select="supportphone" />
             </supportphone>
-            <inactive m:left="-38" m:top="318" xmlns:m="http://www.navitas.nl/2014/Mapper">
+            <inactive m:left="-120" m:top="300" xmlns:m="http://www.navitas.nl/2014/Mapper">
               <xsl:value-of select="inactived" />
             </inactive>
             <description m:left="28" m:top="284" xmlns:m="http://www.navitas.nl/2014/Mapper">
               <xsl:value-of select="description" />
             </description>
-            <largedescription m:left="-38" m:top="348" xmlns:m="http://www.navitas.nl/2014/Mapper">
+            <largedescription m:left="39" m:top="319" xmlns:m="http://www.navitas.nl/2014/Mapper">
               <xsl:value-of select="largedescription" />
             </largedescription>
+            <metakeywords m:left="-105" m:top="339" xmlns:m="http://www.navitas.nl/2014/Mapper">
+              <xsl:value-of select="metakeywords" />
+            </metakeywords>
+            <metadescription m:left="116" m:top="355" xmlns:m="http://www.navitas.nl/2014/Mapper">
+              <xsl:value-of select="metadescription" />
+            </metadescription>
+            <metatitle m:left="-166" m:top="372" xmlns:m="http://www.navitas.nl/2014/Mapper">
+              <xsl:value-of select="title" />
+            </metatitle>
+            <imageid m:left="-38" m:top="389" xmlns:m="http://www.navitas.nl/2014/Mapper">
+              <xsl:value-of select="imageid" />
+            </imageid>
           </brand>
         </xsl:for-each>
       </bodyview3>

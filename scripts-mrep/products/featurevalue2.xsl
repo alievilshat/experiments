@@ -3,7 +3,7 @@
   <xsl:template match="/">
     <target>
       <mrep3>
-        <xsl:for-each select="mrep:query('select varianttypeid2, variantvalue2, min(webcolorid) from str_product where coalesce(varianttypeid2, 0) &gt; 0 and coalesce(length(variantvalue2), 0) &gt; 0 group by varianttypeid2, variantvalue2')">
+        <xsl:for-each select="mrep:query('select varianttypeid2, variantvalue2, min(webcolorid) as webcolorid from str_product where coalesce(varianttypeid2, 0) &gt; 0 and coalesce(length(variantvalue2), 0) &gt; 0 group by varianttypeid2, variantvalue2')">
           <featurevalue>
             <featurevalueid m:left="-10" m:top="30" xmlns:m="http://www.navitas.nl/2014/Mapper">pk:featurevalue(variant-<xsl:value-of select="varianttypeid2" />-<xsl:value-of select="variantvalue2" />)</featurevalueid>
             <featureid m:left="-198" m:top="110" xmlns:m="http://www.navitas.nl/2014/Mapper">fk:feature(variant-<xsl:value-of select="varianttypeid2" />)</featureid>

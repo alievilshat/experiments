@@ -23,18 +23,15 @@ namespace Mapper
             LayoutUpdated += BlockControl_LayoutUpdated;
         }
 
-        long lastLayoutUpdate;
-        long updatePeriod = TimeSpan.FromSeconds(1).Ticks;
+        bool ignore = false;
         void BlockControl_LayoutUpdated(object sender, System.EventArgs e)
         {
-            var now = DateTime.Now.Ticks;
-            if (now - lastLayoutUpdate < updatePeriod) return;
-            lastLayoutUpdate = now;
-
+            if (ignore) { ignore = false; return; }
             LeftPort = null;
             LeftPort = leftPort;
             RightPort = null;
             RightPort = rightPort;
+            ignore = true;
         }
 
         private void ExpanderHeaderDoubleClick(object sender, MouseButtonEventArgs e)
