@@ -7,40 +7,79 @@
         <nc:CodeBlock x:Key="code">
             <![CDATA[
                 using System;
-                using Syste.Linq;
+                using System.IO;
                 using System.Windows;
                 using System.Windows.Controls;
                 using NaitonControls;
+                using NaitonStore.App_Code.Security;
+                using WSALibrary;
+                using NaitonStore.databaseImporterWebService;
                 
-                public class Handler
+                public class Handler : ScriptHandler
                 {
-                    public IEnumerable<string> Result { get; set; }
+                    private const string EXPORT_PATH = "script.delivery_export_path";    
+            
+                    public string Path 
+                    { 
+                        get { return ApplicationSettings.Instance.GetApplicationSetting(EXPORT_PATH); }
+                        set { ApplicationSettings.Instance.SetApplicationSetting(EXPORT_PATH, value); OnPropertyChanged("Path"); } 
+                    }
+            
+                    private string _result;
             
                     public void ButtonClick(object sender, RoutedEventArgs args)
                     {
-                            try
-                            {
-                                var btn = (dynamic)sender;
-                                var window = btn.FindResource("Form");
+                          try
+                          {
+                              var btn = (dynamic)sender;
+                              var window = btn.FindResource("Form");
             
-                                Result = btn.DataContext.Host.dgvPickListDetails.Rows.Cast<DataGridViewRow>().Select(i => i["deliveryid"].ToString());
+            				  var info = IWSAInfo.WSAInfo;
+                              _results = importer.Execute(info.Login, info.Password, 10, "", "", "<parameters><employeeid>" + info.EmployeeID + "</employeeid></parameters>");
             
-                                window.DataContext = this;
-                                window.Show();
-                            }
-                            catch (Exception ex)
-                            {
-                                Result = ex.Message;
-                            }
+                              window.DataContext = this;
+                              window.Show();
+                          }
+                          catch (Exception ex)
+                          {
+                              ShowMessage(ex.Message);
+                          }
+                    }
+            
+                    public void BrowseClick(object sender, RoutedEventArgs args)
+                    {
+                    }
+            
+                    public void OkClick(object sender, RoutedEventArgs args)
+                    {
+                        try
+                        {
+                            File.WriteAllText(Path, _result);
+                        }
+                        catch (Exception ex)
+                        {
+                            ShowMessage(ex.Message);
+                        }
                     }
                 }
             ]]>
         </nc:CodeBlock>
-        <Window x:Key="Form" Width="200" Height="100">
+        <nc:ScriptWindow x:Key="Form" Width="200" Height="100">
             <Grid>
-                <ListBox ItemsSource="{Binding Result}" />
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                
+                <TextBox Text="{Binding Path}" Margin="10" />
+                <Button Grid.Column="1" Margin="10" Click="{nc:Handler BrowseClick,Code={StaticResource code}}">Browse</Button>
+                <Button Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Click="{nc:Handler OkClick, Code={StaticResource code}}" Width="100" Margin="10">OK</Button>
             </Grid>
-        </Window>
+        </nc:ScriptWindow>
     </nc:ScriptButtonControl.Resources>
     <Button Background="WhiteSmoke" BorderThickness="0" Click="{nc:Handler ButtonClick, Code={StaticResource code}}" x:Name="btn">
         <StackPanel Orientation="Horizontal">

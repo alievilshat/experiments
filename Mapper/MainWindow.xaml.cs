@@ -260,36 +260,19 @@ namespace Mapper
         #endregion
 
         #region Run Handler
-        int nextjobid = 0;
         private void Run_Click(object sender, RoutedEventArgs e)
         {
-            var id = nextjobid++;
-
-            var executor = new StandaloneScriptsExecutor(id, Model.SourceSchema, Model.TargetSchema, Model.Transformation.Document);
-
-            new Thread(() =>
+            try
             {
-                try
-                {
-                    AsyncProcessInfo info;
-                    while ((info = AsyncProcessManager.GetProcessInfo(id)) == null || !info.Completed)
-                    {
-                        if (info != null)
-                            Dispatcher.InvokeAsync(() => 
-                                Model.AddMessage(info.Total > 0 ? "{0} ({1}/{2})" : "{0}", info.StatusText, info.Processed, info.Total));
+                var executor = new StandaloneScriptsExecutor(Model.SourceSchema, Model.TargetSchema, Model.Transformation.Document);
+                executor.ProgressUpdated += (o, a) => Dispatcher.InvokeAsync(() => Model.AddMessage(a.Total > 0 ? "{0} ({1}/{2})" : "{0}", a.State, a.Current, a.Total));
 
-                        AsyncProcessManager.Wait(id, 1000);
-                    }
-                    Dispatcher.InvokeAsync(() => Model.AddMessage(info.StatusText));
-                }
-                catch (Exception ex)
-                {
-                    Dispatcher.InvokeAsync(() => Model.AddMessage("ERROR: {0}\n{1}", ex.Message, ex.ToString()));
-                }
-
-            }).Start();
-
-            AsyncProcessManager.StartAsyncProcess(executor);
+                new Thread(executor.Execute).Start();
+            }
+            catch (Exception ex)
+            {
+                Dispatcher.InvokeAsync(() => Model.AddMessage("ERROR: {0}\n{1}", ex.Message, ex.ToString()));
+            }
         }
         #endregion
 

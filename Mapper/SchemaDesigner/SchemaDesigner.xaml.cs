@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Xml;
-using System.Xml.Linq;
 using System.Xml.Schema;
-using Microsoft.Win32;
 using WPG.Data;
 
 namespace Mapper
