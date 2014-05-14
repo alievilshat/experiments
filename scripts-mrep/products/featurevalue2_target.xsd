@@ -38,6 +38,7 @@
                     <xs:element minOccurs="0" name="inputproductid" type="xs:int" />
                     <xs:element minOccurs="0" name="inputquantity" type="xs:int" />
                     <xs:element minOccurs="0" name="inactive" type="xs:boolean" />
+                    <xs:element name="externalvalueid" />
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
