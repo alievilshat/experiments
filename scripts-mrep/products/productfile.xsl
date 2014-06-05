@@ -3,13 +3,11 @@
   <xsl:template match="/">
     <target>
       <mrep3>
-        <xsl:for-each select="mrep:query(&quot;select * from v_files where object ilike 'Product' and objectid in (select id from str_product where not deleted and true and (parentid is null or parentid in (select id from str_product where not deleted and true) )) and objectid != 705 and objectid &lt; 5181&quot;)">
+        <xsl:for-each select="mrep:query('select o.id, p.id as productid, 0 as isdefault from str_fileobjects o inner join str_product p on coalesce(p.parentid, p.id) = o.productid and p.variantvalue2 = o.variantvalue2 where p.id in (select p.id from str_product p inner join str_category c on c.id = p.categoryid where not deleted and (p.parentid is null or p.parentid in (select id from str_product where not deleted)))')">
           <productfile>
-            <productfileid m:left="-20" m:top="162">
-              <xsl:value-of select="id" />
-            </productfileid>
+            <productfileid m:left="-21" m:top="130">pk:productfile(<xsl:value-of select="id" />-<xsl:value-of select="productid" />)</productfileid>
             <productid m:left="-20" m:top="196">
-              <xsl:value-of select="objectid" />
+              <xsl:value-of select="productid" />
             </productid>
             <fileid m:left="-20" m:top="230">
               <xsl:value-of select="id" />

@@ -3,7 +3,7 @@
   <xsl:template match="/">
     <target>
       <bodyview3>
-        <xsl:for-each select="bodyview:query('select * from str_discountgroup where giveawayid is null or giveawayid in (select id from str_product where not deleted and producttype = 0 and (parentid is null or parentid in (select id from str_product where not deleted and producttype = 0)))')">
+        <xsl:for-each select="bodyview:query('select * from str_discountgroup where giveawayid is null or giveawayid in (select p.id from str_product p inner join str_category c on c.id = p.categoryid where not deleted and (p.parentid is null or p.parentid in (select id from str_product where not deleted)))')">
           <discountgroup>
             <discountgroupid m:left="-43" m:top="161">
               <xsl:value-of select="groupid" />

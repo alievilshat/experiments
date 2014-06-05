@@ -1,0 +1,40 @@
+﻿<Page x:Class="ScriptModule.FileLocation"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      Width="400"
+	Title="FileLocation">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>         
+        </Grid.RowDefinitions>
+      
+        <GroupBox Header="File location" Grid.Row="0" Margin="5">
+            <StackPanel>
+         <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+
+        <RadioButton Name="local" Content="Local" IsChecked="True" Margin="8"/>
+        <TextBox Name="location"  Grid.Row="1" Margin="6" Height="18"/>
+        <Button Content="Browse" Grid.Row="1" Grid.Column="1"  Width="150" Click="Button_Click" Margin="6"/>
+        <RadioButton Name="remote"  Grid.Row="2" Content="Remote" Margin="8"  />
+        <TextBox  Name="UrlPath"  Grid.Row="3" Margin="6" IsEnabled="False" Height="18"/>
+           </Grid>
+            </StackPanel>
+        </GroupBox>
+        <Button Content="OK" Grid.Row="2" Click="OK_Click" Width="150" Margin="0,6,7,6"  HorizontalAlignment="Right"/>
+    </Grid>
+</Page>

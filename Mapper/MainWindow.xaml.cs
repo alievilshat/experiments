@@ -10,10 +10,10 @@ using System.Xml.Linq;
 using System.Xml.Schema;
 using DatabaseImporterWebService;
 using DatabaseImporterWebService.ProcessManagement;
-using Mapper.Properties;
 using Microsoft.Win32;
+using ScriptModule.Properties;
 
-namespace Mapper
+namespace ScriptModule
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -103,9 +103,9 @@ namespace Mapper
         {
             CurrentFilePath = filepath;
 
-            Model.SourceSchema = loadSchema(CurrentFilePath, SOURCE_SCHEMA);
-            Model.TargetSchema = loadSchema(CurrentFilePath, TARGET_SCHEMA);
-            Model.Transformation = loadTransformation(CurrentFilePath);
+            Model.Initialize(loadSchema(CurrentFilePath, SOURCE_SCHEMA),
+                loadSchema(CurrentFilePath, TARGET_SCHEMA),
+                loadTransformation(CurrentFilePath));
         }
 
         private string getSchemaPath(string _currentFilePath, string suffix)
@@ -219,7 +219,9 @@ namespace Mapper
         private static FileStream createNewFile(string path)
         {
             if (File.Exists(path))
+            {
                 return File.Open(path, FileMode.Truncate);
+            }
             return File.Open(path, FileMode.Create);
         }
         #endregion
@@ -262,17 +264,19 @@ namespace Mapper
         #region Run Handler
         private void Run_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                var executor = new StandaloneScriptsExecutor(Model.SourceSchema, Model.TargetSchema, Model.Transformation.Document);
-                executor.ProgressUpdated += (o, a) => Dispatcher.InvokeAsync(() => Model.AddMessage(a.Total > 0 ? "{0} ({1}/{2})" : "{0}", a.State, a.Current, a.Total));
+            var executor = new StandaloneScriptsExecutor(Model.SourceSchema, Model.TargetSchema, Model.Transformation.Document);
+            executor.ProgressUpdated += (o, a) => Dispatcher.InvokeAsync(() => Model.AddMessage(a.Total > 0 ? "{0} ({1}/{2})" : "{0}", a.State, a.Current, a.Total));
 
-                new Thread(executor.Execute).Start();
-            }
-            catch (Exception ex)
-            {
-                Dispatcher.InvokeAsync(() => Model.AddMessage("ERROR: {0}\n{1}", ex.Message, ex.ToString()));
-            }
+            new Thread(() => {
+                try
+                {
+                    executor.Execute();
+                }
+                catch (Exception ex)
+                {
+                    Dispatcher.InvokeAsync(() => Model.AddMessage("{0}\n{1}", ex.Message, ex.ToString()));
+                }
+            }).Start();
         }
         #endregion
 

@@ -1,0 +1,22 @@
+﻿<Page x:Class="ScriptModule.ImportType"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+    Width="400"
+	Title="ImportType">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <RadioButton Name="Database" Content="Database" Margin="10" IsChecked="True"/>
+        <RadioButton Name="Webservice" Grid.Row="1" Content="Web Service" HorizontalAlignment="Left" Margin="10"/>
+        <RadioButton Name="File" Grid.Row="2" Content="File" HorizontalAlignment="Left" Margin="10"/>
+        <Button Content="Next"  Grid.Row="3"  Click="Button_Click" Width="150" HorizontalAlignment="Right" Margin="5" />
+    </Grid>
+</Page>

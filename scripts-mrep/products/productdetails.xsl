@@ -3,7 +3,7 @@
   <xsl:template match="/">
     <target>
       <mrep3>
-        <xsl:for-each select="mrep:query('select * from str_productdetails where productid in (select id from str_product where not deleted and true and categoryid != 0 and categoryid != 1 and (parentid is null or parentid in (select id from str_product where not deleted and true and categoryid != 0 and categoryid != 1)))')">
+        <xsl:for-each select="mrep:query('select * from str_productdetails where productid in (select p.id from str_product  p inner join str_category c on c.id = p.categoryid where not deleted and (p.parentid is null or p.parentid in (select id from str_product where not deleted)))')">
           <productdetails>
             <productdetailsid m:left="-20" m:top="168" xmlns:m="http://www.navitas.nl/2014/Mapper">
               <xsl:value-of select="id" />

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace Mapper
+namespace ScriptModule
 {
     public class ObservableConverter : IValueConverter
     {

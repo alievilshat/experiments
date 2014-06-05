@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Mapper
+namespace ScriptModule
 {
     public class GenericEventArgs<T> : EventArgs
     {

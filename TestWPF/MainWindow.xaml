@@ -48,6 +48,7 @@
             
                     public void BrowseClick(object sender, RoutedEventArgs args)
                     {
+                        Save
                     }
             
                     public void OkClick(object sender, RoutedEventArgs args)

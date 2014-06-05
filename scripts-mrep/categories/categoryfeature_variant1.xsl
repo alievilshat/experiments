@@ -9,7 +9,7 @@
               <xsl:value-of select="categoryid" />
             </categoryid>
             <featureid m:left="-168" m:top="300">fk:feature(variant-<xsl:value-of select="varianttypeid" />)</featureid>
-            <categoryfeatureid m:left="-137" m:top="147">pk:categoryfeature(<xsl:value-of select="categoryid" />-<xsl:value-of select="varianttypeid" />)</categoryfeatureid>
+            <categoryfeatureid m:left="-137" m:top="147">pk:categoryfeature(variant-<xsl:value-of select="varianttypeid" />-<xsl:value-of select="categoryid" />)</categoryfeatureid>
             <isvariant m:left="100" m:top="273">1</isvariant>
           </categoryfeature>
         </xsl:for-each>

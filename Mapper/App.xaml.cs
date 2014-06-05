@@ -6,7 +6,7 @@ using System.Windows.Data;
 using System.Xml;
 using System.Xml.Schema;
 
-namespace Mapper
+namespace ScriptModule
 {
     /// <summary>
     /// Interaction logic for App.xaml

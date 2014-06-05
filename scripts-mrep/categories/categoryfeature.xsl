@@ -3,9 +3,9 @@
   <xsl:template match="/">
     <target>
       <mrep3>
-        <xsl:for-each select="mrep:query('select cf.* from str_categoryfeature cf inner join str_category c on c.id = cf.categoryid')">
+        <xsl:for-each select="mrep:query('select cf.id, c.id as categoryid, cf.featureid, cf.sequenceid from str_categoryfeature cf inner join str_category c on c.id != 180')">
           <categoryfeature>
-            <categoryfeatureid m:left="-6" m:top="162">pk:categoryfeature(<xsl:value-of select="id" />)</categoryfeatureid>
+            <categoryfeatureid m:left="-1" m:top="128">pk:categoryfeature(<xsl:value-of select="id" />-<xsl:value-of select="categoryid" />)</categoryfeatureid>
             <categoryid m:left="-130" m:top="178">
               <xsl:value-of select="categoryid" />
             </categoryid>
@@ -15,12 +15,8 @@
             <featuregroupid m:left="-133" m:top="208">
               <xsl:value-of select="featuregroupid" />
             </featuregroupid>
-            <overview m:left="-10" m:top="226">
-              <xsl:value-of select="overview" />
-            </overview>
-            <manditory m:left="-135" m:top="241">
-              <xsl:value-of select="manditory" />
-            </manditory>
+            <overview m:left="-10" m:top="226">0</overview>
+            <manditory m:left="-135" m:top="241">0</manditory>
             <sequenceid m:left="-11" m:top="258">
               <xsl:value-of select="sequenceid" />
             </sequenceid>

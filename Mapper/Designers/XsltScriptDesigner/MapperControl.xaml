@@ -1,0 +1,131 @@
+﻿<UserControl x:Class="ScriptModule.MapperControl"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:l="clr-namespace:ScriptModule"
+        xmlns:sxml="clr-namespace:System.Xml;assembly=System.Xml"
+        Loaded="UserControl_Loaded"
+        SizeChanged="UserControl_SizeChanged">
+
+    <UserControl.Resources>
+        <Style x:Key="ExpandedStyle">
+            <Setter Property="TreeViewItem.IsExpanded" Value="True" />
+        </Style>
+        <Style TargetType="{x:Type TreeViewItem}">
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <l:ThumbsPathConverter x:Key="thumbsPathConverter" />
+
+        <DataTemplate DataType="{x:Type l:XsltUnknownNodeViewModel}">
+            <ItemsControl ItemsSource="{Binding Children}" />
+        </DataTemplate>
+        
+        <DataTemplate DataType="{x:Type l:XsltSkipNodeViewModel}">
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type l:XsltContentNodeViewModel}">
+            <ItemsControl ItemsSource="{Binding Children}" />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type l:XsltRootTemplateNodeViewModel}">
+            <StackPanel>
+                <ItemsControl ItemsSource="{Binding Path=Children}" />
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type l:XsltTemplateNodeViewModel}">
+            <StackPanel>
+                <ItemsControl  ItemsSource="{Binding Children}" />
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type l:XsltForEachViewModel}">
+            <StackPanel>
+                <ItemsControl ItemsSource="{Binding Children}" />
+                <Canvas>
+                    <l:Connector>
+                        <l:Connector.Geometry>
+                            <MultiBinding Converter="{StaticResource thumbsPathConverter}" ConverterParameter="-*-">
+                                <Binding RelativeSource="{RelativeSource AncestorType=Canvas}" />
+                                <Binding Path="SourcePort" />
+                                <Binding Path="Port" ElementName="sourceSchema" />
+                                <Binding Path="Port" ElementName="targetSchema" />
+                                <Binding Path="TargetPort" />
+                            </MultiBinding>
+                        </l:Connector.Geometry>
+                    </l:Connector>
+                </Canvas>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type l:XsltMixedContentViewModel}">
+            <l:BlockControl>
+                <l:BlockControl.HeaderContent>
+                    <Grid>
+                        <TextBlock Text="Converter" Padding="7, 3" />
+                        <!--SOURCE CONNECTORS-->
+                        <Canvas>
+                            <ItemsControl ItemsSource="{Binding SourcePorts}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <l:Connector>
+                                            <l:Connector.Geometry>
+                                                    <MultiBinding Converter="{StaticResource thumbsPathConverter}" ConverterParameter="-*">
+                                                        <Binding RelativeSource="{RelativeSource AncestorType=Canvas}" />
+                                                        <Binding />
+                                                        <Binding Path="Port" ElementName="sourceSchema" />
+                                                        <Binding Path="LeftPort" RelativeSource="{RelativeSource AncestorType=l:BlockControl}" />
+                                                    </MultiBinding>
+                                            </l:Connector.Geometry>
+                                        </l:Connector>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <!--TARGET CONNECTOR-->
+                            <l:Connector>
+                                <l:Connector.Geometry>
+                                    <MultiBinding Converter="{StaticResource thumbsPathConverter}" ConverterParameter="*-">
+                                        <Binding RelativeSource="{RelativeSource AncestorType=Canvas}" />
+                                        <Binding Path="RightPort" RelativeSource="{RelativeSource AncestorType=l:BlockControl}" />
+                                        <Binding Path="Port" ElementName="targetSchema" />
+                                        <Binding Path="TargetPort" />
+                                    </MultiBinding>
+                                </l:Connector.Geometry>
+                            </l:Connector>
+                        </Canvas>
+                    </Grid>
+                </l:BlockControl.HeaderContent>
+                <l:BlockControl.BlockContent>
+                    <Grid>
+                        <ContentControl HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" 
+                                        Content="{Binding ContentTextBox}" />
+                    </Grid>
+                </l:BlockControl.BlockContent>
+            </l:BlockControl>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <TabControl TabStripPlacement="Bottom">
+        <TabItem Header="Design">
+            <DockPanel ClipToBounds="True" Background="Transparent" Focusable="True" IsVisibleChanged="DesignPanel_IsVisibleChanged">
+                <l:SchemaControl x:Name="sourceSchema" DragDropEnabled="True" DockPanel.Dock="Left" Schema="{Binding SourceSchema, Mode=TwoWay}"
+                                 DragEnter="schemaDragEnter"
+                                 DragOver="schemaDragOver"
+                                 DragLeave="schemaDragOver"
+                                 Drop="sourceSchemaDrop"/>
+                <l:SchemaControl x:Name="targetSchema" DragDropEnabled="True" DockPanel.Dock="Right" FlowDirection="RightToLeft" Schema="{Binding TargetSchema, Mode=TwoWay}"
+                                 DragEnter="schemaDragEnter"
+                                 DragOver="schemaDragOver"
+                                 DragLeave="schemaDragOver"
+                                 Drop="targetSchemaDrop" />
+                <ItemsControl DataContext="{Binding TransformationViewModel}" ItemsSource="{Binding Children}" />
+            </DockPanel>
+        </TabItem>
+        <TabItem Header="Source">
+            <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                            Content="{Binding SourceTextBox}" IsVisibleChanged="SourceTextBox_IsVisibleChanged" />
+        </TabItem>
+    </TabControl>
+</UserControl>

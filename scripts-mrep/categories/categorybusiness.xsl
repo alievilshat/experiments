@@ -3,18 +3,14 @@
   <xsl:template match="/">
     <target>
       <mrep3>
-        <xsl:for-each select="mrep:query('select distinct p.categoryid, ps.subsidiaryid from str_product p inner join str_productsubsidiary ps on ps.productid = p.id  where not deleted and true and categoryid != 0 and categoryid != 1 and (parentid is null or parentid in (select id from str_product where not deleted and true and categoryid != 0 and categoryid != 1))')">
+        <xsl:for-each select="mrep:table('str_category')">
           <categorybusiness>
             <categoryid m:left="-70" m:top="298">
-              <xsl:value-of select="categoryid" />
+              <xsl:value-of select="id" />
             </categoryid>
-            <iswebsite m:left="-76" m:top="296">
-              1
-            </iswebsite>
-            <businessid m:left="-74" m:top="218">
-              <xsl:value-of select="subsidiaryid" />
-            </businessid>
-            <categorybusinessid m:left="-186" m:top="132">pk:categorybusiness(<xsl:value-of select="subsidiaryid" />-<xsl:value-of select="categoryid" />)</categorybusinessid>
+            <iswebsite m:left="-76" m:top="296">1</iswebsite>
+            <businessid m:left="-74" m:top="218">1</businessid>
+            <categorybusinessid m:left="-186" m:top="132">pk:categorybusiness1-<xsl:value-of select="id" />)</categorybusinessid>
           </categorybusiness>
         </xsl:for-each>
       </mrep3>

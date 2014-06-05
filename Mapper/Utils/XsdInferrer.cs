@@ -4,7 +4,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
 
-namespace Mapper
+namespace ScriptModule
 {
     public class XsdInferrer
     {

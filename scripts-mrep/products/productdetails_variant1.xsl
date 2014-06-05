@@ -3,7 +3,7 @@
   <xsl:template match="/">
     <target>
       <mrep3>
-        <xsl:for-each select="mrep:query('select * from str_product where coalesce(varianttypeid, 0) &gt; 0 and id in (select id from str_product where not deleted and true and (parentid is null or parentid in (select id from str_product where not deleted and true))) and id not in (705)')">
+        <xsl:for-each select="mrep:query('select * from str_product where coalesce(varianttypeid, 0) &gt; 0 and id in (select p.id from str_product p inner join str_category c on c.id = p.categoryid where not deleted and (p.parentid is null or p.parentid in (select id from str_product where not deleted)))')">
           <productdetails>
             <productdetailsid m:left="-107" m:top="149" xmlns:m="http://www.navitas.nl/2014/Mapper">pk:productdetails(variant-<xsl:value-of select="varianttypeid" />-<xsl:value-of select="id" />)</productdetailsid>
             <productid m:left="-104" m:top="185" xmlns:m="http://www.navitas.nl/2014/Mapper">

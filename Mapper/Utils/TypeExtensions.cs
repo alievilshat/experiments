@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Dynamic;
 
-namespace Mapper
+namespace ScriptModule
 {
     public static class TypeExtensions
     {

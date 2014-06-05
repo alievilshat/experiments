@@ -3,15 +3,15 @@
   <xsl:template match="/">
     <target>
       <mrep3>
-        <xsl:for-each select="mrep:query('select p.*, ws.title, ws.metakeywords, ws.metadescription from str_product p left join cms_websiteitems ws on ws.productid = p.id and ws.websiteid = 2 where not p.deleted and true and p.categoryid != 0 and categoryid != 1 and (p.parentid is null or p.parentid in (select id from str_product where not deleted and true and categoryid != 0 and categoryid != 1))')">
+        <xsl:for-each select="mrep:query('select p.*, ws.title, ws.metakeywords, ws.metadescription, ps.obsolete as subsidiaryobsolete from str_product p left join cms_websiteitems ws on ws.productid = p.id inner join str_brand b on b.id = p.brandid inner join str_category c on c.id = p.categoryid inner join str_productsubsidiary ps on ps.productid = p.id where not p.deleted and (p.parentid is null or p.parentid in (select id from str_product where not deleted))))')">
           <product>
-            <productid m:left="-156" m:top="66">
+            <productid m:left="-154" m:top="50">
               <xsl:value-of select="id" />
             </productid>
-            <parentid m:left="54" m:top="84">
+            <parentid m:left="44" m:top="105">
               <xsl:value-of select="user:product(parentid)" />
             </parentid>
-            <name m:left="76" m:top="424">
+            <name m:left="-256" m:top="405">
               <xsl:value-of select="name" />
             </name>
             <description m:left="-126" m:top="440">
@@ -29,25 +29,22 @@
             <producttypeid m:left="-154" m:top="168">
               <xsl:value-of select="producttype" />
             </producttypeid>
-            <externalkey m:left="-156" m:top="218">
+            <externalkey m:left="48" m:top="205">
               <xsl:value-of select="externalkey" />
             </externalkey>
-            <measurementid m:left="-344" m:top="180">
+            <measurementid m:left="-153" m:top="204">
               <xsl:value-of select="measurementid" />
             </measurementid>
-            <obsolete m:left="-128" m:top="504">
-              <xsl:value-of select="obsolete" />
-            </obsolete>
-            <standalone m:left="96" m:top="354">
+            <standalone m:left="-177" m:top="357">
               <xsl:value-of select="standalone" />
             </standalone>
-            <quantity m:left="-162" m:top="268">
+            <quantity m:left="-176" m:top="273">
               <xsl:value-of select="quantity" />
             </quantity>
-            <sequence m:left="-28" m:top="286">
+            <sequence m:left="-38" m:top="294">
               <xsl:value-of select="sequence" />
             </sequence>
-            <isbatch m:left="98" m:top="302">
+            <isbatch m:left="104" m:top="321">
               <xsl:value-of select="isbatch" />
             </isbatch>
             <onechoice m:left="-174" m:top="318">
@@ -59,20 +56,20 @@
             <minimumquantity m:left="-290" m:top="252">
               <xsl:value-of select="minimumquantity" />
             </minimumquantity>
-            <barcode m:left="-430" m:top="236">
+            <barcode m:left="-153" m:top="239">
               <xsl:value-of select="barcode" />
             </barcode>
-            <weight m:left="-510" m:top="198">
+            <weight m:left="-323" m:top="210">
               <xsl:value-of select="weight" />
             </weight>
-            <taxcategoryid>1</taxcategoryid>
-            <metatitle>
+            <taxcategoryid m:left="-111" m:top="392">1</taxcategoryid>
+            <metatitle m:left="-256" m:top="540">
               <xsl:value-of select="title" />
             </metatitle>
-            <metadescription>
+            <metadescription m:left="-251" m:top="457">
               <xsl:value-of select="metadescription" />
             </metadescription>
-            <metakeywords>
+            <metakeywords m:left="-126" m:top="520">
               <xsl:value-of select="metakeywords" />
             </metakeywords>
           </product>

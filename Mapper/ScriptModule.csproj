@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{799B0F01-CE10-4FBE-A310-9CF7FCCBC378}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ScriptModule</RootNamespace>
+    <AssemblyName>ScriptModule</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql, Version=2.0.14.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WPG, Version=4.0.5168.41668, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\WPG.dll</HintPath>
+    </Reference>
+    <Reference Include="WPGBrushEditor">
+      <HintPath>lib\WPGBrushEditor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Designers\XsltScriptDesigner\Controls\BlockControl.xaml.cs">
+      <DependentUpon>BlockControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Designers\XsltScriptDesigner\Context.cs" />
+    <Compile Include="Designers\XsltScriptDesigner\Controls\Buttons\CloseButton.xaml.cs">
+      <DependentUpon>CloseButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Designers\XsltScriptDesigner\Controls\Buttons\ExpanderButton.xaml.cs">
+      <DependentUpon>ExpanderButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Designers\XsltScriptDesigner\Controls\Schema.xaml.cs">
+      <DependentUpon>Schema.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Designers\XsltScriptDesigner\Logic\NodePath.cs" />
+    <Compile Include="Designers\XsltScriptDesigner\Logic\NodeProperties.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Designers\XsltScriptDesigner\ConnectionSetting.Designer.cs">
+      <DependentUpon>ConnectionSetting.settings</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Designers\XsltScriptDesigner\SchemaDesigner\Wizard\Database\ConnectionSettings.xaml.cs">
+      <DependentUpon>ConnectionSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Designers\XsltScriptDesigner\SchemaDesigner\Wizard\Database\DatabaseImportType.xaml.cs">
+      <DependentUpon>DatabaseImportType.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Designers\XsltScriptDesigner\SchemaDesigner\Wizard\Database\IConnectionSettings.cs" />
+    <Compile Include="Designers\XsltScriptDesigner\SchemaDesigner\Wizard\Database\ImportTables.xaml.cs">
+      <DependentUpon>ImportTables.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Designers\XsltScriptDesigner\SchemaDesigner\Wizard\Database\Query.xaml.cs">
+      <DependentUpon>Query.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Designers\XsltScriptDesigner\SchemaDesigner\Wizard\File\FileLocation.xaml.cs">
+      <DependentUpon>FileLocation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Designers\XsltScriptDesigner\SchemaDesigner\Wizard\File\FileType.xaml.cs">
+      <DependentUpon>FileType.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Designers\XsltScriptDesigner\SchemaDesigner\Wizard\File\Schemalcation.xaml.cs">
+      <DependentUpon>Schemalcation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Designers\XsltScriptDesigner\SchemaDesigner\Wizard\ImportType.xaml.cs">
+      <DependentUpon>ImportType.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Designers\XsltScriptDesigner\SchemaDesigner\Wizard\ImportWizard.xaml.cs">
+      <DependentUpon>ImportWizard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Designers\XsltScriptDesigner\SchemaDesigner\SchemaDesigner.xaml.cs">
+      <DependentUpon>SchemaDesigner.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Designers\XsltScriptDesigner\SchemaDesigner\Wizard\Webservice\WebServiceCall.xaml.cs">
+      <DependentUpon>WebServiceCall.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Designers\XsltScriptDesigner\Controls\Connector.xaml.cs">
+      <DependentUpon>Connector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Designers\UIUtils\ThumbsPathConverter.cs" />
+    <Compile Include="Designers\UIUtils\UnionConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils\CsvReader.cs" />
+    <Compile Include="Utils\CsvToXmlConverter.cs" />
+    <Compile Include="Utils\GenericEventArgs.cs" />
+    <Compile Include="Utils\Observable\ObservableCollectionDecorator.cs" />
+    <Compile Include="Utils\Observable\ObservableConverter.cs" />
+    <Compile Include="Utils\Observable\ObservableDecorator.cs" />
+    <Compile Include="Utils\Observable\ObservableDecoratorExtensions.cs" />
+    <Compile Include="Utils\TypeExtensions.cs" />
+    <Compile Include="Utils\Reference.cs" />
+    <Compile Include="Designers\UIUtils\WPFExtensions.cs" />
+    <Compile Include="Utils\XmlSchemaExtensions.cs" />
+    <Compile Include="Utils\XsdInferrer.cs" />
+    <Compile Include="Designers\XsltScriptDesigner\ViewModels\IMapperHost.cs" />
+    <Compile Include="Designers\XsltScriptDesigner\ViewModels\MapperViewModel.cs" />
+    <Compile Include="Designers\XsltScriptDesigner\Logic\TransformationBuilder.cs" />
+    <Compile Include="Designers\XsltScriptDesigner\ViewModels\ViewModelBase.cs" />
+    <Compile Include="Designers\XsltScriptDesigner\ViewModels\Xslt\XsltContentNodeViewModel.cs" />
+    <Compile Include="Designers\XsltScriptDesigner\ViewModels\Xslt\XsltForEachViewModel.cs" />
+    <Compile Include="Designers\XsltScriptDesigner\ViewModels\Xslt\XsltMixedContentViewModel.cs" />
+    <Compile Include="Designers\XsltScriptDesigner\ViewModels\Xslt\XsltRootTemplateNodeViewModel.cs" />
+    <Compile Include="Designers\XsltScriptDesigner\ViewModels\Xslt\XsltSkipNodeViewModel.cs" />
+    <Compile Include="Designers\XsltScriptDesigner\ViewModels\Xslt\XsltStylesheetViewModel.cs" />
+    <Compile Include="Designers\XsltScriptDesigner\ViewModels\Xslt\XsltTemplateNodeViewModel.cs" />
+    <Compile Include="Designers\XsltScriptDesigner\ViewModels\Xslt\XsltUnknownNodeViewModel.cs" />
+    <Compile Include="Designers\XsltScriptDesigner\ViewModels\Xslt\XsltViewModelBase.cs" />
+    <Compile Include="Scripts\IScript.cs" />
+    <Page Include="Designers\XsltScriptDesigner\Controls\BlockControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Designers\XsltScriptDesigner\Controls\Buttons\ButtonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Designers\XsltScriptDesigner\Controls\Buttons\CloseButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Designers\XsltScriptDesigner\Controls\Buttons\ExpanderButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Designers\XsltScriptDesigner\Controls\Schema.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Designers\XsltScriptDesigner\MapperControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Designers\XsltScriptDesigner\MapperControl.xaml.cs">
+      <DependentUpon>MapperControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Designers\XsltScriptDesigner\SchemaDesigner\Wizard\Database\ConnectionSettings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Designers\XsltScriptDesigner\SchemaDesigner\Wizard\Database\DatabaseImportType.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Designers\XsltScriptDesigner\SchemaDesigner\Wizard\Database\ImportTables.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Designers\XsltScriptDesigner\SchemaDesigner\Wizard\Database\Query.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Designers\XsltScriptDesigner\SchemaDesigner\Wizard\File\FileLocation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Designers\XsltScriptDesigner\SchemaDesigner\Wizard\File\FileType.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Designers\XsltScriptDesigner\SchemaDesigner\Wizard\File\Schemalcation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Designers\XsltScriptDesigner\SchemaDesigner\Wizard\ImportType.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Designers\XsltScriptDesigner\SchemaDesigner\Wizard\ImportWizard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Designers\XsltScriptDesigner\SchemaDesigner\SchemaDesigner.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Designers\XsltScriptDesigner\SchemaDesigner\Wizard\Webservice\WebServiceCall.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Designers\XsltScriptDesigner\Controls\Connector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <None Include="Designers\XsltScriptDesigner\ConnectionSetting.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>ConnectionSetting.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="lib\Mono.Security.dll" />
+    <Content Include="lib\Npgsql.dll" />
+    <Content Include="lib\WPG.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="D:\Work\Navitas\Naiton\svn\NaitonProject2014\NaitonWebServices\DatabaseImporterWebService\DatabaseImporterWebService.csproj">
+      <Project>{d159720e-476c-4f9c-a8f7-735b2853f105}</Project>
+      <Name>DatabaseImporterWebService</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

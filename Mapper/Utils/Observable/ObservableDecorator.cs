@@ -6,7 +6,7 @@ using System.Reflection;
 using WPG;
 using System;
 
-namespace Mapper
+namespace ScriptModule
 {
     public class ObservableDecorator : DynamicObject, INotifyPropertyChanged, ITypeDecorator
     {

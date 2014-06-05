@@ -3,7 +3,7 @@
   <xsl:template match="/">
     <target>
       <mrep3>
-        <xsl:for-each select="mrep:query('select * from str_productsubsidiary where productid in (select id from str_product where not deleted and true and categoryid != 0 and categoryid != 1 and (parentid is null or parentid in (select id from str_product where not deleted and true and categoryid != 0 and categoryid != 1)))')">
+        <xsl:for-each select="mrep:query('select ps.*, (case when w.id is null then 0 else 1 end) as iswebsite from str_productsubsidiary ps left join cms_websiteitems w on w.productid = ps.productid where ps.productid in (select p.id from str_product p inner join str_category c on c.id = p.categoryid where not deleted and (p.parentid is null or p.parentid in (select id from str_product where not deleted)))')">
           <productbusiness>
             <productbusinessid m:left="-110" m:top="160" xmlns:m="http://www.navitas.nl/2014/Mapper">
               <xsl:value-of select="id" />
@@ -50,6 +50,9 @@
             <creationdate m:left="62" m:top="424" xmlns:m="http://www.navitas.nl/2014/Mapper">
               <xsl:value-of select="creationdate" />
             </creationdate>
+            <iswebsite m:left="-100" m:top="442" xmlns:m="http://www.navitas.nl/2014/Mapper">
+              <xsl:value-of select="iswebsite" />
+            </iswebsite>
           </productbusiness>
         </xsl:for-each>
       </mrep3>

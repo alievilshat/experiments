@@ -3,19 +3,51 @@
   <xsl:template match="/">
     <target>
       <mrep3>
-        <xsl:for-each select="mrep:query(&quot;select * from v_files where object ilike 'Product' and objectid in (select id from str_product where not deleted and true and (parentid is null or parentid in (select id from str_product where not deleted and true)))&quot;)">
+        <xsl:for-each select="mrep:query('select id, imageheight, imagewidth, languageid, fileobjecttypeid, filename, filetype, dateuploaded, dateedited, employeeuploadedid, employeeeditedid, filesize, published, folderid from str_fileobjects where fileobjecttypeid &lt; 100 and id &gt; 219000')">
           <file>
-            <fileid m:left="-51" m:top="161">
+            <fileid m:left="-129" m:top="162">
               <xsl:value-of select="id" />
             </fileid>
-            <filetypeid m:left="-99" m:top="334">4</filetypeid>
-            <filename m:left="-118" m:top="230">
+            <imageheight m:left="-5" m:top="177">
+              <xsl:value-of select="imageheight" />
+            </imageheight>
+            <imagewidth m:left="-133" m:top="193">
+              <xsl:value-of select="imagewidth" />
+            </imagewidth>
+            <languageid m:left="-4" m:top="211">
+              <xsl:value-of select="languageid" />
+            </languageid>
+            <filetypeid m:left="-130" m:top="229">
+              <xsl:value-of select="fileobjecttypeid" />
+            </filetypeid>
+            <filename m:left="-5" m:top="248">
               <xsl:value-of select="filename" />
             </filename>
-            <extention m:left="28" m:top="262">
-              <xsl:value-of select="user:formantContentType(contenttype)" />
+            <extention m:left="-130" m:top="268">
+              <xsl:value-of select="filetype" />
             </extention>
-            <file m:left="-51" m:top="351">http://www.bodylab.nl/_images/original/<xsl:value-of select="id" /><xsl:value-of select="contenttype" />|http://www.worldofchemicals.com/Woclite/tmp/chem/no_image.gif</file>
+            <dateuploaded m:left="-3" m:top="285">
+              <xsl:value-of select="dateuploaded" />
+            </dateuploaded>
+            <dateedited m:left="-125" m:top="306">
+              <xsl:value-of select="dateedited" />
+            </dateedited>
+            <employeeuploadedid m:left="-2" m:top="324">
+              <xsl:value-of select="employeeuploadedid" />
+            </employeeuploadedid>
+            <employeeeditedid m:left="-129" m:top="341">
+              <xsl:value-of select="employeeeditedid" />
+            </employeeeditedid>
+            <filesize m:left="-2" m:top="360">
+              <xsl:value-of select="filesize" />
+            </filesize>
+            <file m:left="-131" m:top="377">http://www.moderepubliek.nl/_images/original/<xsl:value-of select="id" />.<xsl:value-of select="filetype" /></file>
+            <published m:left="-129" m:top="411">
+              <xsl:value-of select="published" />
+            </published>
+            <folderid m:left="-1" m:top="391">
+              <xsl:value-of select="folderid" />
+            </folderid>
           </file>
         </xsl:for-each>
       </mrep3>

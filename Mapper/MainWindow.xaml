@@ -1,7 +1,7 @@
-﻿<Window x:Class="Mapper.MainWindow"
+﻿<Window x:Class="ScriptModule.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:l="clr-namespace:Mapper"
+        xmlns:l="clr-namespace:ScriptModule"
         Closing="Window_Closing"
         x:Name="window"
         Title="{Binding WindowTitle, RelativeSource={RelativeSource Self}}">

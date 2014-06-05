@@ -3,7 +3,7 @@
   <xsl:template match="/">
     <target>
       <bodyview3>
-        <xsl:for-each select="bodyview:query(&quot;select * from v_files where object ilike 'Product' and objectid in (select id from str_product where not deleted and producttype = 0 and (parentid is null or parentid in (select id from str_product where not deleted and producttype = 0) )) and objectid != 705 and objectid &lt; 5181&quot;)">
+        <xsl:for-each select="bodyview:query(&quot;select * from v_files where object ilike 'Product' and objectid in (select p.id from str_product p inner join str_category c on c.id = p.categoryid where not p.deleted and (p.parentid is null or p.parentid in (select id from str_product where not deleted)))&quot;)">
           <productfile>
             <productfileid m:left="-20" m:top="162">
               <xsl:value-of select="id" />

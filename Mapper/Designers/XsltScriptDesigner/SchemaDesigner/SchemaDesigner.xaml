@@ -1,0 +1,97 @@
+﻿<Window x:Class="ScriptModule.SchemaDesigner"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:xs="clr-namespace:System.Xml.Schema;assembly=System.Xml"
+        xmlns:xl="clr-namespace:System.Xml;assembly=System.Xml"
+        xmlns:uc="clr-namespace:ScriptModule"
+        xmlns:wpg="clr-namespace:WPG;assembly=WPG"
+        Title="Schema"
+        Closing="Window_Closing">
+    <Window.Resources>
+        <uc:UnionConverter x:Key="unionConverter" />
+        <uc:ObservableConverter x:Key="observable" />
+
+        <HierarchicalDataTemplate DataType="{x:Type xs:XmlSchemaElement}">
+            <HierarchicalDataTemplate.ItemsSource>
+                <MultiBinding Converter="{StaticResource unionConverter}">
+                    <Binding Path="Annotation.Items" Converter="{StaticResource observable}" />
+                    <Binding Path="SchemaType.Attributes" Converter="{StaticResource observable}" /> 
+                    <Binding Path="SchemaType.Particle.Items" Converter="{StaticResource observable}" />
+                </MultiBinding>
+            </HierarchicalDataTemplate.ItemsSource>
+
+            <TextBlock DataContext="{Binding Converter={StaticResource observable}}" Text="{Binding Name}">
+                <TextBlock.ContextMenu>
+                    <ContextMenu Name="Designer_menu">
+                        <MenuItem Header="Add Attribute" Click="addAttr_Click" />
+                        <MenuItem Header="Add Element" Click="addElem_Click" />
+                        <Separator />
+                        <MenuItem Header="Import Wizard" Click="importWizard_Click" />
+                        <Separator />
+                        <MenuItem Header="Remove" Click="deleteElem_Click" />
+                    </ContextMenu>
+                </TextBlock.ContextMenu>
+            </TextBlock>
+        </HierarchicalDataTemplate>
+
+        <HierarchicalDataTemplate DataType="{x:Type xs:XmlSchemaAppInfo}">
+            <HierarchicalDataTemplate.ItemsSource>
+                <Binding Path="Markup" Converter="{StaticResource observable}" />
+            </HierarchicalDataTemplate.ItemsSource>
+
+            <TextBlock Text="[appinfo]" />
+        </HierarchicalDataTemplate>
+
+        <DataTemplate DataType="{x:Type xl:XmlElement}">
+            <StackPanel DataContext="{Binding Converter={StaticResource observable}}" Orientation="Horizontal">
+                <TextBlock Text="{Binding Name}" FontStyle="Italic" />
+                <TextBlock Text=": " />
+                <TextBlock Text="{Binding InnerText}" FontStyle="Italic" />
+            </StackPanel>
+        </DataTemplate>
+
+        <HierarchicalDataTemplate DataType="{x:Type xs:XmlSchemaChoice}">
+            <HierarchicalDataTemplate.ItemsSource>
+                <Binding  Path="Items" Converter="{StaticResource observable}" />
+            </HierarchicalDataTemplate.ItemsSource>
+            
+            <TextBlock Text="[choise]" />
+        </HierarchicalDataTemplate>
+        
+        <DataTemplate DataType="{x:Type xs:XmlSchemaAttribute}">
+            <TextBlock FontStyle="Italic" DataContext="{Binding Converter={StaticResource observable}}" Text="{Binding Name}">
+                 <TextBlock.ContextMenu>
+                     <ContextMenu Name="Designer_menu_attr">
+                        <MenuItem Header="Remove" Name="deleteAttr" Click="deleteAttr_Click"/>
+                     </ContextMenu>
+                  </TextBlock.ContextMenu>
+            </TextBlock>
+        </DataTemplate>
+
+        <Style TargetType="{x:Type TreeViewItem}">
+            <Setter Property="IsExpanded" Value="True" />
+            <EventSetter Event="TreeViewItem.ContextMenuOpening" Handler="schemaTree_PreviewMouseRightButtonDown"/>
+        </Style>
+    </Window.Resources>
+    
+    <TabControl TabStripPlacement="Bottom" SelectionChanged="TabControl_SelectionChanged">
+        <TabItem x:Name="designerTab" Header="Designer">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <TreeView x:Name="schemaTree" Grid.Column="0" ItemsSource="{Binding Schema.Items, Converter={StaticResource observable}}" />
+                <wpg:PropertyGrid Grid.Column="1" Instance="{Binding SelectedItem, ElementName=schemaTree, Converter={StaticResource observable}}" PropertyFilter="PropertyFilter"  />
+            </Grid>
+        </TabItem>
+        
+        <TabItem x:Name="sourceTab" Header="Source">
+            <Grid>
+                <TextBox x:Name="schemaCode" Text="{Binding Code}" />
+            </Grid>
+        </TabItem>
+       
+    </TabControl>
+</Window>

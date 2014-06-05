@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bodyview="http://www.navitas.nl/2014/Mapper/dbaccess/bodyview" xmlns:m="http://www.navitas.nl/2014/Mapper">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bodyview="http://www.navitas.nl/2014/Mapper/dbaccess/bodyview" xmlns:m="http://www.navitas.nl/2014/Mapper" xmlns:user="http://www.navitas.nl/2014/Mapper/scripts" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
   <xsl:template match="/">
     <target>
       <bodyview3>
-        <xsl:for-each select="bodyview:query('select * from str_documenttemplatedetails')">
+        <xsl:for-each select="bodyview:query(user:query())">
           <templatedetails>
-            <templatedetailsid m:left="40" m:top="158">pk:templatedetails(document-<xsl:value-of select="id" />)</templatedetailsid>
+            <templatedetailsid m:left="30" m:top="38">pk:templatedetails(document-<xsl:value-of select="id" />)</templatedetailsid>
             <xsl:if test="businessid != 0">
-              <businessid m:left="-92" m:top="176">
+              <businessid m:left="-87" m:top="152">
                 <xsl:value-of select="businessid" />
               </businessid>
             </xsl:if>
-            <templateid m:left="40" m:top="191">fk:template(document-<xsl:value-of select="templateid" />)</templateid>
+            <templateid m:left="37" m:top="180">fk:template(document - <xsl:value-of select="templatename" />)</templateid>
             <templatesubject m:left="-94" m:top="209">
               <xsl:value-of select="templatesubject" />
             </templatesubject>
@@ -27,4 +27,10 @@
       </bodyview3>
     </target>
   </xsl:template>
+  <msxsl:script implements-prefix="user" language="CSharp"><![CDATA[
+    public string query()
+    {
+        return "select t.templatename, td.* from str_documenttemplatedetails td inner join str_documenttemplate t on t.id = td.templateid and t.systemtype = 0";
+    }
+    ]]></msxsl:script>
 </xsl:stylesheet>

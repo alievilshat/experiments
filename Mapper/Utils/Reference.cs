@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Mapper
+namespace ScriptModule
 {
     public class Reference<T>
         where T:class

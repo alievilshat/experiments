@@ -78,6 +78,7 @@
             <businessid m:left="11" m:top="644">
               <xsl:value-of select="businessid" />
             </businessid>
+            <billingaddressid m:left="18" m:top="768">fk:address(company-<xsl:value-of select="id" />)</billingaddressid>
           </person>
         </xsl:for-each>
       </bodyview3>
