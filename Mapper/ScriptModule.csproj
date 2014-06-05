@@ -280,7 +280,7 @@
     <Content Include="lib\WPG.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="D:\Work\Navitas\Naiton\svn\NaitonProject2014\NaitonWebServices\DatabaseImporterWebService\DatabaseImporterWebService.csproj">
+    <ProjectReference Include="..\..\svn\NaitonProject2014\NaitonWebServices\DatabaseImporterWebService\DatabaseImporterWebService.csproj">
       <Project>{d159720e-476c-4f9c-a8f7-735b2853f105}</Project>
       <Name>DatabaseImporterWebService</Name>
     </ProjectReference>
