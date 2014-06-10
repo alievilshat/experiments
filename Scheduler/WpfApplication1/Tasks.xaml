@@ -1,0 +1,24 @@
+﻿<Window x:Class="WpfApplication1.TasksWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Window1" Height="451" Width="653">
+    <DockPanel>
+        <DockPanel.CommandBindings>
+            <CommandBinding Command="New" Executed="AddTask" />
+            <CommandBinding Command="Open" CanExecute="CheckIfItemSelected" Executed="OpenSchedule" />
+            <CommandBinding Command="Delete" CanExecute="CheckIfItemSelected" Executed="DeleteSchedule" />
+            <CommandBinding Command="Save" Executed="Synchronize" />
+        </DockPanel.CommandBindings>
+        <ToolBarPanel DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Content="Add" Width="120" Command="New"  />
+                <Button Content="Edit"  Width="120" Command="Open" />
+                <Button Content="Remove" Width="120" Command="Delete"  />
+                <Button Content="Synchronize" Width="120" Command="Save" VerticalAlignment="Top" />
+            </ToolBar>
+        </ToolBarPanel>
+        <GroupBox  Header="Tasks">
+            <ListView ItemsSource="{Binding ScriptSchedules}" DisplayMemberPath="ScheduleName" SelectedItem="{Binding CurrentScriptSchedule}" />
+        </GroupBox>
+    </DockPanel>
+</Window>

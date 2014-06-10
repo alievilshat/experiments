@@ -1,0 +1,68 @@
+c:\Users\ADNAN_cp\Documents\Visual Studio 2010\Projects\Scheduler\WpfApplication1\bin\Debug\WpfApplication1.exe
+c:\Users\ADNAN_cp\Documents\Visual Studio 2010\Projects\Scheduler\WpfApplication1\bin\Debug\WpfApplication1.pdb
+c:\Users\ADNAN_cp\Documents\Visual Studio 2010\Projects\Scheduler\WpfApplication1\bin\Debug\Xceed.Wpf.DataGrid.dll
+c:\Users\ADNAN_cp\Documents\Visual Studio 2010\Projects\Scheduler\WpfApplication1\bin\Debug\Xceed.Wpf.Toolkit.dll
+c:\Users\ADNAN_cp\Documents\Visual Studio 2010\Projects\Scheduler\WpfApplication1\obj\x86\Debug\MainWindow.baml
+c:\Users\ADNAN_cp\Documents\Visual Studio 2010\Projects\Scheduler\WpfApplication1\obj\x86\Debug\MainWindow.g.cs
+c:\Users\ADNAN_cp\Documents\Visual Studio 2010\Projects\Scheduler\WpfApplication1\obj\x86\Debug\App.g.cs
+c:\Users\ADNAN_cp\Documents\Visual Studio 2010\Projects\Scheduler\WpfApplication1\obj\x86\Debug\WpfApplication1_MarkupCompile.cache
+c:\Users\ADNAN_cp\Documents\Visual Studio 2010\Projects\Scheduler\WpfApplication1\obj\x86\Debug\WpfApplication1.g.resources
+c:\Users\ADNAN_cp\Documents\Visual Studio 2010\Projects\Scheduler\WpfApplication1\obj\x86\Debug\WpfApplication1.Properties.Resources.resources
+c:\Users\ADNAN_cp\Documents\Visual Studio 2010\Projects\Scheduler\WpfApplication1\obj\x86\Debug\scheduler.csproj.GenerateResource.Cache
+c:\Users\ADNAN_cp\Documents\Visual Studio 2010\Projects\Scheduler\WpfApplication1\obj\x86\Debug\WpfApplication1.exe
+c:\Users\ADNAN_cp\Documents\Visual Studio 2010\Projects\Scheduler\WpfApplication1\obj\x86\Debug\WpfApplication1.pdb
+C:\Users\ADNAN_cp\Documents\Visual Studio 2010\Projects\Scheduler\WpfApplication1\obj\x86\Debug\scheduler.csprojResolveAssemblyReference.cache
+C:\Users\ADNAN_cp\Documents\Visual Studio 2010\Projects\Scheduler\WpfApplication1\obj\x86\Debug\Interop.TaskScheduler.dll
+C:\Users\ADNAN_cp\Documents\Visual Studio 2010\Projects\Scheduler\WpfApplication1\obj\x86\Debug\scheduler.csproj.ResolveComReference.cache
+C:\Users\ADNAN_cp\Documents\Visual Studio 2010\Projects\Scheduler\WpfApplication1\bin\Debug\Microsoft.Win32.TaskScheduler.dll
+C:\Users\ADNAN_cp\Documents\Visual Studio 2010\Projects\Scheduler\WpfApplication1\bin\Debug\de-DE\Microsoft.Win32.TaskScheduler.resources.dll
+C:\Users\ADNAN_cp\Documents\Visual Studio 2010\Projects\Scheduler\WpfApplication1\bin\Debug\it\Microsoft.Win32.TaskScheduler.resources.dll
+C:\Users\ADNAN_cp\Documents\Visual Studio 2010\Projects\Scheduler\WpfApplication1\bin\Debug\zh-CN\Microsoft.Win32.TaskScheduler.resources.dll
+C:\Users\ADNAN_cp\Documents\Visual Studio 2010\Projects\Scheduler\WpfApplication1\bin\Debug\Interop.TaskScheduler.dll
+C:\Users\ADNAN_cp\Documents\Visual Studio 2010\Projects\Scheduler\WpfApplication1\bin\Debug\Microsoft.Win32.TaskScheduler.pdb
+C:\Users\ADNAN_cp\Documents\Visual Studio 2010\Projects\Scheduler\WpfApplication1\bin\Debug\npgsql.dll
+C:\Users\ADNAN_cp\Documents\Visual Studio 2010\Projects\Scheduler\WpfApplication1\bin\Debug\mono.security.dll
+C:\Users\ADNAN_cp\Documents\Visual Studio 2010\Projects\Scheduler\WpfApplication1\obj\x86\Debug\Tasks.baml
+C:\Users\ADNAN_cp\Documents\Visual Studio 2010\Projects\Scheduler\WpfApplication1\obj\x86\Debug\Tasks.g.cs
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\Scheduler\WpfApplication1\obj\x86\Debug\Interop.TaskScheduler.dll
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\Scheduler\WpfApplication1\obj\x86\Debug\scheduler.csproj.ResolveComReference.cache
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\Scheduler\WpfApplication1\obj\x86\Debug\WpfApplication1.exe
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\Scheduler\WpfApplication1\obj\x86\Debug\WpfApplication1.pdb
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\Scheduler\WpfApplication1\obj\x86\Debug\scheduler.csprojResolveAssemblyReference.cache
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\Scheduler\WpfApplication1\obj\x86\Debug\Tasks.baml
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\Scheduler\WpfApplication1\obj\x86\Debug\Tasks.g.cs
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\Scheduler\WpfApplication1\obj\x86\Debug\App.g.cs
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\Scheduler\WpfApplication1\obj\x86\Debug\WpfApplication1_MarkupCompile.cache
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\Scheduler\WpfApplication1\obj\x86\Debug\WpfApplication1.g.resources
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\Scheduler\WpfApplication1\obj\x86\Debug\WpfApplication1.Properties.Resources.resources
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\Scheduler\WpfApplication1\obj\x86\Debug\scheduler.csproj.GenerateResource.Cache
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\Scheduler\WpfApplication1\obj\x86\Debug\ScheduleSettignsWindow.baml
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\Scheduler\WpfApplication1\obj\x86\Debug\ScheduleSettignsWindow.g.cs
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\Scheduler\WpfApplication1\obj\x86\Debug\WpfApplication1_Content.g.cs
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\Scheduler\WpfApplication1\bin\Debug\WpfApplication1.exe
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\Scheduler\WpfApplication1\bin\Debug\WpfApplication1.pdb
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\Scheduler\WpfApplication1\bin\Debug\Microsoft.Win32.TaskScheduler.dll
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\Scheduler\WpfApplication1\bin\Debug\Interop.TaskScheduler.dll
+C:\Users\ADNAN_cp\Desktop\Scheduler\WpfApplication1\obj\x86\Debug\Interop.TaskScheduler.dll
+C:\Users\ADNAN_cp\Desktop\Scheduler\WpfApplication1\obj\x86\Debug\scheduler.csproj.ResolveComReference.cache
+C:\Users\ADNAN_cp\Desktop\Scheduler\WpfApplication1\obj\x86\Debug\WpfApplication1.exe
+C:\Users\ADNAN_cp\Desktop\Scheduler\WpfApplication1\obj\x86\Debug\WpfApplication1.pdb
+F:\experiments\Scheduler\WpfApplication1\obj\x86\Debug\Interop.TaskScheduler.dll
+F:\experiments\Scheduler\WpfApplication1\obj\x86\Debug\scheduler.csproj.ResolveComReference.cache
+F:\experiments\Scheduler\WpfApplication1\obj\x86\Debug\WpfApplication1.exe
+F:\experiments\Scheduler\WpfApplication1\obj\x86\Debug\WpfApplication1.pdb
+F:\experiments\Scheduler\WpfApplication1\obj\x86\Debug\scheduler.csprojResolveAssemblyReference.cache
+F:\experiments\Scheduler\WpfApplication1\bin\Debug\WpfApplication1.exe
+F:\experiments\Scheduler\WpfApplication1\bin\Debug\WpfApplication1.pdb
+F:\experiments\Scheduler\WpfApplication1\bin\Debug\Microsoft.Win32.TaskScheduler.dll
+F:\experiments\Scheduler\WpfApplication1\bin\Debug\Interop.TaskScheduler.dll
+F:\experiments\Scheduler\WpfApplication1\obj\x86\Debug\ScheduleSettignsWindow.baml
+F:\experiments\Scheduler\WpfApplication1\obj\x86\Debug\Tasks.baml
+F:\experiments\Scheduler\WpfApplication1\obj\x86\Debug\ScheduleSettignsWindow.g.cs
+F:\experiments\Scheduler\WpfApplication1\obj\x86\Debug\Tasks.g.cs
+F:\experiments\Scheduler\WpfApplication1\obj\x86\Debug\App.g.cs
+F:\experiments\Scheduler\WpfApplication1\obj\x86\Debug\WpfApplication1_Content.g.cs
+F:\experiments\Scheduler\WpfApplication1\obj\x86\Debug\WpfApplication1_MarkupCompile.cache
+F:\experiments\Scheduler\WpfApplication1\obj\x86\Debug\WpfApplication1.g.resources
+F:\experiments\Scheduler\WpfApplication1\obj\x86\Debug\WpfApplication1.Properties.Resources.resources
+F:\experiments\Scheduler\WpfApplication1\obj\x86\Debug\scheduler.csproj.GenerateResource.Cache

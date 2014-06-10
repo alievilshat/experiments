@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="Scheduler">
+</Property><Property Name="Projektmappendatei" Value="F:\experiments\Scheduler\Scheduler.sln">
+</Property><Property Name="Date" Value="Freitag, 6. Juni 2014">
+</Property><Property Name="Time" Value="17:33">
+</Property></Properties><Event ErrorLevel="0" Project="scheduler" Source="WpfApplication1\scheduler.csproj" Description="Die Projektdatei erfordert keine Konvertierung.">
+</Event><Event ErrorLevel="3" Project="scheduler" Source="WpfApplication1\scheduler.csproj" Description="Keine Konvertierung erforderlich">
+</Event><Event ErrorLevel="0" Project="" Source="Scheduler.sln" Description="Die Projektmappe wurde erfolgreich konvertiert.">
+</Event><Event ErrorLevel="3" Project="" Source="Scheduler.sln" Description="Converted">
+</Event></UpgradeLog>
