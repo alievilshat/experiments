@@ -132,18 +132,25 @@
     <Compile Include="Designers\UIUtils\UnionConverter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Utils\CsvReader.cs" />
-    <Compile Include="Utils\CsvToXmlConverter.cs" />
-    <Compile Include="Utils\GenericEventArgs.cs" />
+    <Compile Include="Scripts\CSharpScript.cs" />
+    <Compile Include="Scripts\ScriptBase.cs" />
+    <Compile Include="Scripts\ScriptButton.cs" />
+    <Compile Include="Scripts\ScriptComposition.cs" />
+    <Compile Include="Scripts\UIScript.cs" />
+    <Compile Include="Scripts\XsltScript.cs" />
+    <Compile Include="Utils\Compiler.cs" />
+    <Compile Include="Utils\InputFormats\CsvReader.cs" />
+    <Compile Include="Utils\InputFormats\CsvToXmlConverter.cs" />
+    <Compile Include="Utils\Common\GenericEventArgs.cs" />
     <Compile Include="Utils\Observable\ObservableCollectionDecorator.cs" />
     <Compile Include="Utils\Observable\ObservableConverter.cs" />
     <Compile Include="Utils\Observable\ObservableDecorator.cs" />
     <Compile Include="Utils\Observable\ObservableDecoratorExtensions.cs" />
-    <Compile Include="Utils\TypeExtensions.cs" />
-    <Compile Include="Utils\Reference.cs" />
+    <Compile Include="Utils\Common\TypeExtensions.cs" />
+    <Compile Include="Utils\Common\Reference.cs" />
     <Compile Include="Designers\UIUtils\WPFExtensions.cs" />
-    <Compile Include="Utils\XmlSchemaExtensions.cs" />
-    <Compile Include="Utils\XsdInferrer.cs" />
+    <Compile Include="Utils\InputFormats\XmlSchemaExtensions.cs" />
+    <Compile Include="Utils\InputFormats\XsdInferrer.cs" />
     <Compile Include="Designers\XsltScriptDesigner\ViewModels\IMapperHost.cs" />
     <Compile Include="Designers\XsltScriptDesigner\ViewModels\MapperViewModel.cs" />
     <Compile Include="Designers\XsltScriptDesigner\Logic\TransformationBuilder.cs" />
