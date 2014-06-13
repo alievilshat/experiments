@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Xml.Schema;
+using ScriptModule.Utils.Extensions;
 
 namespace ScriptModule
 {

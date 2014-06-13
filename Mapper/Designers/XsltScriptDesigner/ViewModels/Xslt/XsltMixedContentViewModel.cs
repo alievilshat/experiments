@@ -8,6 +8,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Xml;
+using ScriptModule.Utils.Extensions;
 
 namespace ScriptModule
 {

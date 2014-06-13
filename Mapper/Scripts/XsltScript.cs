@@ -8,7 +8,7 @@ namespace ScriptModule.Scripts
 {
     public class XsltScript : ScriptBase
     {
-        public override void Execute()
+        protected override object ExecuteScript()
         {
             throw new NotImplementedException();
         }

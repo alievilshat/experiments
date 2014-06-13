@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptModule", "Mapper\ScriptModule.csproj", "{799B0F01-CE10-4FBE-A310-9CF7FCCBC378}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptModuleWebService", "ScriptModuleWebService\ScriptModuleWebService.csproj", "{CE59874F-0F05-4225-BEF2-CCD52CF7C13F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{799B0F01-CE10-4FBE-A310-9CF7FCCBC378}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{799B0F01-CE10-4FBE-A310-9CF7FCCBC378}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{799B0F01-CE10-4FBE-A310-9CF7FCCBC378}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{799B0F01-CE10-4FBE-A310-9CF7FCCBC378}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE59874F-0F05-4225-BEF2-CCD52CF7C13F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE59874F-0F05-4225-BEF2-CCD52CF7C13F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE59874F-0F05-4225-BEF2-CCD52CF7C13F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE59874F-0F05-4225-BEF2-CCD52CF7C13F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

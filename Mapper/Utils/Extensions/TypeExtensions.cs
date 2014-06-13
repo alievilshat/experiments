@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Dynamic;
 
-namespace ScriptModule
+namespace ScriptModule.Utils.Extensions
 {
     public static class TypeExtensions
     {

@@ -1,0 +1,12 @@
+C:\Work\rep\ScriptModuleWebService\bin\ScriptModuleWebService.dll.config
+C:\Work\rep\ScriptModuleWebService\bin\ScriptModuleWebService.dll
+C:\Work\rep\ScriptModuleWebService\bin\ScriptModuleWebService.pdb
+C:\Work\rep\ScriptModuleWebService\bin\Mono.Security.dll
+C:\Work\rep\ScriptModuleWebService\bin\Npgsql.dll
+C:\Work\rep\ScriptModuleWebService\bin\ScriptModule.exe
+C:\Work\rep\ScriptModuleWebService\bin\WPG.dll
+C:\Work\rep\ScriptModuleWebService\bin\WPGBrushEditor.dll
+C:\Work\rep\ScriptModuleWebService\bin\ScriptModule.pdb
+C:\Work\rep\ScriptModuleWebService\obj\Release\ScriptModuleWebService.csprojResolveAssemblyReference.cache
+C:\Work\rep\ScriptModuleWebService\obj\Release\ScriptModuleWebService.dll
+C:\Work\rep\ScriptModuleWebService\obj\Release\ScriptModuleWebService.pdb

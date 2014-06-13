@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Media;
+using ScriptModule.Utils.Extensions;
 
 namespace ScriptModule
 {

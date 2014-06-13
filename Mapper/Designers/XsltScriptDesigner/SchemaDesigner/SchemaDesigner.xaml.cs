@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Xml.Schema;
+using ScriptModule.Utils.Extensions;
 using WPG.Data;
 
 namespace ScriptModule

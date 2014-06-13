@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ScriptModule
+namespace ScriptModule.Utils.Common
 {
     public class GenericEventArgs<T> : EventArgs
     {

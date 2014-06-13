@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Xml;
 using System.Xml.Schema;
 using Npgsql;
+using ScriptModule.Utils.Extensions;
 
 namespace ScriptModule
 {

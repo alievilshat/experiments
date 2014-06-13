@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Markup;
+using ScriptModule.Utils;
 
 namespace ScriptModule.Scripts
 {
@@ -14,16 +15,32 @@ namespace ScriptModule.Scripts
         public string MainMethod { get; set; }
         public List<string> Dependencies { get; private set; }
 
+        /// <summary>
+        /// Semicolon separated list of dependencies
+        /// </summary>
+        public string DependenciesString 
+        {
+            get { return string.Join(";", Dependencies); }
+            set
+            {
+                Dependencies.Clear();
+                Dependencies.AddRange(value.Split(';'));
+            }
+        }
+
         public CSharpScript()
         {
             Dependencies = new List<string>();
         }
 
-        public override void Execute()
+        protected override object ExecuteScript()
         {
+            OnProgressChanged("Initialization", 0);
             var method = GetMainMethod();
             var instance = GetInstance();
-            method.Invoke(instance, new object[0]);
+
+            OnProgressChanged("Execution", 20);
+            return method.Invoke(instance, new object[0]);
         }
 
         private Assembly _compiledAssembly;
@@ -51,7 +68,7 @@ namespace ScriptModule.Scripts
             return GetMethod(getMainMethodName());
         }
 
-        private Dictionary<string, MethodInfo> _methods = new Dictionary<string, MethodInfo>();
+        private readonly Dictionary<string, MethodInfo> _methods = new Dictionary<string, MethodInfo>();
         public MethodInfo GetMethod(string methodName)
         {
             MethodInfo res;

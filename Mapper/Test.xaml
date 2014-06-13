@@ -1,0 +1,229 @@
+﻿<sm:CSharpScript xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+                 xmlns:sm="clr-namespace:ScriptModule.Scripts"
+                 DependenciesString="Npgsql.dll;Mono.Security.dll">
+<![CDATA[ 
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Linq;
+using WebServiceUtils;
+
+namespace ImportWebProducts
+{
+    class WebProducts
+    {
+        private static readonly string[] variants = new string[8]{ "\"size\"", "\"material_selectbox\"", "\"theme_image_selectbox_variant\"", "\"area_selectbox_variant\"", 
+            "\"printing_type\"", "\"smaken\"", "\"inhoud\"", "\"colour\"" };
+
+        public static string con = ConfigurationManager.ConnectionStrings["Conn"].ToString();
+
+        public static string execute()
+        {
+            const string webproduct = "webproduct";
+
+            // Drop table
+            DbUtils.Query("DROP TABLE IF EXISTS " + webproduct + " CASCADE", con);
+
+            // Create table
+            var columns = new List<string[]> {
+                  new[] { "productid", "INTEGER NOT NULL", "p.productid" },
+                  new[] { "parentid", "INTEGER", "p.parentid" },
+                  new[] { "businessid", "INTEGER NOT NULL", "pb.businessid" },
+                  new[] { "businessname", "VARCHAR", "translation_gettranslation(b.languageid, 'company', 'companyname', b.companyid, b.companyname)" },
+                  new[] { "name", "VARCHAR", "translation_gettranslation(b.languageid, 'product', 'name', p.productid, p.name)" },
+                  new[] { "description", "VARCHAR", "translation_gettranslation(b.languageid, 'product', 'description', p.productid, p.description)" },
+                  new[] { "largedescription", "VARCHAR", "translation_gettranslation(b.languageid, 'product', 'largedescription', p.productid, p.largedescription)" },
+                  new[] { "defaultfilename", "VARCHAR", @"(select f.fileid || '.' || f.extention as defaultfilename from file f 
+                                                    inner join filelink fl on  (f.fileid = fl.fileid and fl.filetypeid = 4 and fl.referenceid = p.productid )
+                                                    order by fl.isdefault desc, fl.sequence 
+                                                    limit 1)" },
+                  new[] { "secondfilename", "VARCHAR", @"(select f.fileid || '.' || f.extention as defaultfilename from file f 
+                                                    inner join filelink fl on  (f.fileid = fl.fileid and fl.filetypeid = 4 and fl.referenceid = p.productid )
+                                                    order by fl.isdefault desc, fl.sequence 
+                                                    offset 1 limit 1)" },
+                  new[] { "isrelatedcategory", "BOOLEAN NOT NULL", "(p.categoryid <> pc.categoryid)" },
+                  new[] { "categoryid", "INTEGER NOT NULL", "c.categoryid" },
+                  new[] { "categoryname", "VARCHAR", "translation_gettranslation(b.languageid, 'category', 'categoryname', c.categoryid, c.categoryname)" },
+                  new[] { "brandid", "INTEGER NOT NULL", "br.brandid" },
+                  new[] { "brandname", "VARCHAR", "translation_gettranslation(b.languageid, 'brand', 'brandname', c.categoryid, br.brandname)" },
+                  new[] { "specialoffer", "BOOLEAN NOT NULL", "pb.specialoffer" },
+                  new[] { "price", "NUMERIC NOT NULL", "pb.salesprice" },
+                  new[] { "buyprice", "NUMERIC NOT NULL", "pb.buyprice" },
+                  new[] { "tax", "NUMERIC NOT NULL", "t.taxvalue" },
+                  new[] { "producttypeid", "NUMERIC NOT NULL", "p.producttypeid" },
+                  new[] { "discount", "NUMERIC NOT NULL", @"COALESCE((SELECT dq.percentage 
+                                                    FROM discountgroup dg
+                                                    INNER join discountobject dobj ON dobj.groupid = dg.discountgroupid 
+                                                    INNER join discountquantity dq ON dq.groupid = dg.discountgroupid 
+                                                    WHERE businessid = pb.businessid 
+                                                        AND discounttypeid = 2
+                                                        AND dq.quantity = 1
+                                                        AND (dobj.objecttypeid = 4 AND dobj.itemid = p.productid OR
+                                                            dobj.objecttypeid = 3 AND dobj.itemid = p.brandid OR
+                                                            dobj.objecttypeid = 2 AND dobj.itemid = p.categoryid OR
+                                                            dobj.objecttypeid = 1 AND dobj.itemid = 1)
+                                                        AND COALESCE(dg.expirationdate, now()) >= now() 
+                                                    ORDER BY dq.quantity DESC, dobj.objecttypeid DESC, dg.discountgroupid DESC LIMIT 1
+                                                ), 0) / 100" },
+                  new[] { "hasamountdiscount", "BOOLEAN NOT NULL", @"COALESCE((SELECT COUNT(dg.discountgroupid) > 0
+                                                    FROM discountgroup dg
+                                                    INNER join discountobject dobj ON dobj.groupid = dg.discountgroupid 
+                                                    WHERE  dg.businessid = pb.businessid  AND  dg.discounttypeid = 7
+                                                        AND (dobj.objecttypeid = 4 AND dobj.itemid = p.productid OR
+                                                            dobj.objecttypeid = 3 AND dobj.itemid = p.brandid OR
+                                                            dobj.objecttypeid = 2 AND dobj.itemid = p.categoryid OR
+                                                            dobj.objecttypeid = 1 AND dobj.itemid = 1)
+                                                        AND COALESCE(dg.expirationdate, now()) >= now()), false)" },
+                  new[] { "date", "TIMESTAMP WITHOUT TIME ZONE NOT NULL", "pb.creationdate" },
+                  new[] { "isstandalone", "BOOLEAN DEFAULT false NOT NULL", "(p.parentid IS NULL OR p.standalone)" },
+                  new[] { "manufacturercode", "VARCHAR NOT NULL", "p.manufacturercode" },
+                  new[] { "measurement", "VARCHAR", "translation_gettranslation(b.languageid, 'measurement', 'name', m.measurementid, m.name)" },
+                  new[] { "onechoice", "BOOLEAN DEFAULT false NOT NULL", "COALESCE(p.onechoice, false)" },
+                  new[] { "minimumquantity", "INTEGER NOT NULL", "COALESCE(p.minimumquantity, 0)" },
+                  new[] { "barcode", "VARCHAR", "p.barcode" },
+                  new[] { "weight", "NUMERIC NOT NULL", "COALESCE(p.weight, 0)" },
+                  new[] { "obsolete", "BOOLEAN DEFAULT false NOT NULL", "pb.obsolete" },
+                  
+                  new[] { "averagerating", "INTEGER NOT NULL", "(SELECT COALESCE(SUM(rating) / COUNT(reviewid), 0) FROM review WHERE verified = true AND businessid = pb.businessid AND CASE WHEN (p.parentid IS NULL OR p.standalone) = true THEN  productid = ANY(ARRAY(SELECT productid FROM product where productid = p.productid OR parentid = p.productid)) ELSE productid = p.productid END)"},
+                  new[] { "countreviews", "INTEGER NOT NULL", "(SELECT COALESCE(COUNT(reviewid), 0) FROM review WHERE verified = true AND businessid = pb.businessid AND CASE WHEN (p.parentid IS NULL OR p.standalone) = true THEN  productid = ANY(ARRAY(SELECT productid FROM product where productid = p.productid OR parentid = p.productid)) ELSE productid = p.productid END)"},
+
+                  new[] { "quantityinstock", "NUMERIC NOT NULL", "(SELECT COALESCE(sum(COALESCE(sp.quantityinstock, 0)), 0) FROM stockproduct as sp WHERE sp.productid = pb.productid AND sp.businessid = pb.businessid)"},
+                  new[] { "orderscount", "INTEGER NOT NULL", "COALESCE((select count(ord.productid) from orderdetails ord left join orders od on (ord.orderid = od.orderid)  where ord.productid = pb.productid and  od.businessid = pb.businessid),0)" },
+                  new[] { "title", "VARCHAR", "translation_gettranslation(b.languageid, 'product', 'metatitle', p.productid, p.metatitle)" },
+                  new[] { "metadescription", "VARCHAR", "translation_gettranslation(b.languageid, 'product', 'metadescription', p.productid, p.metadescription)" },
+                  new[] { "metakeywords", "VARCHAR", "translation_gettranslation(b.languageid, 'product', 'metakeywords', p.productid, p.metakeywords)" },
+                  new[] { "searchvector", "tsvector", @"to_tsvector(p.productid
+		                        || ' ' || COALESCE(p.manufacturercode, '')
+		                        || ' ' || COALESCE(p.barcode, '')
+		                        || ' ' || COALESCE(translation_gettranslation(b.languageid, 'product', 'name', p.productid, p.name), '')
+		                        || ' ' || COALESCE(translation_gettranslation(b.languageid, 'company', 'companyname', b.companyid, b.companyname), '')
+		                        || ' ' || COALESCE(translation_gettranslation(b.languageid, 'product', 'description', p.productid, p.description), '')
+                                || ' ' || COALESCE(translation_gettranslation(b.languageid, 'product', 'largedescription', p.productid, p.largedescription), '')
+		                        || ' ' || COALESCE(translation_gettranslation(b.languageid, 'product', 'metatitle', p.productid, p.metatitle), '')
+                                || ' ' || COALESCE(translation_gettranslation(b.languageid, 'product', 'metadescription', p.productid, p.metadescription), '')
+                                || ' ' || COALESCE(translation_gettranslation(b.languageid, 'product', 'metakeywords', p.productid, p.metakeywords), '')
+		                        || ' ' || COALESCE((
+                                            SELECT SUM(COALESCE(pd.featurevalue, '') || ' ' || COALESCE(pd.featurememo, '')) 
+                                            FROM productdetails pd
+                                            JOIN feature f ON f.featureid = pd.featureid AND f.typeid = 0
+                                            WHERE pd.productid = p.productid
+                                          ), '')
+                                || ' ' || COALESCE(translation_gettranslation(b.languageid, 'category', 'categoryname', c.categoryid, c.categoryname), '')                               
+		                        )" },
+                 new[] {"colorhex", "VARCHAR", @"(SELECT w.hex FROM productdetails d 
+                                                INNER JOIN featurevalue v ON d.featurevalueid = v.featurevalueid
+                                                INNER JOIN webcolor w ON w.Id = v.externalvalueid
+                                                WHERE d.productid = p.productid AND d.featureid = 96)"}
+            };
+
+            var extracols = DbUtils.Query(@"SELECT first(featureid) as featureid, name 
+                                            FROM feature
+                                            WHERE typeid < 100
+                                            GROUP BY name", con);
+            columns.AddRange(extracols.Rows.Cast<DataRow>().Select(i => new[] {
+                    "\"" + i["name"].ToString().Replace(' ', '_').ToLower() + "\"",
+                    "VARCHAR",
+                    string.Format("COALESCE((SELECT v.optionvalue FROM productdetails d "
+                                + "INNER JOIN featurevalue v ON d.featurevalueid = v.featurevalueid " 
+                                + "WHERE d.featureid = {0} AND d.productid = p.productid), '')", i["featureid"])
+                }));
+
+            //var b = variants.Where(w => !columns.Any(a => a[0] == w)).Select(s => s).ToArray();
+            columns.AddRange(variants.Where(w => !columns.Any(a => a[0] == w)).Select(s => new string[] { s, "VARCHAR", "null" }));
+
+            var from = @"FROM product p
+            INNER JOIN productbusiness pb ON pb.productid = p.productid and pb.iswebsite
+            INNER JOIN company b ON b.companyid = pb.businessid
+            INNER JOIN brand br ON br.brandid = p.brandid
+            INNER JOIN address ba ON ba.addressid = b.addressid
+            INNER JOIN (
+		            SELECT productid, categoryid FROM product
+                    UNION
+                    SELECT productid, categoryid FROM productcategory
+                    UNION
+                    SELECT p.productid, pc.categoryid FROM productcategory pc
+                    JOIN product p ON pc.productid=p.parentid
+	            ) pc ON pc.productid = p.productid
+            INNER JOIN category c ON c.categoryid = pc.categoryid and not c.inactive
+            INNER JOIN tax t ON t.businessid = pb.businessid AND t.taxcategoryid = p.taxcategoryid AND t.countryid = ba.countryid
+            LEFT JOIN measurement m ON m.measurementid = p.measurementid order by p.parentid, p.productid, p.name";
+
+            var createQuery = string.Format("CREATE TABLE public.{0}({1}, brandurl VARCHAR, colorurl VARCHAR, sizeurl VARCHAR);",
+                    webproduct,
+                    string.Join(", ", columns.Select(i => i[0] + " " + i[1])));
+
+            DbUtils.Query(createQuery, con);
+
+            // Fill table
+            var fillQuery = string.Format("TRUNCATE TABLE {0};\nINSERT INTO {0} ({1}, brandurl, colorurl, sizeurl)\nSELECT T.*, (REGEXP_REPLACE(LOWER(T.brandname), '([^a-z0-9]+)', '-', 'g')) as brandurl, (REGEXP_REPLACE(LOWER(T.colour), '([^a-z0-9]+)', '-', 'g')) as coloururl, (REGEXP_REPLACE(LOWER(T.size), '([^a-z0-9]+)', '-', 'g')) as sizeurl FROM (SELECT {2}\n{3}) as T",
+                webproduct,
+                string.Join(",\n\t", columns.Select(i => i[0])),
+                string.Join(",\n\t", columns.Select(i => i[2] + " AS " + i[0])),
+                from
+            );
+
+            DbUtils.Query(fillQuery, con);
+
+            //            DbUtils.Query(@"CREATE OR REPLACE VIEW webproducts AS 
+            //                                         SELECT *
+            //                                           FROM webproduct
+            //                                          WHERE webproduct.businessid = (currentsettings()).businessid;
+            //            
+            //                                        ALTER TABLE webproducts
+            //                                          OWNER TO postgres;
+            //                                        ", con);
+
+            DbUtils.Query(@"CREATE OR REPLACE VIEW webproducts AS 
+                                         SELECT *
+                                           FROM webproduct
+                                          WHERE webproduct.businessid = (currentsettings()).businessid;
+            
+                                        ALTER TABLE webproducts
+                                          OWNER TO postgres;
+                                        ", con);
+
+
+            /*           DbUtils.Query(@"CREATE OR REPLACE VIEW webproducts AS 
+                                       SELECT webproduct.productid,
+                                       webproduct.parentid,
+                                       webproduct.businessid,
+                                       webproduct.name,
+                                       webproduct.description,
+                                       webproduct.largedescription,
+                                       webproduct.categoryid,
+                                       webproduct.brandid,
+                                       webproduct.price,
+                                       webproduct.tax,
+                                       webproduct.discount,
+                                       webproduct.date,
+                                       webproduct.isstandalone,
+                                       webproduct.manufacturercode,
+                                       webproduct.measurement,
+                                       webproduct.onechoice,
+                                       webproduct.barcode,
+                                       webproduct.defaultfilename,
+                                       webproduct.title,
+                                       webproduct.metadescription,
+                                       webproduct.metakeywords,
+                                       1::numeric AS minimumquantity,
+                                       webproduct.size AS size,
+                                       webproduct.material_selectbox,
+                                       ''::varchar AS frontbackboth,
+                                       ''::varchar AS material,
+                                       ''::varchar AS orientation,
+                                       ''::varchar AS cuttingmethod,
+                                       ''::varchar AS weight,
+                                       ''::varchar AS lamination,
+                                       ''::varchar AS fileverification,
+                                       ''::varchar AS customnumberofitems,
+                                       ''::varchar AS pricequantitytable,
+                                       ''::varchar AS customwidthheight
+                                       FROM webproduct
+                                       WHERE webproduct.businessid = (currentsettings()).businessid;", con);
+           */
+            return "OK";
+        }
+    }
+}
+]]>
+</sm:CSharpScript>

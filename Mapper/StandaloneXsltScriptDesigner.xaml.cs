@@ -6,10 +6,7 @@ using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Xml;
-using System.Xml.Linq;
 using System.Xml.Schema;
-using DatabaseImporterWebService;
-using DatabaseImporterWebService.ProcessManagement;
 using Microsoft.Win32;
 using ScriptModule.Properties;
 
@@ -18,7 +15,7 @@ namespace ScriptModule
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class StandaloneXsltScriptDesigner : Window
     {
         private const string SOURCE_SCHEMA = "source";
         private const string TARGET_SCHEMA = "target";
@@ -33,7 +30,7 @@ namespace ScriptModule
             set { SetValue(WindowTitleProperty, value); }
         }
         public static readonly DependencyProperty WindowTitleProperty =
-            DependencyProperty.Register("WindowTitle", typeof(string), typeof(MainWindow), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register("WindowTitle", typeof(string), typeof(StandaloneXsltScriptDesigner), new PropertyMetadata(string.Empty));
 
         public string CurrentFilePath
         {
@@ -41,24 +38,24 @@ namespace ScriptModule
             set { SetValue(CurrentFilePathProperty, value); }
         }
         public static readonly DependencyProperty CurrentFilePathProperty =
-            DependencyProperty.Register("CurrentFilePath", typeof(string), typeof(MainWindow), new PropertyMetadata(null, CurrentFilePathChanged));
+            DependencyProperty.Register("CurrentFilePath", typeof(string), typeof(StandaloneXsltScriptDesigner), new PropertyMetadata(null, CurrentFilePathChanged));
 
         private static void CurrentFilePathChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var s = (MainWindow)d;
+            var s = (StandaloneXsltScriptDesigner)d;
             s.WindowTitle = string.IsNullOrEmpty(s.CurrentFilePath)
                 ? "Mapper"
                 : "Mapper [" + Path.GetFileName(s.CurrentFilePath) + "]";
         }
 
 
-        public MainWindow()
+        public StandaloneXsltScriptDesigner()
         {
             Model = new MapperViewModel();
             InitializeComponent();
-            if (Settings.Default.LastOpenFile != null && File.Exists(Settings.Default.LastOpenFile))
+            if (UserSettings.Default.LastOpenFile != null && File.Exists(UserSettings.Default.LastOpenFile))
             {
-                loadFiles(Settings.Default.LastOpenFile);
+                loadFiles(UserSettings.Default.LastOpenFile);
             }
             else
                 loadDefaultTemplates();
@@ -234,8 +231,8 @@ namespace ScriptModule
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-            Settings.Default.LastOpenFile = CurrentFilePath;
-            Settings.Default.Save();
+            UserSettings.Default.LastOpenFile = CurrentFilePath;
+            UserSettings.Default.Save();
 
             if (!ensureSaveChanges())
                 e.Cancel = true;
@@ -264,19 +261,20 @@ namespace ScriptModule
         #region Run Handler
         private void Run_Click(object sender, RoutedEventArgs e)
         {
-            var executor = new StandaloneScriptsExecutor(Model.SourceSchema, Model.TargetSchema, Model.Transformation.Document);
-            executor.ProgressUpdated += (o, a) => Dispatcher.InvokeAsync(() => Model.AddMessage(a.Total > 0 ? "{0} ({1}/{2})" : "{0}", a.State, a.Current, a.Total));
+            throw new NotImplementedException();
+            //var executor = new StandaloneScriptsExecutor(Model.SourceSchema, Model.TargetSchema, Model.Transformation.Document);
+            //executor.ProgressUpdated += (o, a) => Dispatcher.InvokeAsync(() => Model.AddMessage(a.Total > 0 ? "{0} ({1}/{2})" : "{0}", a.State, a.Current, a.Total));
 
-            new Thread(() => {
-                try
-                {
-                    executor.Execute();
-                }
-                catch (Exception ex)
-                {
-                    Dispatcher.InvokeAsync(() => Model.AddMessage("{0}\n{1}", ex.Message, ex.ToString()));
-                }
-            }).Start();
+            //new Thread(() => {
+            //    try
+            //    {
+            //        executor.Execute();
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Dispatcher.InvokeAsync(() => Model.AddMessage("{0}\n{1}", ex.Message, ex.ToString()));
+            //    }
+            //}).Start();
         }
         #endregion
 

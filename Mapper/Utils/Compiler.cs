@@ -1,18 +1,17 @@
-﻿using Microsoft.CSharp;
-using System;
+﻿using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Reflection;
+using Microsoft.CSharp;
 
-namespace ScriptModule
+namespace ScriptModule.Utils
 {
     class Compiler
     {
         public static Assembly CompileAssembly(string code, string[] dependencies)
         {
-            CSharpCodeProvider codeProvider = new CSharpCodeProvider(new Dictionary<string, string> { { "CompilerVersion", "v4.0" } });
-            CompilerParameters parameters = new CompilerParameters();
-            parameters.GenerateInMemory = true;
+            var codeProvider = new CSharpCodeProvider(new Dictionary<string, string> { { "CompilerVersion", "v4.0" } });
+            var parameters = new CompilerParameters { GenerateInMemory = true };
 
             parameters.ReferencedAssemblies.AddRange(new[] { 
                 "mscorlib.dll", 
@@ -24,7 +23,8 @@ namespace ScriptModule
                 "System.Xaml.dll",
                 Assembly.Load("WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35").Location,
                 Assembly.Load("PresentationCore, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35").Location,
-                Assembly.Load("PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35").Location });
+                Assembly.Load("PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35").Location
+                });
             parameters.ReferencedAssemblies.AddRange(dependencies);
 
             var res = codeProvider.CompileAssemblyFromSource(parameters, code);
