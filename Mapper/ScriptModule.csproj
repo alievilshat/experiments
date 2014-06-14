@@ -101,6 +101,9 @@
     </Compile>
     <Compile Include="Designers\XsltScriptDesigner\Logic\NodePath.cs" />
     <Compile Include="Designers\XsltScriptDesigner\Logic\NodeProperties.cs" />
+    <Compile Include="Scripts\CsvToXmlConverter.cs" />
+    <Compile Include="ScriptUtils\DbUtils.cs" />
+    <Compile Include="ScriptUtils\FtpUtils.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="StandaloneXsltScriptDesigner.xaml.cs">
       <DependentUpon>StandaloneXsltScriptDesigner.xaml</DependentUpon>

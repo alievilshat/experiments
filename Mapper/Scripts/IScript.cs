@@ -5,7 +5,7 @@ namespace ScriptModule.Scripts
 {
     public interface IScript
     {
-        void Execute();
+        void Execute(object param = null);
 
         event ProgressChangedEventHandler ProgressChanged;
         event RunWorkerCompletedEventHandler ExecutionComplited;

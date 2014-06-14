@@ -1,8 +1,8 @@
-﻿using ScriptModule.Scripts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using ScriptModule.Scripts;
 
 namespace ScriptModuleWebService
 {
@@ -22,64 +22,15 @@ namespace ScriptModuleWebService
 
             return s_nextJobId;
         }
-    }
 
-    public class AsyncExecutor
-    {
-        public IScript Script { get; set; }
-        public object UserState { get; set; }
-        public int ProgressPercentage { get; set; }
-        public bool Completed { get; set; }
-        public object Result { get; set; }
-        public bool Canceled { get; set; }
-        public Exception Error { get; set; }
-        
-        public bool HasException { get { return Error != null; } }
-
-        public AsyncExecutor(IScript script)
+        public static ExecutionProgress GetExecutionProgress(int id)
         {
-            this.Script = script;
-            initializeListeners();
+            return s_scriptExecutors[id].Progress;
         }
 
-        private void initializeListeners()
+        public static void AbortExecution(int id)
         {
-            Script.ProgressChanged += (o, e) =>
-            {
-                UserState = e.UserState;
-                ProgressPercentage = e.ProgressPercentage;
-            };
-            Script.ExecutionComplited += (o, e) =>
-            {
-                Completed = true;
-
-                if (e.Cancelled)
-                {
-                    Canceled = true;
-                    return;
-                }
-                if (e.Error != null)
-                {
-                    Error = e.Error;
-                    return;
-                }
-                Result = e.Result;
-            };
-        }
-
-        private Thread _thread;
-
-        public void Start()
-        {
-            _thread = new Thread(Script.Execute);
-            _thread.Start();
-        }
-
-        public void Abort()
-        {
-            if (_thread == null)
-                return;
-            _thread.Abort();
+            s_scriptExecutors[id].Abort();
         }
     }
 }

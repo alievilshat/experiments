@@ -5,11 +5,12 @@ namespace ScriptModule.Scripts
 {
     public abstract class ScriptBase : IScript
     {
-        public void Execute()
+        public void Execute(object param = null)
         {
             try
             {
-                var result = ExecuteScript();
+                var result = ExecuteScript(param);
+                OnProgressChanged("Completed", 100);
                 OnExecutionComplited(result, null, false);
             }
             catch (OperationCanceledException)
@@ -22,7 +23,7 @@ namespace ScriptModule.Scripts
             }
         }
 
-        protected abstract object ExecuteScript();
+        protected abstract object ExecuteScript(object param = null);
 
         public event ProgressChangedEventHandler ProgressChanged;
         public event RunWorkerCompletedEventHandler ExecutionComplited;

@@ -15,5 +15,17 @@ namespace ScriptModuleWebService
             var script = ScriptManager.GetScriptRow(login, password, Context.Request.UserHostAddress, scriptid).GetScript();
             return ExecutionManager.ExecuteScriptAsync(script);
         }
+
+        [WebMethod]
+        public ExecutionProgress GetExecutionProgress(int id)
+        {
+            return ExecutionManager.GetExecutionProgress(id);
+        }
+
+        [WebMethod]
+        public void AbortExecution(int id)
+        {
+            ExecutionManager.AbortExecution(id);
+        }
     }
 }

@@ -8,7 +8,7 @@ namespace ScriptModule.Scripts
 {
     public class ScriptButton : UIScript
     {
-        protected override object ExecuteScript()
+        protected override object ExecuteScript(object param = null)
         {
             throw new NotImplementedException();
         }

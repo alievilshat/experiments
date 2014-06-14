@@ -33,14 +33,26 @@ namespace ScriptModule.Scripts
             Dependencies = new List<string>();
         }
 
-        protected override object ExecuteScript()
+        protected override object ExecuteScript(object param = null)
         {
             OnProgressChanged("Initialization", 0);
             var method = GetMainMethod();
             var instance = GetInstance();
 
             OnProgressChanged("Execution", 20);
-            return method.Invoke(instance, new object[0]);
+
+            int paramCount = method.GetParameters().Length;
+            switch (paramCount)
+            {
+                case 0:
+                    return method.Invoke(instance, new object[0]);
+
+                case 1:
+                    return method.Invoke(instance, new object[] { param });
+
+                default:
+                    throw new ApplicationException("Main method of CSharpScript should have 0 or 1 parameter.");
+            }
         }
 
         private Assembly _compiledAssembly;
@@ -96,7 +108,7 @@ namespace ScriptModule.Scripts
         {
             if (MainMethod == null)
             {
-                var method = getInstanceType().GetMethods(BindingFlags.Public | BindingFlags.Instance).SingleOrDefault();
+                var method = getInstanceType().GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly).SingleOrDefault();
                 if (method == null)
                     throw new Exception("Main method not specified!");
                 return method.Name;

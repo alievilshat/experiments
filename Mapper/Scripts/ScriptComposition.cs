@@ -4,7 +4,7 @@ namespace ScriptModule.Scripts
 {
     public class ScriptComposition : ScriptBase
     {
-        protected override object ExecuteScript()
+        protected override object ExecuteScript(object param = null)
         {
             throw new NotImplementedException();
         }
