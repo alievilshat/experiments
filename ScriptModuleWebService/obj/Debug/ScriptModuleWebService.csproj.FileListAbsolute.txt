@@ -1,12 +1,3 @@
-C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebService\bin\ScriptModuleWebService.dll
-C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebService\bin\ScriptModuleWebService.pdb
-C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebService\bin\ScriptModule.exe
-C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebService\bin\WPG.dll
-C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebService\bin\WPGBrushEditor.dll
-C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebService\bin\ScriptModule.pdb
-C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebService\obj\Debug\ScriptModuleWebService.csprojResolveAssemblyReference.cache
-C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebService\obj\Debug\ScriptModuleWebService.dll
-C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebService\obj\Debug\ScriptModuleWebService.pdb
 C:\Work\rep\ScriptModuleWebService\obj\Debug\ScriptModuleWebService.csprojResolveAssemblyReference.cache
 C:\Work\rep\ScriptModuleWebService\bin\ScriptModuleWebService.dll.config
 C:\Work\rep\ScriptModuleWebService\bin\ScriptModuleWebService.dll
@@ -22,3 +13,15 @@ C:\Work\rep\ScriptModuleWebService\obj\Debug\ScriptModuleWebService.pdb
 C:\Work\rep\ScriptModuleWebService\bin\SciLexer.dll
 C:\Work\rep\ScriptModuleWebService\bin\SciLexer64.dll
 C:\Work\rep\ScriptModuleWebService\bin\ScintillaNET.dll
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebService\bin\SciLexer.dll
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebService\bin\SciLexer64.dll
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebService\bin\ScriptModuleWebService.dll
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebService\bin\ScriptModuleWebService.pdb
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebService\bin\ScriptModule.exe
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebService\bin\ScintillaNET.dll
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebService\bin\WPG.dll
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebService\bin\WPGBrushEditor.dll
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebService\bin\ScriptModule.pdb
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebService\obj\Debug\ScriptModuleWebService.csprojResolveAssemblyReference.cache
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebService\obj\Debug\ScriptModuleWebService.dll
+C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebService\obj\Debug\ScriptModuleWebService.pdb

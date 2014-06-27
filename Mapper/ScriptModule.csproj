@@ -130,11 +130,26 @@
     </Compile>
     <Compile Include="Designers\CompositeScriptDesigner\ViewModels\CompositeScriptItemViewModel.cs" />
     <Compile Include="Designers\CompositeScriptDesigner\ViewModels\CompositeScriptViewModel.cs" />
+    <Compile Include="Designers\ConvertCsvToXml\ConvertCsvToXmlScriptDesigner.xaml.cs">
+      <DependentUpon>ConvertCsvToXmlScriptDesigner.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Designers\ConvertXmlToCsv\ConvertXmlToCsvScriptDesigner.xaml.cs">
+      <DependentUpon>ConvertXmlToCsvScriptDesigner.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Designers\CSharpScriptDesigner\CSharpScriptDesignerControl.xaml.cs">
       <DependentUpon>CSharpScriptDesignerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Designers\CSharpScriptDesigner\ViewModels\CSharpScriptViewModel.cs" />
     <Compile Include="Designers\DesignerControlBase.cs" />
+    <Compile Include="Designers\InputDatabase\InputDatabaseScriptDesigner.xaml.cs">
+      <DependentUpon>InputDatabaseScriptDesigner.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Designers\InputLocalFile\InputLocalFileScriptDesigner.xaml.cs">
+      <DependentUpon>InputLocalFileScriptDesigner.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Designers\OutputLocalFile\OutputLocalFileScriptDesigner.xaml.cs">
+      <DependentUpon>OutputLocalFileScriptDesigner.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Designers\ScriptDesigner.cs" />
     <Compile Include="Designers\XsltScriptDesigner\Controls\BlockControl.xaml.cs">
       <DependentUpon>BlockControl.xaml</DependentUpon>
@@ -278,9 +293,29 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Designers\ConvertCsvToXml\ConvertCsvToXmlScriptDesigner.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Designers\ConvertXmlToCsv\ConvertXmlToCsvScriptDesigner.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Designers\CSharpScriptDesigner\CSharpScriptDesignerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Designers\InputDatabase\InputDatabaseScriptDesigner.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Designers\InputLocalFile\InputLocalFileScriptDesigner.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Designers\OutputLocalFile\OutputLocalFileScriptDesigner.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Designers\XsltScriptDesigner\Controls\BlockControl.xaml">
       <SubType>Designer</SubType>
@@ -450,7 +485,9 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Designers\OutputDatabase\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

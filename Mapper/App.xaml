@@ -7,5 +7,13 @@
     <Application.Resources>
         <uiUtils:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
         <uiUtils:BoolToVisibilityConverter x:Key="InvertBoolToVisibility" Invert="true"/>
+        <Style x:Key="PropertyName">
+            <Setter Property="FrameworkElement.VerticalAlignment" Value="Center" />
+            <Setter Property="FrameworkElement.HorizontalAlignment" Value="Right" />
+        </Style>
+        <Style x:Key="PropertyValue">
+            <Setter Property="FrameworkElement.VerticalAlignment" Value="Center" />
+            <Setter Property="FrameworkElement.HorizontalAlignment" Value="Left" />
+        </Style>
     </Application.Resources>
 </Application>
