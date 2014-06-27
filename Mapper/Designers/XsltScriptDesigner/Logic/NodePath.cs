@@ -3,10 +3,8 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Schema;
 
-namespace ScriptModule
+namespace ScriptModule.Designers.XsltScriptDesigner.Logic
 {
-    using Candidate = KeyValuePair<NodeProperties, LinkedListNode<XmlSchemaElement>>;
-
     abstract class NodePath
     {
         public const string XSL_NAMESPACE = "http://www.w3.org/1999/XSL/Transform";
@@ -56,9 +54,9 @@ namespace ScriptModule
             : base(node)
         { }
 
-        protected override IEnumerable<Candidate> GetNextNodeCandidates(LinkedListNode<XmlSchemaElement> current)
+        protected override IEnumerable<KeyValuePair<NodeProperties, LinkedListNode<XmlSchemaElement>>> GetNextNodeCandidates(LinkedListNode<XmlSchemaElement> current)
         {
-            yield return new Candidate(new NodeProperties { Name = current.Value.Name }, current.Next);
+            yield return new KeyValuePair<NodeProperties, LinkedListNode<XmlSchemaElement>>(new NodeProperties { Name = current.Value.Name }, current.Next);
         }
     }
 
@@ -68,14 +66,14 @@ namespace ScriptModule
             : base(node)
         { }
 
-        protected override IEnumerable<Candidate> GetNextNodeCandidates(LinkedListNode<XmlSchemaElement> current)
+        protected override IEnumerable<KeyValuePair<NodeProperties, LinkedListNode<XmlSchemaElement>>> GetNextNodeCandidates(LinkedListNode<XmlSchemaElement> current)
         {
             var element = current.Value;
             if (element.Parent is XmlSchema)
             {
                 if (current.Next != null)
                 {
-                    yield return new Candidate(
+                    yield return new KeyValuePair<NodeProperties, LinkedListNode<XmlSchemaElement>>(
                             new NodeProperties
                             {
                                 Name = "template",
@@ -85,7 +83,7 @@ namespace ScriptModule
                             current.Next.Next
                         );
                 }
-                yield return new Candidate(
+                yield return new KeyValuePair<NodeProperties, LinkedListNode<XmlSchemaElement>>(
                         new NodeProperties
                         {
                             Name = "template",
@@ -104,7 +102,7 @@ namespace ScriptModule
             {
                 var elementname = last.Value.MaxOccursString == "unbounded" ? "for-each" : "value-of";
 
-                yield return new Candidate(
+                yield return new KeyValuePair<NodeProperties, LinkedListNode<XmlSchemaElement>>(
                             new NodeProperties
                             {
                                 Name = elementname,

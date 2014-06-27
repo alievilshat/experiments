@@ -7,16 +7,16 @@ using System.Windows.Controls;
 using System.Xml;
 using System.Xml.Schema;
 using Npgsql;
-using ScriptModule.Utils.Extensions;
+using ScriptModule.Utils;
 
-namespace ScriptModule
+namespace ScriptModule.Designers.XsltScriptDesigner.SchemaDesigner.Wizard.Database
 {
     /// <summary>
     /// Interaktionslogik für Query.xaml
     /// </summary>
     public partial class Query : Page
     {
-        private IConnectionSettings _connectionSettings;
+        private readonly IConnectionSettings _connectionSettings;
         public Query(IConnectionSettings connectionSettings)
         {
             DataContext = this;

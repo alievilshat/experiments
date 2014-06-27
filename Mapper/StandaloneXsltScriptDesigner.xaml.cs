@@ -1,14 +1,13 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using ScriptModule.Designers.XsltScriptDesigner.ViewModels;
+using ScriptModule.Properties;
+using System;
 using System.ComponentModel;
 using System.IO;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
 using System.Xml;
 using System.Xml.Schema;
-using Microsoft.Win32;
-using ScriptModule.Properties;
 
 namespace ScriptModule
 {
@@ -19,8 +18,6 @@ namespace ScriptModule
     {
         private const string SOURCE_SCHEMA = "source";
         private const string TARGET_SCHEMA = "target";
-        private const string XSL = "xsl";
-        private const string XSL_NAMESPACE = "http://www.w3.org/1999/XSL/Transform";
 
         public MapperViewModel Model { get; set; }
 
@@ -70,10 +67,7 @@ namespace ScriptModule
         private void loadDefaultTemplates()
         {
             CurrentFilePath = null;
-
-            Model.SourceSchema = getDefaultSchema(SOURCE_SCHEMA);
-            Model.TargetSchema = getDefaultSchema(TARGET_SCHEMA);
-            Model.Transformation = getDefaultTransformation();
+            Model.Initialize(null, null, null);
         }
         #endregion
 
@@ -105,15 +99,15 @@ namespace ScriptModule
                 loadTransformation(CurrentFilePath));
         }
 
-        private string getSchemaPath(string _currentFilePath, string suffix)
+        private string getSchemaPath(string currentFilePath, string suffix)
         {
             return Path.Combine(
-                Path.GetDirectoryName(_currentFilePath), 
-                Path.GetFileNameWithoutExtension(_currentFilePath) + "_" + suffix + ".xsd"
+                Path.GetDirectoryName(currentFilePath), 
+                Path.GetFileNameWithoutExtension(currentFilePath) + "_" + suffix + ".xsd"
             );
         }
 
-        private XmlSchema loadSchema(string filename, string suffix)
+        private XmlDocument loadSchema(string filename, string suffix)
         {
             try
             {
@@ -122,30 +116,30 @@ namespace ScriptModule
                 if (!File.Exists(path))
                     throw new Exception("File " + path + " does not exist.");
 
-                using (var stream = File.OpenText(path))
-                {
-                    return XmlSchema.Read(stream, (o, e) => Console.WriteLine(e.Message));
-                }
+                var doc = new XmlDocument();
+                doc.Load(path);
+                return doc;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                return getDefaultSchema(suffix);
+                return null;
             }
         }
 
-        private XmlDataProvider loadTransformation(string filename)
+        private XmlDocument loadTransformation(string filename)
         {
-            var transformation = getDefaultTransformation();
             try
             {
-                transformation.Document.LoadXml(File.ReadAllText(filename));
+                var doc = new XmlDocument();
+                doc.Load(filename);
+                return doc;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                return null;
             }
-            return transformation;
         }
         #endregion
 
@@ -275,25 +269,6 @@ namespace ScriptModule
             //        Dispatcher.InvokeAsync(() => Model.AddMessage("{0}\n{1}", ex.Message, ex.ToString()));
             //    }
             //}).Start();
-        }
-        #endregion
-
-        #region Default Templates
-        public XmlSchema getDefaultSchema(string root)
-        {
-            var schema = new XmlSchema();
-            schema.Items.Add(new XmlSchemaElement() { Name = root });
-            return schema;
-        }
-
-        private static XmlDataProvider getDefaultTransformation()
-        {
-            var transformation = new XmlDataProvider();
-            transformation.Document = new XmlDocument();
-            transformation.XmlNamespaceManager = new XmlNamespaceManager(transformation.Document.NameTable);
-            transformation.XmlNamespaceManager.AddNamespace(XSL, XSL_NAMESPACE);
-            transformation.Document.AppendChild(transformation.Document.CreateElement(XSL, "stylesheet", XSL_NAMESPACE));
-            return transformation;
         }
         #endregion
 

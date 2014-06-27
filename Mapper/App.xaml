@@ -1,8 +1,11 @@
 ﻿<Application x:Class="ScriptModule.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="StandaloneXsltScriptDesigner.xaml">
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:uiUtils="clr-namespace:ScriptModule.UIUtils"
+             StartupUri="ScriptModule.xaml">
     <Application.Resources>
-         
+        <uiUtils:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
+        <uiUtils:BoolToVisibilityConverter x:Key="InvertBoolToVisibility" Invert="true"/>
     </Application.Resources>
 </Application>

@@ -10,7 +10,7 @@ namespace ScriptModule.Scripts
     {
         protected override object ExecuteScript(object param = null)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
     }
 }

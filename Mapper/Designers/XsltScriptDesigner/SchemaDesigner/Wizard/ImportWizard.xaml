@@ -1,4 +1,4 @@
-﻿<NavigationWindow x:Class="ScriptModule.ImportWizard"
+﻿<NavigationWindow x:Class="ScriptModule.Designers.XsltScriptDesigner.SchemaDesigner.Wizard.ImportWizard"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Import Wizard" Width="500" Height="300">

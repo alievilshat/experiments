@@ -1,0 +1,22 @@
+﻿<designers:DesignerControl x:Class="ScriptModule.Designers.CompositeScriptDesigner.CompositeScriptDesignerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:designers="clr-namespace:ScriptModule.Designers"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <ContentControl Content="{Binding SingleItem.ScriptDesigner}" Visibility="{Binding SingleElementComposite, Converter={StaticResource BoolToVisibility}}" />
+        <ListView x:Name="ScriptsListView" ItemsSource="{Binding ScriptItems}"
+                  AllowDrop="True" PreviewMouseLeftButtonDown="Scripts_OnPreviewMouseLeftButtonDown" Drop="Scripts_OnDrop">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Height="40" Width="100" MouseDown="OpenDesigner_Click">
+                        <Label Content="{Binding ScriptName}" />
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</designers:DesignerControl>

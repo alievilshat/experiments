@@ -22,7 +22,7 @@ namespace ScriptModule.DAL
             return new NpgsqlConnection(connstr);
         }
 
-        private static string GetConnectionByUserLogin(string userLogin, string userPassword, string userIpAddress)
+        public static string GetConnectionByUserLogin(string userLogin, string userPassword, string userIpAddress)
         {
             string connectionString = String.Empty;
 

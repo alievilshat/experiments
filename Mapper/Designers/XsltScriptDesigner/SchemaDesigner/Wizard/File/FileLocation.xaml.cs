@@ -1,23 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Microsoft.Win32;
-using System.Xml.Linq;
-using System.Xml.Schema;
 using System.Xml;
-using System.IO;
+using System.Xml.Schema;
+using Microsoft.Win32;
+using ScriptModule.Utils.Converters;
 
-namespace ScriptModule
+namespace ScriptModule.Designers.XsltScriptDesigner.SchemaDesigner.Wizard.File
 {
     /// <summary>
     /// Interaktionslogik für FileLocation.xaml
@@ -83,22 +75,24 @@ namespace ScriptModule
             try
             {
                 var wizard = (ImportWizard)Window.GetWindow(this);
+                Debug.Assert(wizard != null, "wizard != null");
+
                 if (local.IsChecked.GetValueOrDefault())
                 {
                     if (_contenttype == "xml")
                     {
 
-                        var source = XDocument.Load(location.Text);
+                        var source = new XmlDocument();
+                        source.Load(new StringReader(location.Text));
                         var xsd = XsdInferrer.InferXsdFromXml(source);
                         addAnnotations(xsd, _contenttype, "");
                         wizard.Schema = xsd;
                        
                     }
                     else 
-                    { 
-                    
+                    {
                         var source = location.Text;
-                        var csvtext = File.ReadAllText(source);
+                        var csvtext = System.IO.File.ReadAllText(source);
                         var xsd = XsdInferrer.InferXsdFromCsv(csvtext);
                         addAnnotations(xsd, _contenttype, "");
                         wizard.Schema = xsd;
@@ -110,7 +104,7 @@ namespace ScriptModule
                 }
                 else 
                 { 
-                // call the remote file from URLpath text box.
+                    // call the remote file from URLpath text box.
                 }
 
                 wizard.DialogResult = true;

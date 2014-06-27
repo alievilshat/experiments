@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Controls.Primitives;
-using ScriptModule.Utils.Extensions;
+using ScriptModule.Utils;
 
-namespace ScriptModule
+namespace ScriptModule.Designers.XsltScriptDesigner.ViewModels.Xslt
 {
     public class XsltForEachViewModel : XsltViewModelBase
     {

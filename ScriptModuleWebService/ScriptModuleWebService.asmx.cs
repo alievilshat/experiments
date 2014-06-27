@@ -1,6 +1,8 @@
-﻿using ScriptModule.DAL;
+﻿using System.Linq;
+using ScriptModule.DAL;
 using System.ComponentModel;
 using System.Web.Services;
+using ScriptModule.Scripts;
 
 namespace ScriptModuleWebService
 {
@@ -12,7 +14,8 @@ namespace ScriptModuleWebService
         [WebMethod]
         public int Execute(string login, string password, int scriptid)
         {
-            var script = ScriptManager.GetScriptRow(login, password, Context.Request.UserHostAddress, scriptid).GetScript();
+            var entities = ScriptManager.CreateEntitiesContainer(login, password);
+            var script = ScriptBase.GetScript(entities.ScriptRows.First(i => i.Scriptid == scriptid).Scripttext);
             return ExecutionManager.ExecuteScriptAsync(script);
         }
 

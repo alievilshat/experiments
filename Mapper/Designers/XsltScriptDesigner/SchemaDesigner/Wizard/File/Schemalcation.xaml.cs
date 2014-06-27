@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,7 +6,7 @@ using System.Xml;
 using System.Xml.Schema;
 using Microsoft.Win32;
 
-namespace ScriptModule
+namespace ScriptModule.Designers.XsltScriptDesigner.SchemaDesigner.Wizard.File
 {
     /// <summary>
     /// Interaktionslogik für Schemalcation.xaml
@@ -45,7 +44,7 @@ namespace ScriptModule
             {
                 var wizard = (ImportWizard)Window.GetWindow(this);
 
-                using (var stream = File.OpenRead(location.Text))
+                using (var stream = System.IO.File.OpenRead(location.Text))
                 {
                     var xsd = XmlSchema.Read(stream, (o, ea) => Console.WriteLine(ea.Message));
                     addAnnotations(xsd, "xml");

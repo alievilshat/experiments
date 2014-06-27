@@ -4,10 +4,11 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Xml.Schema;
-using ScriptModule.Utils.Extensions;
+using ScriptModule.Designers.XsltScriptDesigner.SchemaDesigner.Wizard;
+using ScriptModule.Utils;
 using WPG.Data;
 
-namespace ScriptModule
+namespace ScriptModule.Designers.XsltScriptDesigner.SchemaDesigner
 {
     public partial class SchemaDesigner : Window
     {

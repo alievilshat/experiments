@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using ScriptModule.Scripts;
+using System;
 using System.Threading;
-using System.Web;
-using ScriptModule.Scripts;
 
 namespace ScriptModuleWebService
 {
@@ -50,29 +47,31 @@ namespace ScriptModuleWebService
                 Progress.UserState = e.UserState;
                 Progress.ProgressPercentage = e.ProgressPercentage;
             };
-            Script.ExecutionComplited += (o, e) =>
-            {
-                Progress.Completed = true;
-
-                if (e.Cancelled)
-                {
-                    Progress.Canceled = true;
-                    return;
-                }
-                if (e.Error != null)
-                {
-                    Error = e.Error;
-                    return;
-                }
-                Progress.Result = e.Result;
-            };
         }
 
         private Thread _thread;
 
         public void Start()
         {
-            _thread = new Thread(Script.Execute);
+            _thread = new Thread(() =>
+            {
+                try
+                {
+                    var res = Script.Execute(null);
+
+                    Progress.ProgressPercentage = 100;
+                    Progress.Result = res;
+                }
+                catch (OperationCanceledException)
+                {
+                    Progress.Canceled = true;
+                }
+                catch (Exception ex)
+                {
+                    Error = ex;
+                }
+                Progress.Completed = true;
+            });
             _thread.Start();
         }
 

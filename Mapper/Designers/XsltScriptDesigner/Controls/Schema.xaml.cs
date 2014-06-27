@@ -5,9 +5,9 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Xml.Schema;
-using ScriptModule.Utils.Extensions;
+using ScriptModule.Utils;
 
-namespace ScriptModule
+namespace ScriptModule.Designers.XsltScriptDesigner.Controls
 {
     /// <summary>
     /// Interaction logic for Schema.xaml
@@ -43,7 +43,7 @@ namespace ScriptModule
             var w = new StringWriter();
             Schema.Write(w);
 
-            var designer = new SchemaDesigner(w.ToString());
+            var designer = new SchemaDesigner.SchemaDesigner(w.ToString());
             designer.Show();
             designer.Closing += designer_Closing;
         }
@@ -57,12 +57,10 @@ namespace ScriptModule
                     return;
 
                 case MessageBoxResult.Yes:
-                    Schema = sender.As<SchemaDesigner>().Schema;
+                    Schema = sender.As<SchemaDesigner.SchemaDesigner>().Schema;
                     break;
 
                 default:
-                case MessageBoxResult.None:
-                case MessageBoxResult.Cancel:
                     e.Cancel = true;
                     break;
             }

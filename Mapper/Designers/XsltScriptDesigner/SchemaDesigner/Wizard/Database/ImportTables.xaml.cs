@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -9,9 +8,10 @@ using System.Windows.Controls;
 using System.Xml;
 using System.Xml.Schema;
 using Npgsql;
-using ScriptModule.Utils.Extensions;
+using ScriptModule.Utils;
+using ScriptModule.ViewModels;
 
-namespace ScriptModule
+namespace ScriptModule.Designers.XsltScriptDesigner.SchemaDesigner.Wizard.Database
 {
     /// <summary>
     /// Interaction logic for ImportTables.xaml
@@ -40,9 +40,14 @@ namespace ScriptModule
                 get { return _visible; }
                 set { _visible = value; OnPropertyChanged("Visible"); }
             }
+
+            public override object Model
+            {
+                get { return _name; }
+            }
         }
 
-        private IConnectionSettings _connectionSettings;
+        private readonly IConnectionSettings _connectionSettings;
 
         public ImportTables(IConnectionSettings connectionSettings)
         {

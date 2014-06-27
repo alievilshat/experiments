@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace ScriptModule
+namespace ScriptModule.Designers.XsltScriptDesigner.Controls.Buttons
 {
     /// <summary>
     /// Interaction logic for ExpanderButton.xaml

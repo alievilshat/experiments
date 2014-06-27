@@ -48,7 +48,30 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Devart.Data, Version=5.0.963.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
+    <Reference Include="Devart.Data.PostgreSql, Version=7.3.171.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
+    <Reference Include="Devart.Data.PostgreSql.Entity, Version=7.3.171.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
     <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\Mono.Security.dll</HintPath>
@@ -57,8 +80,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\Npgsql.dll</HintPath>
     </Reference>
+    <Reference Include="ScintillaNET, Version=2.5.2.0, Culture=neutral, PublicKeyToken=948d6c9751444115, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\ScintillaNET.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -70,6 +100,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
     <Reference Include="WPG, Version=4.0.5168.41668, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\WPG.dll</HintPath>
@@ -83,9 +114,28 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\Editor.xaml.cs">
+      <DependentUpon>Editor.xaml</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DAL\CDBA.cs" />
-    <Compile Include="DAL\ScriptManager.cs" />
-    <Compile Include="DAL\ScriptRow.cs" />
+    <Compile Include="DAL\EntitiesContainerFactory.cs" />
+    <Compile Include="DAL\ScriptModuleModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ScriptModuleModel.edml</DependentUpon>
+    </Compile>
+    <Compile Include="Designers\CompositeScriptDesigner\CompositeScriptDesignerControl.xaml.cs">
+      <DependentUpon>CompositeScriptDesignerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Designers\CompositeScriptDesigner\ViewModels\CompositeScriptItemViewModel.cs" />
+    <Compile Include="Designers\CompositeScriptDesigner\ViewModels\CompositeScriptViewModel.cs" />
+    <Compile Include="Designers\CSharpScriptDesigner\CSharpScriptDesignerControl.xaml.cs">
+      <DependentUpon>CSharpScriptDesignerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Designers\CSharpScriptDesigner\ViewModels\CSharpScriptViewModel.cs" />
+    <Compile Include="Designers\DesignerControlBase.cs" />
+    <Compile Include="Designers\ScriptDesigner.cs" />
     <Compile Include="Designers\XsltScriptDesigner\Controls\BlockControl.xaml.cs">
       <DependentUpon>BlockControl.xaml</DependentUpon>
     </Compile>
@@ -101,10 +151,27 @@
     </Compile>
     <Compile Include="Designers\XsltScriptDesigner\Logic\NodePath.cs" />
     <Compile Include="Designers\XsltScriptDesigner\Logic\NodeProperties.cs" />
-    <Compile Include="Scripts\CsvToXmlConverter.cs" />
+    <Compile Include="LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptModule.xaml.cs">
+      <DependentUpon>ScriptModule.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Scripts\Converters\CsvToXml.cs" />
+    <Compile Include="Scripts\Converters\XmlToCsv.cs" />
+    <Compile Include="Scripts\Input\InputDatabase.cs" />
+    <Compile Include="Scripts\Input\InputFtpFile.cs" />
+    <Compile Include="Scripts\Input\InputLocalFile.cs" />
+    <Compile Include="Scripts\Output\OutputDatabase.cs" />
+    <Compile Include="Scripts\Output\OutputFtpFile.cs" />
+    <Compile Include="Scripts\Output\OutputLocalFile.cs" />
     <Compile Include="ScriptUtils\DbUtils.cs" />
     <Compile Include="ScriptUtils\FtpUtils.cs" />
-    <Compile Include="Settings.cs" />
+    <Compile Include="Services\DatabaseImport\DatabaseImporter.cs" />
+    <Compile Include="Services\DatabaseImport\Registries\TableColumnRegistry.cs" />
+    <Compile Include="Services\DatabaseImport\Registries\TableForiegnkeysRegistry.cs" />
+    <Compile Include="Services\DatabaseImport\Registries\TableKeysRegistry.cs" />
+    <Compile Include="Services\DatabaseImport\Registries\TableRegistry.cs" />
     <Compile Include="StandaloneXsltScriptDesigner.xaml.cs">
       <DependentUpon>StandaloneXsltScriptDesigner.xaml</DependentUpon>
     </Compile>
@@ -150,38 +217,43 @@
     <Compile Include="Designers\XsltScriptDesigner\Controls\Connector.xaml.cs">
       <DependentUpon>Connector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Designers\UIUtils\ThumbsPathConverter.cs" />
-    <Compile Include="Designers\UIUtils\UnionConverter.cs">
+    <Compile Include="UIUtils\BoolToVisubilityConverter.cs" />
+    <Compile Include="UIUtils\ExtendedBinding.cs" />
+    <Compile Include="UIUtils\ThumbsPathConverter.cs" />
+    <Compile Include="UIUtils\UnionConverter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Scripts\CSharpScript.cs" />
+    <Compile Include="Scripts\Generic\CSharpScript.cs" />
     <Compile Include="Scripts\ScriptBase.cs" />
     <Compile Include="Scripts\ScriptButton.cs" />
-    <Compile Include="Scripts\ScriptComposition.cs" />
+    <Compile Include="Scripts\CompositeScript.cs" />
     <Compile Include="Scripts\UIScript.cs" />
-    <Compile Include="Scripts\XsltScript.cs" />
+    <Compile Include="Scripts\Generic\XsltScript.cs" />
     <Compile Include="Properties\UserSettings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>UserSettings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Utils\Common\GenericEventArgs.cs" />
-    <Compile Include="Utils\Compiler.cs" />
-    <Compile Include="Utils\InputFormats\CsvReader.cs" />
-    <Compile Include="Utils\InputFormats\CsvToXmlConverter.cs" />
+    <Compile Include="Utils\Collections\ViewModelCollection.cs" />
+    <Compile Include="Utils\Collections\ViewModelObjectSet.cs" />
+    <Compile Include="Utils\GenericEventArgs.cs" />
+    <Compile Include="Services\Compiler.cs" />
+    <Compile Include="Utils\Converters\CsvReader.cs" />
+    <Compile Include="Utils\Converters\CsvToXmlConverter.cs" />
+    <Compile Include="Utils\Converters\XmlToCsvConverter.cs" />
     <Compile Include="Utils\Observable\ObservableCollectionDecorator.cs" />
     <Compile Include="Utils\Observable\ObservableConverter.cs" />
     <Compile Include="Utils\Observable\ObservableDecorator.cs" />
     <Compile Include="Utils\Observable\ObservableDecoratorExtensions.cs" />
-    <Compile Include="Utils\Extensions\TypeExtensions.cs" />
-    <Compile Include="Utils\Common\Reference.cs" />
-    <Compile Include="Designers\UIUtils\WPFExtensions.cs" />
-    <Compile Include="Utils\InputFormats\XmlSchemaExtensions.cs" />
-    <Compile Include="Utils\InputFormats\XsdInferrer.cs" />
+    <Compile Include="Utils\TypeExtensions.cs" />
+    <Compile Include="Utils\Reference.cs" />
+    <Compile Include="UIUtils\WPFExtensions.cs" />
+    <Compile Include="Designers\XsltScriptDesigner\Logic\XmlSchemaExtensions.cs" />
+    <Compile Include="Utils\Converters\XsdInferrer.cs" />
     <Compile Include="Designers\XsltScriptDesigner\ViewModels\IMapperHost.cs" />
     <Compile Include="Designers\XsltScriptDesigner\ViewModels\MapperViewModel.cs" />
     <Compile Include="Designers\XsltScriptDesigner\Logic\TransformationBuilder.cs" />
-    <Compile Include="Designers\XsltScriptDesigner\ViewModels\ViewModelBase.cs" />
+    <Compile Include="Designers\XsltScriptDesigner\ViewModels\DesignerViewModelBase.cs" />
     <Compile Include="Designers\XsltScriptDesigner\ViewModels\Xslt\XsltContentNodeViewModel.cs" />
     <Compile Include="Designers\XsltScriptDesigner\ViewModels\Xslt\XsltForEachViewModel.cs" />
     <Compile Include="Designers\XsltScriptDesigner\ViewModels\Xslt\XsltMixedContentViewModel.cs" />
@@ -192,6 +264,24 @@
     <Compile Include="Designers\XsltScriptDesigner\ViewModels\Xslt\XsltUnknownNodeViewModel.cs" />
     <Compile Include="Designers\XsltScriptDesigner\ViewModels\Xslt\XsltViewModelBase.cs" />
     <Compile Include="Scripts\IScript.cs" />
+    <Compile Include="Utils\Collections\ViewModelCollectionBase.cs" />
+    <Compile Include="ViewModels\IViewModel.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\ScriptModuleViewModel.cs" />
+    <Compile Include="ViewModels\ScriptRowViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Page Include="Controls\Editor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Designers\CompositeScriptDesigner\CompositeScriptDesignerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Designers\CSharpScriptDesigner\CSharpScriptDesignerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Designers\XsltScriptDesigner\Controls\BlockControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -212,11 +302,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScriptModule.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="StandaloneXsltScriptDesigner.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Designers\XsltScriptDesigner\MapperControl.xaml">
+    <Page Include="Designers\XsltScriptDesigner\XsltScriptDesignerControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -224,8 +322,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Designers\XsltScriptDesigner\MapperControl.xaml.cs">
-      <DependentUpon>MapperControl.xaml</DependentUpon>
+    <Compile Include="Designers\XsltScriptDesigner\XsltScriptDesignerControl.xaml.cs">
+      <DependentUpon>XsltScriptDesignerControl.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Designers\XsltScriptDesigner\SchemaDesigner\Wizard\Database\ConnectionSettings.xaml">
@@ -295,6 +393,16 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="DAL\ScriptModuleModel.Diagram1.view">
+      <DependentUpon>ScriptModuleModel.edml</DependentUpon>
+    </None>
+    <DevartEntityDeploy Include="DAL\ScriptModuleModel.edml">
+      <Generator>DevartEfGenerator</Generator>
+      <LastGenOutput>ScriptModuleModel.Designer.cs</LastGenOutput>
+    </DevartEntityDeploy>
+    <None Include="DAL\ScriptModuleModel.edps">
+      <DependentUpon>ScriptModuleModel.edml</DependentUpon>
+    </None>
     <None Include="Properties\ApplicationSettings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>ApplicationSettings.Designer.cs</LastGenOutput>
@@ -315,7 +423,15 @@
   <ItemGroup>
     <Content Include="lib\Mono.Security.dll" />
     <Content Include="lib\Npgsql.dll" />
+    <Content Include="SciLexer.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SciLexer64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lib\ScintillaNET.dll" />
     <Content Include="lib\WPG.dll" />
+    <Content Include="lib\WPGBrushEditor.dll" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -334,6 +450,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

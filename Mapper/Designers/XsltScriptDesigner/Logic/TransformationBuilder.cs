@@ -3,11 +3,11 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Schema;
 
-namespace ScriptModule
+namespace ScriptModule.Designers.XsltScriptDesigner.Logic
 {
     class TransformationBuilder
     {
-        private XmlDocument _document;
+        private readonly XmlDocument _document;
 
         public TransformationBuilder(XmlDocument document)
         {

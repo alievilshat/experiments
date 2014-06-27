@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace ScriptModule
+namespace ScriptModule.Designers.XsltScriptDesigner.Controls
 {
     /// <summary>
     /// Interaction logic for Transformation.xaml

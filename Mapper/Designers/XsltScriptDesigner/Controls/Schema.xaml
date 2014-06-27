@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ScriptModule.SchemaControl"
+﻿<UserControl x:Class="ScriptModule.Designers.XsltScriptDesigner.Controls.SchemaControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:xs="clr-namespace:System.Xml.Schema;assembly=System.Xml"
@@ -69,7 +69,7 @@
             <Thumb x:Name="port" x:FieldModifier="public" Width="0" Height="0" />
             <TreeView x:Name="schemaTree" Padding="0, 5, 10, 5"
                         FlowDirection="{Binding TreeViewFlowDirection, ElementName=sc}"
-                        Grid.Column="0" ItemsSource="{Binding Schema.Items, Converter={StaticResource observable}, ElementName=sc}">
+                        ItemsSource="{Binding Schema.Items, Converter={StaticResource observable}, ElementName=sc}">
                 <TreeView.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Open Designer" Click="OpenDesigner_Click" FlowDirection="LeftToRight" />

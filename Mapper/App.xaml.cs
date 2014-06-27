@@ -1,10 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.IO;
-using System.Windows;
-using System.Windows.Data;
-using System.Xml;
-using System.Xml.Schema;
+﻿using System.Windows;
 
 namespace ScriptModule
 {

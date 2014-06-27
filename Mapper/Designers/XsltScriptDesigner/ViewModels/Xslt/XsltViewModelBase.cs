@@ -6,9 +6,9 @@ using System.Windows.Controls.Primitives;
 using System.Xml;
 using System.Xml.Schema;
 
-namespace ScriptModule
+namespace ScriptModule.Designers.XsltScriptDesigner.ViewModels.Xslt
 {
-    public class XsltViewModelBase : ViewModelBase
+    public class XsltViewModelBase : DesignerViewModelBase
     {
         private XmlNode _node;
         public XmlNode Node
@@ -32,6 +32,11 @@ namespace ScriptModule
                     };
             }
             OnPropertyChanged("Node"); 
+        }
+
+        public override object Model
+        {
+            get { return _node; }
         }
 
         MapperViewModel _mapperViewModel;
@@ -95,7 +100,7 @@ namespace ScriptModule
             get 
             { 
                 return _node == null ? null 
-                    : _node.ChildNodes.Cast<XmlNode>().Select(i => createViewModel(i)); 
+                    : _node.ChildNodes.Cast<XmlNode>().Select(createViewModel); 
             }
         }
 
@@ -191,7 +196,7 @@ namespace ScriptModule
             foreach (var p in parts)
             {
                 node = node.GetChildrenBFS().OfType<FrameworkElement>().Where(i => i.DataContext is XmlSchemaElement)
-                    .FirstOrDefault(i => string.Compare(((XmlSchemaElement)i.DataContext).Name, p, true) == 0);
+                    .FirstOrDefault(i => string.Compare(((XmlSchemaElement)i.DataContext).Name, p, StringComparison.OrdinalIgnoreCase) == 0);
 
                 if (node == null)
                     return null;

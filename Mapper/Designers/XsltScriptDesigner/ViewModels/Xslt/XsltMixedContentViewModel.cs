@@ -8,9 +8,9 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Xml;
-using ScriptModule.Utils.Extensions;
+using ScriptModule.Utils;
 
-namespace ScriptModule
+namespace ScriptModule.Designers.XsltScriptDesigner.ViewModels.Xslt
 {
     class XsltMixedContentViewModel : XsltViewModelBase
     {
@@ -22,7 +22,7 @@ namespace ScriptModule
         }
 
         private IEnumerable<string> _sourcePaths;
-        public IEnumerable<Reference<Thumb>> _sourcePorts;
+        private IEnumerable<Reference<Thumb>> _sourcePorts;
         public IEnumerable<Reference<Thumb>> SourcePorts
         {
             get { return _sourcePorts; }
@@ -139,12 +139,12 @@ namespace ScriptModule
             }
         }
 
-        bool editing = false;
+        bool _editing;
         void rtb_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (editing)
+            if (_editing)
                 return;
-            editing = true;
+            _editing = true;
 
             var offset = ContentTextBox.CaretPosition.DocumentStart.GetOffsetToPosition(ContentTextBox.CaretPosition);
 
@@ -159,7 +159,7 @@ namespace ScriptModule
             updateText(paragraph);
 
             ContentTextBox.CaretPosition = ContentTextBox.CaretPosition.DocumentStart.GetPositionAtOffset(offset);
-            editing = false;
+            _editing = false;
         }
 
         private bool analizeText(Paragraph paragraph)
@@ -196,7 +196,7 @@ namespace ScriptModule
                     var run = (Run)t;
                     unionConsequentRuns(paragraph.Inlines, run);
 
-                    Regex p = new Regex(@"\{[^\}]+\}");
+                    var p = new Regex(@"\{[^\}]+\}");
                     var res = new List<Inline>();
                     var lastindex = 0;
                     foreach (var m in p.Matches(run.Text).Cast<Match>())

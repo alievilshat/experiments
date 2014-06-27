@@ -1,26 +1,41 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Linq;
+using System.Windows.Threading;
 using System.Xml;
 using System.Xml.Schema;
-using System.Collections.ObjectModel;
-using System.Windows.Threading;
+using ScriptModule.Designers.XsltScriptDesigner.Logic;
+using ScriptModule.Scripts.Generic;
+using ScriptModule.Designers.XsltScriptDesigner.ViewModels.Xslt;
 
-namespace ScriptModule
+namespace ScriptModule.Designers.XsltScriptDesigner.ViewModels
 {
-    public class MapperViewModel : ViewModelBase
+    public class MapperViewModel : DesignerViewModelBase
     {
         public event EventHandler Initialized;
         public event EventHandler SizeChanged;
+        public XsltScript Script { get; set; }
+
+        public override object Model
+        {
+            get { return Script; }
+        }
 
         public MapperViewModel()
         {
             Messages = new ObservableCollection<string>();
             Messages.CollectionChanged += (o, e) => HasMessages = Messages.Count > 0;
+        }
+
+        public MapperViewModel(XsltScript script)
+        {
+            this.Script = script;
+            Initialize(script);
         }
 
         public IMapperHost Host { get; set; }
@@ -85,7 +100,7 @@ namespace ScriptModule
             set { _transformationViewModel = value; OnPropertyChanged("TransformationViewModel"); }
         }
 
-        public RichTextBox _sourceTextBox;
+        private RichTextBox _sourceTextBox;
         public RichTextBox SourceTextBox
         {
             get { return _sourceTextBox; }
@@ -159,13 +174,41 @@ namespace ScriptModule
             node.AsObservable().Update("ChildNodes");
         }
 
-        public void Initialize(XmlSchema sourceSchema, XmlSchema targetSchema, XmlDataProvider transformaitonScript)
+        private void Initialize(XsltScript script)
         {
-            this.SourceSchema = sourceSchema;
-            this.TargetSchema = targetSchema;
-            this.Transformation = transformaitonScript;
+            Initialize(script.SourceSchema, script.TargetSchema, script.TransformationScript);
+        }
+
+        public void Initialize(XmlDocument sourceSchema, XmlDocument targetSchema, XmlDocument transformaitonScript)
+        {
+            ValidationEventHandler validationEventHandler = (sender, args) => Debug.WriteLine(args.Message);
+
+            this.SourceSchema = sourceSchema != null ? XmlSchema.Read(new XmlNodeReader(sourceSchema), validationEventHandler) : getDefaultSchema("source");
+            this.TargetSchema = targetSchema != null ? XmlSchema.Read(new XmlNodeReader(targetSchema), validationEventHandler) : getDefaultSchema("target");
+
+            var transformation = getDefaultTransformation();
+            if (transformaitonScript != null) transformation.Document.Load(new XmlNodeReader(transformaitonScript));
+            this.Transformation = transformation;
+
             InvokeInitialized();
         }
+
+        private XmlSchema getDefaultSchema(string root)
+        {
+            var schema = new XmlSchema();
+            schema.Items.Add(new XmlSchemaElement() { Name = root });
+            return schema;
+        }
+
+        private static XmlDataProvider getDefaultTransformation()
+        {
+            var transformation = new XmlDataProvider { Document = new XmlDocument() };
+            transformation.XmlNamespaceManager = new XmlNamespaceManager(transformation.Document.NameTable);
+            transformation.XmlNamespaceManager.AddNamespace(XSL, XSL_NAMESPACE);
+            transformation.Document.AppendChild(transformation.Document.CreateElement(XSL, "stylesheet", XSL_NAMESPACE));
+            return transformation;
+        }
+        
 
         private void InvokeInitialized()
         {

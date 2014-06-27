@@ -1,4 +1,6 @@
 ﻿
+using ScriptModule.Utils.Converters;
+
 namespace ScriptModule.Scripts.Converters
 {
     public class CsvToXml : ScriptBase
@@ -8,7 +10,7 @@ namespace ScriptModule.Scripts.Converters
             if (param == null)
                 return null;
 
-            return CsvToXmlConverter.ConvertCsvToXml(param.ToString()).ToString();
+            return CsvToXmlConverter.ConvertCsvToXml(param.ToString());
         }
     }
 }

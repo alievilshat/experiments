@@ -1,45 +1,51 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using System.IO;
+using System.Text;
+using System.Xaml;
+using System.Xml;
+using XamlWriter = System.Windows.Markup.XamlWriter;
 
 namespace ScriptModule.Scripts
 {
-    public abstract class ScriptBase : IScript
+    public abstract class ScriptBase : IScript, INotifyPropertyChanged
     {
-        public void Execute(object param = null)
+        public event PropertyChangedEventHandler PropertyChanged;
+        public event ProgressChangedEventHandler ProgressChanged;
+
+        public object Execute(object param = null)
         {
-            try
-            {
-                var result = ExecuteScript(param);
-                OnProgressChanged("Completed", 100);
-                OnExecutionComplited(result, null, false);
-            }
-            catch (OperationCanceledException)
-            {
-                OnExecutionComplited(null, null, true);
-            }
-            catch (Exception ex)
-            {
-                OnExecutionComplited(null, ex, false);
-            }
+            return ExecuteScript(param);
         }
 
-        protected abstract object ExecuteScript(object param = null);
+        protected abstract object ExecuteScript(object param);
 
-        public event ProgressChangedEventHandler ProgressChanged;
-        public event RunWorkerCompletedEventHandler ExecutionComplited;
-
-        protected void OnProgressChanged(string state, int percentage)
+        protected void OnProgressChanged(object state, int percentage)
         {
             if (ProgressChanged != null)
-            {
                 ProgressChanged(this, new ProgressChangedEventArgs(percentage, state));
-            }
         }
 
-        protected void OnExecutionComplited(object result, Exception error, bool cancelled)
+        protected void OnPropertyChanged(string name)
         {
-            if (ExecutionComplited != null)
-                ExecutionComplited(this, new RunWorkerCompletedEventArgs(result, error, cancelled));
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
+        }
+
+        public static IScript GetScript(string scripttext)
+        {
+            var settings = new XamlXmlReaderSettings { XmlSpacePreserve = true };
+            var reader = new XamlXmlReader(new StringReader(scripttext), settings);
+            var result = (IScript)XamlServices.Load(reader);
+            return result;
+        }
+
+        public static string GetScriptText(IScript script)
+        {
+            var builder = new StringBuilder();
+            var settings = new XmlWriterSettings { Indent = true, OmitXmlDeclaration = false };
+            var writer = XmlWriter.Create(new StringWriter(builder), settings);
+            XamlWriter.Save(script, writer);
+            return builder.ToString();
         }
     }
 }
