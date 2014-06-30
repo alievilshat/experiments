@@ -6,13 +6,14 @@ using ScriptModule.ViewModels;
 
 namespace ScriptModule.Designers.CSharpScriptDesigner.ViewModels
 {
-    public class CSharpScriptViewModel : ViewModelBase
+    public class CSharpScriptViewModel : DesignerViewModelBase
     {
-        private readonly CSharpScript _script;
+        private CSharpScript _script;
 
         public override object Model
         {
             get { return _script; }
+            set { _script = (CSharpScript)value; AllPropertiesChanged(); }
         }
 
         private string[] _classes;

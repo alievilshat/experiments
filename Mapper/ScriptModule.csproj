@@ -146,7 +146,7 @@
       <DependentUpon>CSharpScriptDesignerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Designers\CSharpScriptDesigner\ViewModels\CSharpScriptViewModel.cs" />
-    <Compile Include="Designers\DesignerControlBase.cs" />
+    <Compile Include="Designers\DesignerControl.cs" />
     <Compile Include="Designers\InputDatabase\InputDatabaseScriptDesigner.xaml.cs">
       <DependentUpon>InputDatabaseScriptDesigner.xaml</DependentUpon>
     </Compile>
@@ -156,7 +156,7 @@
     <Compile Include="Designers\OutputLocalFile\OutputLocalFileScriptDesigner.xaml.cs">
       <DependentUpon>OutputLocalFileScriptDesigner.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Designers\ScriptDesigner.cs" />
+    <Compile Include="Designers\ScriptDesignerAttribute.cs" />
     <Compile Include="Designers\XsltScriptDesigner\Controls\BlockControl.xaml.cs">
       <DependentUpon>BlockControl.xaml</DependentUpon>
     </Compile>
@@ -287,6 +287,7 @@
     <Compile Include="Designers\XsltScriptDesigner\ViewModels\Xslt\XsltViewModelBase.cs" />
     <Compile Include="Scripts\IScript.cs" />
     <Compile Include="Utils\Collections\ViewModelCollectionBase.cs" />
+    <Compile Include="ViewModels\DesignerViewModelBase.cs" />
     <Compile Include="ViewModels\IViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\ScriptModuleViewModel.cs" />
@@ -309,6 +310,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Designers\CSharpScriptDesigner\CSharpScriptDesignerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

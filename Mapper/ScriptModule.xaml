@@ -26,25 +26,39 @@
             <RowDefinition Height="24"/>
         </Grid.RowDefinitions>
         <Menu>
-            <MenuItem Header="Script Module">
+            <MenuItem Header="Script">
                 <MenuItem Header="New" Command="New" />
                 <MenuItem Header="Save" Command="Save" />
                 <MenuItem Header="Execute" Command="Play" />
                 <Separator />
                 <MenuItem Header="Exit" Command="Close"/>
             </MenuItem>
+            <MenuItem Header="Window">
+                <MenuItem Header="Scripts" Tag="{Binding ElementName=ScriptsPane}" Click="ShowWindow" />
+                <MenuItem Header="Tools" Tag="{Binding ElementName=ToolsPane}" />
+                <MenuItem Header="Output" Tag="{Binding ElementName=OutputPane}" />
+            </MenuItem>
         </Menu>
 
-        <ad:DockingManager x:Name="dockManager" Grid.Row="1">
+        <ad:DockingManager x:Name="dockManager" Grid.Row="1" ActiveDocument="{Binding Current}">
             <ad:ResizingPanel Orientation="Vertical">
                 <ad:ResizingPanel Orientation="Horizontal">
+                    
                     <ad:DockablePane ad:ResizingPanel.ResizeWidth="150">
-                        <ad:DockableContent x:Name="classesContent" Title="Scripts">
+                        <ad:DockableContent x:Name="ScriptsPane" Title="Scripts">
                             <TreeView ItemsSource="{Binding RootScripts}">
                                 <TreeView.ItemTemplate>
                                     <HierarchicalDataTemplate ItemsSource="{Binding Scripts}">
-                                        <Grid MouseUp="ScriptItem_Click">
-                                            <TextBox Text="{Binding ScriptName}" Visibility="{Binding RenameMode, Converter={StaticResource BoolToVisibility}}" />
+                                        <Grid MouseDown="ScriptItem_Click">
+                                            <Grid.ContextMenu>
+                                                <ContextMenu>
+                                                    <MenuItem Header="Rename" Click="ScriptRename_Click" />
+                                                    <MenuItem Header="Execute" Click="ScriptExecute_Click" />
+                                                    <Separator />
+                                                    <MenuItem Header="Delete" Click="ScriptDelete_Click"/>
+                                                </ContextMenu>
+                                            </Grid.ContextMenu>
+                                            <TextBox Text="{Binding ScriptName, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding RenameMode, Converter={StaticResource BoolToVisibility}}" PreviewKeyDown="ScriptName_TextChanged" />
                                             <TextBlock Text="{Binding ScriptName}" Visibility="{Binding RenameMode, Converter={StaticResource InvertBoolToVisibility}}"/>
                                         </Grid>
                                     </HierarchicalDataTemplate>
@@ -52,11 +66,13 @@
                             </TreeView>
                         </ad:DockableContent>
                     </ad:DockablePane>
+                    
                     <ad:DocumentPane>
                         <!--<ad:DocumentContent Title="Web Products"/>-->
                     </ad:DocumentPane>
+                    
                     <ad:DockablePane ad:ResizingPanel.ResizeWidth="150">
-                        <ad:DockableContent x:Name="toolsContent" Title="Tools">
+                        <ad:DockableContent x:Name="ToolsPane" Title="Tools">
                             <TreeView DockPanel.Dock="Right" Background="WhiteSmoke">
                                 <TreeViewItem Header="Input" IsExpanded="True">
                                     <TreeViewItem Header="Local File System" />
@@ -81,7 +97,7 @@
                     </ad:DockablePane>
                 </ad:ResizingPanel>
                 <ad:DockablePane ad:ResizingPanel.ResizeHeight="100">
-                    <ad:DockableContent Title="Output">
+                    <ad:DockableContent x:Name="OutputPane" Title="Output">
                         <ListView>
                         </ListView>
                     </ad:DockableContent>

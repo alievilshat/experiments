@@ -11,10 +11,10 @@ namespace ScriptModule.Utils.Collections
     {
         private readonly IObjectSet<TModel> _set;
 
-        public ViewModelObjectSet(IObjectSet<TModel> set, bool autoFetch = true)
+        public ViewModelObjectSet(IObjectSet<TModel> set, bool autoFetch = true, Func<TModel, TViewModel> viewModelConstructor = null)
         {
             _set = set;
-            Initialize(autoFetch);
+            Initialize(autoFetch, viewModelConstructor);
         }
 
         protected override IEnumerable<TModel> GetModelCollection()

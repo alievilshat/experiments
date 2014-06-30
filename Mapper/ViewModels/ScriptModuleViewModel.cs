@@ -3,6 +3,12 @@ using ScriptModule.DAL;
 using ScriptModule.Scripts;
 using ScriptModule.Utils.Collections;
 using ScriptModuleModel;
+using System.Linq;
+using System.Collections.ObjectModel;
+using AvalonDock;
+using System;
+using System.Threading;
+using System.Windows.Threading;
 
 namespace ScriptModule.ViewModels
 {
@@ -11,28 +17,22 @@ namespace ScriptModule.ViewModels
         private ScriptManager _scriptManager;
         private ScriptModuleEntities _entities;
 
-        private ViewModelObjectSet<ScriptRowViewModel, ScriptRow> _scripts;
-        public ViewModelObjectSet<ScriptRowViewModel, ScriptRow> Scripts
+        private ObservableCollection<object> _messages = new ObservableCollection<object>();
+        public ObservableCollection<object> Messages
         {
-            get { return _scripts; }
-            set { _scripts = value; OnScriptsPropertyChanged(); }
+            get { return _messages; }
+            set { _messages = value; OnPropertyChanged("Messages"); }
         }
 
-        private void OnScriptsPropertyChanged()
-        {
-            _rootScipts = new ObservableCollectionView<ScriptRowViewModel, ScriptRowViewModel>(_scripts, i => i.ParentId == null);
-            OnPropertyChanged("Scripts");
-        }
-
-        private ObservableCollectionView<ScriptRowViewModel, ScriptRowViewModel> _rootScipts;
-        public ObservableCollectionView<ScriptRowViewModel, ScriptRowViewModel> RootScripts
+        private ObservableCollection<ScriptRowViewModel> _rootScipts;
+        public ObservableCollection<ScriptRowViewModel> RootScripts
         {
             get { return _rootScipts; }
-            set { _rootScipts = value; OnPropertyChanged("RootScripts");}
+            set { _rootScipts = value; OnPropertyChanged("RootScripts"); }
         }
 
-        private ScriptRowViewModel _current;
-        public ScriptRowViewModel Current
+        private ManagedContent _current;
+        public ManagedContent Current
         {
             get { return _current; }
             set { _current = value; OnPropertyChanged("Current"); }
@@ -66,7 +66,9 @@ namespace ScriptModule.ViewModels
 
         public void LoadScripts()
         {
-            Scripts = new ViewModelObjectSet<ScriptRowViewModel, ScriptRow>(_entities.ScriptRows);
+            RootScripts = new ObservableCollection<ScriptRowViewModel>(
+                _entities.ScriptRows.Where(i => i.Parent == null)
+                .ToArray().Select(i => new ScriptRowViewModel(_entities.ScriptRows, i)));
         }
 
         public void NewScript()
@@ -74,10 +76,11 @@ namespace ScriptModule.ViewModels
             var script = new CompositeScript();
             var row = new ScriptRow
             {
-                Scriptname = "New Script " + (Scripts.Count + 1),
+                Scriptname = "New Script " + (RootScripts.Count + 1),
                 Scripttext = ScriptBase.GetScriptText(script)
             };
-            Scripts.Add(new ScriptRowViewModel(Scripts, row) { RenameMode = true });
+            _entities.ScriptRows.AddObject(row);
+            RootScripts.Add(new ScriptRowViewModel(_entities.ScriptRows, row) { RenameMode = true });
         }
 
         public bool CanExecute()
@@ -87,12 +90,35 @@ namespace ScriptModule.ViewModels
 
         internal void Execute()
         {
-            throw new System.NotImplementedException();
+            if (Current != null)
+                Execute((ScriptRowViewModel)Current.DataContext);
+            return;
         }
 
-        internal void Save()
+        public void Execute(ScriptRowViewModel scriptrowviewmodel)
         {
-            throw new System.NotImplementedException();
+            var script = ScriptBase.GetScript(scriptrowviewmodel.ScriptText);
+            script.ProgressChanged += (o, e) =>
+                {
+                    Dispatcher.CurrentDispatcher.Invoke(() =>
+                        {
+                            Messages.Add(string.Format("{0}: [{1}] {2}",
+                                DateTime.Now.ToString("YYYY.MM.DD hh:mm:ss"),
+                                e.ProgressPercentage,
+                                e.UserState));
+                        });
+                };
+            var thread = new Thread(() => script.Execute());
+            thread.Start();
+        }
+
+        public void Save()
+        {
+            foreach (var s in RootScripts)
+            {
+                s.SaveChanges();
+            }
+            _entities.SaveChanges();
         }
     }
 }

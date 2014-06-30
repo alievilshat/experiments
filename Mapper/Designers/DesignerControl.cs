@@ -1,12 +1,22 @@
 using System;
+using System.ComponentModel;
 using System.Reflection;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Markup;
 using ScriptModule.Scripts;
 
 namespace ScriptModule.Designers
 {
-    public class DesignerControl : UserControl
+    public class DesignerControl : ContentControl
     {
+        static DesignerControl()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(DesignerControl),
+                       new FrameworkPropertyMetadata(typeof(DesignerControl)));
+        }
+
         public virtual IScript GetScript()
         {
             throw new NotImplementedException("GetScript implementation for " + GetType() + " is missing.");

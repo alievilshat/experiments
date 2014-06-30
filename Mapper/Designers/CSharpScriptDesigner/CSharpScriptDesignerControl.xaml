@@ -32,10 +32,10 @@
             </Grid.ColumnDefinitions>
             
             <Label>Main Class</Label>
-            <ComboBox Grid.Row="0" Grid.Column="1" IsDropDownOpen="{Binding IsMainClassDropDownOpen}" ItemsSource="{Binding Classes}" SelectedValue="{Binding MainClass}" />
+            <ComboBox Grid.Row="0" Grid.Column="1" IsEditable="True" IsDropDownOpen="{Binding IsMainClassDropDownOpen}" ItemsSource="{Binding Classes}" Text="{Binding MainClass}" />
             
             <Label Grid.Row="1" Grid.Column="0">Main Method</Label>
-            <ComboBox Grid.Row="1" Grid.Column="1" IsDropDownOpen="{Binding IsMainMethodDropDownOpen}" ItemsSource="{Binding Methods}" SelectedValue="{Binding MainMethod}"/>
+            <ComboBox Grid.Row="1" Grid.Column="1" IsEditable="True" IsDropDownOpen="{Binding IsMainMethodDropDownOpen}" ItemsSource="{Binding Methods}" Text="{Binding MainMethod}"/>
             
             <Label Grid.Row="2" Grid.Column="0">Dependencies</Label>
             <TextBox Grid.Row="2" Grid.Column="1"  Height="60" VerticalScrollBarVisibility="Visible" Text="{Binding Dependencies}" AcceptsReturn="True" />

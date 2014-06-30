@@ -18,6 +18,7 @@ namespace ScriptModule.Utils
     {
         private bool _synchDisabled;
 
+        protected Func<TModel, TViewModel> ViewModelConstructor;
         protected abstract IEnumerable<TModel> GetModelCollection();
         protected abstract void ClearColleciton();
         protected abstract void RemoveModel(TModel m);
@@ -28,8 +29,10 @@ namespace ScriptModule.Utils
             CollectionChanged += ViewModelCollectionChanged;
         }
 
-        protected void Initialize(bool autoFetch = true)
+        protected void Initialize(bool autoFetch = true, Func<TModel, TViewModel> viewModelConstructor = null)
         {
+            ViewModelConstructor = viewModelConstructor;
+
             var collection = GetModelCollection();
             if (collection is ObservableCollection<TModel>)
             {
@@ -127,6 +130,10 @@ namespace ScriptModule.Utils
 
         private TViewModel CreateViewModel(TModel model)
         {
+            if (ViewModelConstructor != null)
+                return ViewModelConstructor(model);
+
+            // Constructor with 1 argument
             return (TViewModel)Activator.CreateInstance(typeof (TViewModel), model);
         }
 
