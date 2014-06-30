@@ -69,9 +69,15 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AvalonDock, Version=1.3.3362.0, Culture=neutral, PublicKeyToken=85a1e0ada7ec13e4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\AvalonDock.dll</HintPath>
+    </Reference>
     <Reference Include="Devart.Data, Version=5.0.963.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
     <Reference Include="Devart.Data.PostgreSql, Version=7.3.171.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
-    <Reference Include="Devart.Data.PostgreSql.Entity, Version=7.3.171.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
+    <Reference Include="Devart.Data.PostgreSql.Entity, Version=7.3.171.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Devart\dotConnect\PostgreSQL\Entity\EF4\Devart.Data.PostgreSql.Entity.dll</HintPath>
+    </Reference>
     <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\Mono.Security.dll</HintPath>
@@ -249,6 +255,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>UserSettings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Utils\Collections\ObservableCollectionView.cs" />
     <Compile Include="Utils\Collections\ViewModelCollection.cs" />
     <Compile Include="Utils\Collections\ViewModelObjectSet.cs" />
     <Compile Include="Utils\GenericEventArgs.cs" />
@@ -456,6 +463,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="lib\AvalonDock.dll" />
     <Content Include="lib\Mono.Security.dll" />
     <Content Include="lib\Npgsql.dll" />
     <Content Include="SciLexer.dll">

@@ -1,4 +1,5 @@
-﻿using ScriptModule.DAL;
+﻿using System.Collections.Generic;
+using ScriptModule.DAL;
 using ScriptModule.Scripts;
 using ScriptModule.Utils.Collections;
 using ScriptModuleModel;
@@ -14,7 +15,20 @@ namespace ScriptModule.ViewModels
         public ViewModelObjectSet<ScriptRowViewModel, ScriptRow> Scripts
         {
             get { return _scripts; }
-            set { _scripts = value; OnPropertyChanged("Scripts"); }
+            set { _scripts = value; OnScriptsPropertyChanged(); }
+        }
+
+        private void OnScriptsPropertyChanged()
+        {
+            _rootScipts = new ObservableCollectionView<ScriptRowViewModel, ScriptRowViewModel>(_scripts, i => i.ParentId == null);
+            OnPropertyChanged("Scripts");
+        }
+
+        private ObservableCollectionView<ScriptRowViewModel, ScriptRowViewModel> _rootScipts;
+        public ObservableCollectionView<ScriptRowViewModel, ScriptRowViewModel> RootScripts
+        {
+            get { return _rootScipts; }
+            set { _rootScipts = value; OnPropertyChanged("RootScripts");}
         }
 
         private ScriptRowViewModel _current;
@@ -63,7 +77,7 @@ namespace ScriptModule.ViewModels
                 Scriptname = "New Script " + (Scripts.Count + 1),
                 Scripttext = ScriptBase.GetScriptText(script)
             };
-            Scripts.Add(new ScriptRowViewModel(row) { RenameMode = true });
+            Scripts.Add(new ScriptRowViewModel(Scripts, row) { RenameMode = true });
         }
 
         public bool CanExecute()

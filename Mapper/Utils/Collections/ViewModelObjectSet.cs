@@ -9,7 +9,7 @@ namespace ScriptModule.Utils.Collections
         where TViewModel : class, IViewModel
         where TModel : class
     {
-        private readonly IObjectSet<TModel> _set; 
+        private readonly IObjectSet<TModel> _set;
 
         public ViewModelObjectSet(IObjectSet<TModel> set, bool autoFetch = true)
         {

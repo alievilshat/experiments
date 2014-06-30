@@ -1,6 +1,8 @@
-﻿using System.Windows.Input;
+﻿using System.Linq;
+using System.Windows.Input;
 using ScriptModule.ViewModels;
 using System.Windows;
+using AvalonDock;
 
 namespace ScriptModule
 {
@@ -53,6 +55,31 @@ namespace ScriptModule
         private void CanRun_Handler(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = Model.CanExecute();
+        }
+
+        private void Close_Execute(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void ScriptItem_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount != 2)
+                return;
+
+            var context = ((FrameworkElement)sender).DataContext as ScriptRowViewModel;
+            if (context == null)
+                return;
+
+            var doc = dockManager.Documents.FirstOrDefault(i => i.Content == context);
+            if (doc != null)
+            {
+                doc.Activate();
+                return;
+            }
+            var documentContent = new DocumentContent();
+            documentContent.Title = context.ScriptName;
+            documentContent.Show(dockManager);
         }
     }
 }

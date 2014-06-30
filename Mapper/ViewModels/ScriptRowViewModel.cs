@@ -1,5 +1,6 @@
 ﻿using ScriptModule.Designers;
 using ScriptModule.Scripts;
+using ScriptModule.Utils.Collections;
 using ScriptModuleModel;
 
 namespace ScriptModule.ViewModels
@@ -15,6 +16,18 @@ namespace ScriptModule.ViewModels
             get { return _scriptRow; }
         }
 
+        public int ScriptId
+        {
+            get { return _scriptRow.Scriptid; }
+            set { _scriptRow.Scriptid = value; OnPropertyChanged("ScriptId"); }
+        }
+
+        public int? ParentId
+        {
+            get { return _scriptRow.Parent; }
+            set { _scriptRow.Parent = value; OnPropertyChanged("ParentId"); }
+        }
+
         public string ScriptName
         {
             get { return _scriptRow.Scriptname; }
@@ -27,6 +40,13 @@ namespace ScriptModule.ViewModels
             set { _scriptRow.Scripttext = value; OnPropertyChanged("ScriptText"); }
         }
 
+        private ObservableCollectionView<ScriptRowViewModel, ScriptRowViewModel> _scripts;
+        public ObservableCollectionView<ScriptRowViewModel, ScriptRowViewModel> Scripts
+        {
+            get { return _scripts; }
+            set { _scripts = value; OnPropertyChanged("Scripts"); }
+        }
+        
         private DesignerControl _scriptDesigner;
         public DesignerControl ScriptDesigner
         {
@@ -34,9 +54,10 @@ namespace ScriptModule.ViewModels
             set { _scriptDesigner = value; OnPropertyChanged("ScriptDesigner"); }
         }
 
-        public ScriptRowViewModel(ScriptRow scriptRow)
+        public ScriptRowViewModel(ViewModelObjectSet<ScriptRowViewModel, ScriptRow> scripts, ScriptRow scriptRow)
         {
             this._scriptRow = scriptRow;
+            this._scripts = new ObservableCollectionView<ScriptRowViewModel, ScriptRowViewModel>(scripts, i => i.ParentId == ScriptId);
             InitializeDesigner();
         }
 
