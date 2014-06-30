@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ScriptModule.ViewModels;
 
 namespace ScriptModule.Utils.Collections
@@ -9,10 +10,10 @@ namespace ScriptModule.Utils.Collections
     {
         private readonly ICollection<TModel> _collection; 
 
-        public ViewModelCollection(ICollection<TModel> collection, bool autoFetch = true)
+        public ViewModelCollection(ICollection<TModel> collection, bool autoFetch = true, Func<TModel, TViewModel> viewModelConstructor = null)
         {
             _collection = collection;
-            Initialize(autoFetch);
+            Initialize(autoFetch, viewModelConstructor);
         }
 
         protected override IEnumerable<TModel> GetModelCollection()

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 
 namespace ScriptModule.ViewModels
 {
@@ -11,12 +12,15 @@ namespace ScriptModule.ViewModels
 
         public virtual object Model
         {
-            get { return null; }
+            get { throw new NotSupportedException("Model property must be overrided by subclass"); }
+            set { throw new NotSupportedException("Model property must be overrided by subclass"); }
         }
 
-        protected virtual void OnPropertyChanged(string propertyName)
+        protected virtual void OnPropertyChanged(string propertyName, bool verify = true)
         {
-            VerifyPropertyName(propertyName);
+            if (verify)
+                VerifyPropertyName(propertyName); 
+
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -34,6 +38,14 @@ namespace ScriptModule.ViewModels
                     throw new Exception(msg);
                 else
                     Debug.Fail(msg);
+            }
+        }
+
+        public virtual void AllPropertiesChanged()
+        {
+            foreach (var p in TypeDescriptor.GetProperties(this).Cast<PropertyDescriptor>())
+            {
+                OnPropertyChanged(p.Name, false);
             }
         }
     }

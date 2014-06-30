@@ -9,12 +9,12 @@ namespace ScriptModule.Utils.Collections
         where TViewModel : class, IViewModel
         where TModel : class
     {
-        private readonly IObjectSet<TModel> _set; 
+        private readonly IObjectSet<TModel> _set;
 
-        public ViewModelObjectSet(IObjectSet<TModel> set, bool autoFetch = true)
+        public ViewModelObjectSet(IObjectSet<TModel> set, bool autoFetch = true, Func<TModel, TViewModel> viewModelConstructor = null)
         {
             _set = set;
-            Initialize(autoFetch);
+            Initialize(autoFetch, viewModelConstructor);
         }
 
         protected override IEnumerable<TModel> GetModelCollection()

@@ -14,6 +14,7 @@
           <Property Name="scriptid" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="scriptname" Type="varchar" MaxLength="50" />
           <Property Name="scripttext" Type="text" />
+          <Property Name="parent" Type="int" />
         </EntityType>
       </Schema>
     </edmx:StorageModels>
@@ -23,13 +24,14 @@
         <EntityContainer Name="ScriptModuleEntities" annotation:LazyLoadingEnabled="true" ed:Guid="179a4c0f-188b-4291-a9b9-8c5a2cda2d78">
           <EntitySet Name="ScriptRows" EntityType="ScriptModuleModel.ScriptRow" />
         </EntityContainer>
-        <EntityType Name="ScriptRow" ed:Guid="24fa8830-bc13-4e50-a83a-61df57c88302">
+        <EntityType Name="ScriptRow" ed:Guid="48b53c08-95f0-4804-b6ac-b86051d0bd7a">
           <Key>
             <PropertyRef Name="Scriptid" />
           </Key>
-          <Property Name="Scriptid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" ed:ValidateRequired="True" ed:Guid="8d7d2b47-1e52-4a71-94d0-1d273f76a87d" />
-          <Property Name="Scriptname" Type="String" MaxLength="50" Unicode="true" ed:ValidateMaxLength="50" ed:ValidateRequired="False" ed:Guid="31dbbbb0-a8ac-4277-8441-d3518468214b" />
-          <Property Name="Scripttext" Type="String" ed:ValidateRequired="False" ed:Guid="d3c41d19-dd1c-431d-abce-166ff8f43a7c" />
+          <Property Name="Scriptid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" ed:ValidateRequired="True" ed:Guid="93540e48-4f27-436f-942b-73473317c733" />
+          <Property Name="Scriptname" Type="String" MaxLength="50" Unicode="true" ed:ValidateMaxLength="50" ed:ValidateRequired="False" ed:Guid="5bfc36d3-ca07-4408-9249-d6bf0910fc09" />
+          <Property Name="Scripttext" Type="String" ed:ValidateRequired="False" ed:Guid="09ff9b3a-a9a1-481a-a0cb-02ef124cc999" />
+          <Property Name="Parent" Type="Int32" ed:ValidateRequired="False" ed:Guid="dddcf21c-78eb-445f-bb15-76ea75935cc7" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -43,6 +45,7 @@
                 <ScalarProperty Name="Scriptid" ColumnName="scriptid" />
                 <ScalarProperty Name="Scriptname" ColumnName="scriptname" />
                 <ScalarProperty Name="Scripttext" ColumnName="scripttext" />
+                <ScalarProperty Name="Parent" ColumnName="parent" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

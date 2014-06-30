@@ -9,7 +9,7 @@
     <Grid>
         <ContentControl Content="{Binding SingleItem.ScriptDesigner}" Visibility="{Binding SingleElementComposite, Converter={StaticResource BoolToVisibility}}" />
         <ListView x:Name="ScriptsListView" ItemsSource="{Binding ScriptItems}"
-                  AllowDrop="True" PreviewMouseLeftButtonDown="Scripts_OnPreviewMouseLeftButtonDown" Drop="Scripts_OnDrop">
+                    AllowDrop="True" PreviewMouseLeftButtonDown="Scripts_OnPreviewMouseLeftButtonDown" Drop="Scripts_OnDrop">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border Height="40" Width="100" MouseDown="OpenDesigner_Click">

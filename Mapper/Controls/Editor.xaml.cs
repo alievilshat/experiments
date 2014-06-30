@@ -15,8 +15,8 @@ namespace ScriptModule.Controls
     {
         public string Syntax 
         {
-            get { return editor.ConfigurationManager.Language; }
-            set { editor.ConfigurationManager.Language = value; }
+            get { return editor != null ? editor.ConfigurationManager.Language : string.Empty; }
+            set { if (editor != null) editor.ConfigurationManager.Language = value; }
         }
 
         public string Text

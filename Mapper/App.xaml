@@ -15,5 +15,9 @@
             <Setter Property="FrameworkElement.VerticalAlignment" Value="Center" />
             <Setter Property="FrameworkElement.HorizontalAlignment" Value="Left" />
         </Style>
+        <Style TargetType="MenuItem">
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
     </Application.Resources>
 </Application>

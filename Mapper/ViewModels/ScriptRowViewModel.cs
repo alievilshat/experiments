@@ -1,18 +1,33 @@
-﻿using ScriptModule.Designers;
+﻿using System.Data.Objects;
+using ScriptModule.Designers;
 using ScriptModule.Scripts;
+using ScriptModule.Utils.Collections;
 using ScriptModuleModel;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace ScriptModule.ViewModels
 {
     public class ScriptRowViewModel : ViewModelBase
     {
-        public enum DesingMode { Design = 0, Source = 1 }
-
         private readonly ScriptRow _scriptRow;
 
         public override object Model
         {
             get { return _scriptRow; }
+        }
+
+        public int ScriptId
+        {
+            get { return _scriptRow.Scriptid; }
+            set { _scriptRow.Scriptid = value; OnPropertyChanged("ScriptId"); }
+        }
+
+        public int? ParentId
+        {
+            get { return _scriptRow.Parent; }
+            set { _scriptRow.Parent = value; OnPropertyChanged("ParentId"); }
         }
 
         public string ScriptName
@@ -27,45 +42,33 @@ namespace ScriptModule.ViewModels
             set { _scriptRow.Scripttext = value; OnPropertyChanged("ScriptText"); }
         }
 
+        private ObservableCollection<ScriptRowViewModel> _scripts;
+        public ObservableCollection<ScriptRowViewModel> Scripts
+        {
+            get { return _scripts; }
+            set { _scripts = value; OnPropertyChanged("Scripts"); }
+        }
+        
         private DesignerControl _scriptDesigner;
         public DesignerControl ScriptDesigner
         {
-            get { return _scriptDesigner; }
+            get 
+            {
+                if (_scriptDesigner == null && ScriptText != null)
+                {
+                    _scriptDesigner = DesignerControl.CreateDesigner(ScriptBase.GetScript(_scriptRow.Scripttext));
+                }
+                return _scriptDesigner; 
+            }
             set { _scriptDesigner = value; OnPropertyChanged("ScriptDesigner"); }
         }
 
-        public ScriptRowViewModel(ScriptRow scriptRow)
+        public ScriptRowViewModel(ObjectSet<ScriptRow> scripts, ScriptRow scriptRow)
         {
             this._scriptRow = scriptRow;
-            InitializeDesigner();
-        }
-
-        private void InitializeDesigner()
-        {
-            if (_scriptRow.Scripttext != null)
-                ScriptDesigner = DesignerControl.CreateDesigner(ScriptBase.GetScript(_scriptRow.Scripttext));
-        }
-
-        private DesingMode _designMode = DesingMode.Design;
-        public int DesignMode
-        {
-            get { return (int)_designMode; }
-            set { _designMode = (DesingMode)value; OnTabIndexChanged(); }
-        }
-
-        private void OnTabIndexChanged()
-        {
-            switch (_designMode)
-            {
-                case DesingMode.Design:
-                    ScriptDesigner = DesignerControl.CreateDesigner(ScriptBase.GetScript(_scriptRow.Scripttext));
-                    break;
-                case DesingMode.Source:
-                    if (_scriptDesigner != null)
-                        ScriptText = ScriptBase.GetScriptText(_scriptDesigner.GetScript());
-                    break;
-            }
-            OnPropertyChanged("DesignMode");
+            this._scripts = new ObservableCollection<ScriptRowViewModel>(
+                scripts.Where(i => i.Parent == (int?)_scriptRow.Scriptid)
+                .ToArray().Select(i => new ScriptRowViewModel(scripts, i)));
         }
 
         private bool _renameMode;
@@ -73,6 +76,16 @@ namespace ScriptModule.ViewModels
         {
             get { return _renameMode; }
             set { _renameMode = value; OnPropertyChanged("RenameMode"); }
+        }
+
+        public void SaveChanges()
+        {
+            if (_scriptDesigner != null)
+                _scriptRow.Scripttext = ScriptBase.GetScriptText(ScriptDesigner.GetScript());
+            foreach (var s in Scripts)
+            {
+                s.SaveChanges();
+            }
         }
     }
 }
