@@ -42,7 +42,8 @@ namespace ScriptModule.ViewModels
 
         private void InitializeDesigner()
         {
-            ScriptDesigner = DesignerControl.CreateDesigner(ScriptBase.GetScript(_scriptRow.Scripttext));
+            if (_scriptRow.Scripttext != null)
+                ScriptDesigner = DesignerControl.CreateDesigner(ScriptBase.GetScript(_scriptRow.Scripttext));
         }
 
         private DesingMode _designMode = DesingMode.Design;
