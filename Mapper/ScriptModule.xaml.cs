@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using System.Windows.Input;
+using ScriptModule.Scripts;
+using ScriptModule.Scripts.Generic;
 using ScriptModule.ViewModels;
 using System.Windows;
 using Xceed.Wpf.AvalonDock.Layout;
@@ -15,7 +17,8 @@ namespace ScriptModule
 
         public ScriptModuleWindow()
             : this(new ScriptModuleViewModel())
-        { }
+        {
+        }
 
         public ScriptModuleWindow(string login, string password)
             : this(new ScriptModuleViewModel(login, password))

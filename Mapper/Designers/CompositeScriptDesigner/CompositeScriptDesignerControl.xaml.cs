@@ -26,6 +26,9 @@ namespace ScriptModule.Designers.CompositeScriptDesigner
 
         private void OpenDesigner_Click(object sender, MouseButtonEventArgs e)
         {
+            if (e.ClickCount != 2)
+                return;
+
             var viewModel = ((FrameworkElement) sender).DataContext as CompositeScriptItemViewModel;
             if (viewModel != null)
             {

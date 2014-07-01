@@ -7,7 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <ContentControl Content="{Binding SingleItem.ScriptDesigner}" Visibility="{Binding SingleElementComposite, Converter={StaticResource BoolToVisibility}}" />
         <ListView x:Name="ScriptsListView" ItemsSource="{Binding ScriptItems}"
                     AllowDrop="True" PreviewMouseLeftButtonDown="Scripts_OnPreviewMouseLeftButtonDown" Drop="Scripts_OnDrop">
             <ListView.ItemTemplate>
