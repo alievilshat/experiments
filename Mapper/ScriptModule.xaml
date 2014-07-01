@@ -1,12 +1,11 @@
-﻿<Window x:Class="ScriptModule.ScriptModuleWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="clr-namespace:ScriptModule.Controls"
-        xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
+        xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
+        x:Class="ScriptModule.ScriptModuleWindow"
         Title="ScriptModule"
         Loaded="ScriptModule_OnLoaded">
     <Window.Resources>
-        <Style TargetType="TreeViewItem">
+        <Style TargetType="{x:Type TreeViewItem}">
             <Setter Property="Margin" Value="2" />
         </Style>
     </Window.Resources>
@@ -16,7 +15,7 @@
     <Window.CommandBindings>
         <CommandBinding Command="New" Executed="NewScript_Click" />
         <CommandBinding Command="Save" Executed="Save_Click" />
-        <CommandBinding Command="Play" Executed="Run_Click" CanExecute="CanRun_Handler" />
+        <CommandBinding Command="Play" Executed="Execute_Click" CanExecute="CanExecute_Handler" />
         <CommandBinding Command="Close" Executed="Close_Execute" />
     </Window.CommandBindings>
     <Grid>
@@ -35,86 +34,90 @@
             </MenuItem>
             <MenuItem Header="Window">
                 <MenuItem Header="Scripts" Tag="{Binding ElementName=ScriptsPane}" Click="ShowWindow" />
-                <MenuItem Header="Tools" Tag="{Binding ElementName=ToolsPane}" />
-                <MenuItem Header="Output" Tag="{Binding ElementName=OutputPane}" />
+                <MenuItem Header="Tools" Tag="{Binding ElementName=ToolsPane}" Click="ShowWindow" />
+                <MenuItem Header="Output" Tag="{Binding ElementName=OutputPane}" Click="ShowWindow" />
             </MenuItem>
         </Menu>
 
-        <ad:DockingManager x:Name="dockManager" Grid.Row="1" ActiveDocument="{Binding Current}">
-            <ad:ResizingPanel Orientation="Vertical">
-                <ad:ResizingPanel Orientation="Horizontal">
-                    
-                    <ad:DockablePane ad:ResizingPanel.ResizeWidth="150">
-                        <ad:DockableContent x:Name="ScriptsPane" Title="Scripts">
-                            <TreeView ItemsSource="{Binding RootScripts}">
-                                <TreeView.ItemTemplate>
-                                    <HierarchicalDataTemplate ItemsSource="{Binding Scripts}">
-                                        <Grid MouseDown="ScriptItem_Click">
-                                            <Grid.ContextMenu>
-                                                <ContextMenu>
-                                                    <MenuItem Header="Rename" Click="ScriptRename_Click" />
-                                                    <MenuItem Header="Execute" Click="ScriptExecute_Click" />
-                                                    <Separator />
-                                                    <MenuItem Header="Delete" Click="ScriptDelete_Click"/>
-                                                </ContextMenu>
-                                            </Grid.ContextMenu>
-                                            <TextBox Text="{Binding ScriptName, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding RenameMode, Converter={StaticResource BoolToVisibility}}" PreviewKeyDown="ScriptName_TextChanged" />
-                                            <TextBlock Text="{Binding ScriptName}" Visibility="{Binding RenameMode, Converter={StaticResource InvertBoolToVisibility}}"/>
-                                        </Grid>
-                                    </HierarchicalDataTemplate>
-                                </TreeView.ItemTemplate>
-                            </TreeView>
-                        </ad:DockableContent>
-                    </ad:DockablePane>
-                    
-                    <ad:DocumentPane>
-                        <!--<ad:DocumentContent Title="Web Products"/>-->
-                    </ad:DocumentPane>
-                    
-                    <ad:DockablePane ad:ResizingPanel.ResizeWidth="150">
-                        <ad:DockableContent x:Name="ToolsPane" Title="Tools">
-                            <TreeView DockPanel.Dock="Right" Background="WhiteSmoke">
-                                <TreeViewItem Header="Input" IsExpanded="True">
-                                    <TreeViewItem Header="Local File System" />
-                                    <TreeViewItem Header="Ftp Location" />
-                                    <TreeViewItem Header="Database" />
-                                </TreeViewItem>
-                                <TreeViewItem Header="Converters" IsExpanded="True">
-                                    <TreeViewItem Header="Xml To Csv" />
-                                    <TreeViewItem Header="Csv To Xml" />
-                                </TreeViewItem>
-                                <TreeViewItem Header="Scripts" IsExpanded="True">
-                                    <TreeViewItem Header="C# Script" />
-                                    <TreeViewItem Header="XSLT Script" />
-                                </TreeViewItem>
-                                <TreeViewItem Header="Output" IsExpanded="True">
-                                    <TreeViewItem Header="Local File System" />
-                                    <TreeViewItem Header="Ftp Location" />
-                                    <TreeViewItem Header="Database" />
-                                </TreeViewItem>
-                            </TreeView>
-                        </ad:DockableContent>
-                    </ad:DockablePane>
-                </ad:ResizingPanel>
-                <ad:DockablePane ad:ResizingPanel.ResizeHeight="100">
-                    <ad:DockableContent x:Name="OutputPane" Title="Output">
-                        <ListView>
-                        </ListView>
-                    </ad:DockableContent>
-                </ad:DockablePane>
-            </ad:ResizingPanel>
-        </ad:DockingManager>
+        <xcad:DockingManager x:Name="DockManager" Grid.Row="1" ActiveContent="{Binding Current}">
+            <xcad:DockingManager.Theme>
+                <xcad:AeroTheme />
+                <!--<xcad:VS2010Theme />-->
+            </xcad:DockingManager.Theme>
+            <xcad:LayoutRoot>
+                <xcad:LayoutPanel Orientation="Vertical">
+                    <xcad:LayoutPanel Orientation="Horizontal">
+                        <xcad:LayoutAnchorablePane DockWidth="200">
+                            <xcad:LayoutAnchorable x:Name="ScriptsPane" Title="Scripts" CanHide="False">
+                                <TreeView ItemsSource="{Binding RootScripts}">
+                                    <TreeView.ItemTemplate>
+                                        <HierarchicalDataTemplate ItemsSource="{Binding Scripts}">
+                                            <Grid MouseDown="ScriptItem_Click">
+                                                <Grid.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem Header="Rename" Click="ScriptRename_Click" />
+                                                        <MenuItem Header="Execute" Click="ScriptExecute_Click" />
+                                                        <Separator />
+                                                        <MenuItem Header="Delete" Click="ScriptDelete_Click"/>
+                                                    </ContextMenu>
+                                                </Grid.ContextMenu>
+                                                <TextBox Text="{Binding ScriptName, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding RenameMode, Converter={StaticResource BoolToVisibility}}" PreviewKeyDown="ScriptName_TextChanged" />
+                                                <TextBlock Text="{Binding ScriptName}" Visibility="{Binding RenameMode, Converter={StaticResource InvertBoolToVisibility}}"/>
+                                            </Grid>
+                                        </HierarchicalDataTemplate>
+                                    </TreeView.ItemTemplate>
+                                </TreeView>
+                            </xcad:LayoutAnchorable>
+                        </xcad:LayoutAnchorablePane>
+                        <xcad:LayoutDocumentPaneGroup>
+                            <xcad:LayoutDocumentPane x:Name="Documents">
+                            </xcad:LayoutDocumentPane>
+                        </xcad:LayoutDocumentPaneGroup>
+                        <xcad:LayoutAnchorablePaneGroup DockWidth="200">
+                            <xcad:LayoutAnchorablePane>
+                                <xcad:LayoutAnchorable x:Name="ToolsPane"  Title="Tools" CanHide="False">
+                                    <TreeView DockPanel.Dock="Right" Background="WhiteSmoke">
+                                        <TreeViewItem Header="Input" IsExpanded="True">
+                                            <TreeViewItem Header="Local File System" />
+                                            <TreeViewItem Header="Ftp Location" />
+                                            <TreeViewItem Header="Database" />
+                                        </TreeViewItem>
+                                        <TreeViewItem Header="Converters" IsExpanded="True">
+                                            <TreeViewItem Header="Xml To Csv" />
+                                            <TreeViewItem Header="Csv To Xml" />
+                                        </TreeViewItem>
+                                        <TreeViewItem Header="Scripts" IsExpanded="True">
+                                            <TreeViewItem Header="C# Script" />
+                                            <TreeViewItem Header="XSLT Script" />
+                                        </TreeViewItem>
+                                        <TreeViewItem Header="Output" IsExpanded="True">
+                                            <TreeViewItem Header="Local File System" />
+                                            <TreeViewItem Header="Ftp Location" />
+                                            <TreeViewItem Header="Database" />
+                                        </TreeViewItem>
+                                    </TreeView>
+                                </xcad:LayoutAnchorable>
+                            </xcad:LayoutAnchorablePane>
+                        </xcad:LayoutAnchorablePaneGroup>
+                    </xcad:LayoutPanel>
+                    <xcad:LayoutAnchorablePaneGroup DockHeight="120">
+                        <xcad:LayoutAnchorablePane>
+                            <xcad:LayoutAnchorable x:Name="OutputPane" Title="Output" CanHide="False">
+                                <ListView ItemsSource="{Binding Output}">
+                                </ListView>
+                            </xcad:LayoutAnchorable>
+                            <xcad:LayoutAnchorable x:Name="ErrorsPane" Title="Errors" CanHide="False">
+                                <ListView ItemsSource="{Binding Errors}">
+                                </ListView>
+                            </xcad:LayoutAnchorable>
+                        </xcad:LayoutAnchorablePane>
+                    </xcad:LayoutAnchorablePaneGroup>
+                </xcad:LayoutPanel>
+            </xcad:LayoutRoot>
+        </xcad:DockingManager>
 
         <StatusBar Grid.Row="2">
             <StatusBarItem Content="Ready"/>
         </StatusBar>
     </Grid>
-        <!--<TabControl x:Name="DesignerTagControl" TabStripPlacement="Bottom" IsSynchronizedWithCurrentItem="True"
-                    DataContext="{Binding Current}" SelectedIndex="{Binding DesignMode}">
-            <TabItem Header="Design" Content="{Binding ScriptDesigner}">
-            </TabItem>
-            <TabItem Header="Source">
-                <controls:Editor x:Name="editor" Syntax="xml" Text="{Binding ScriptText, Mode=TwoWay}" />
-            </TabItem>
-        </TabControl>-->
 </Window>

@@ -26,3 +26,4 @@ C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebS
 C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebService\obj\Debug\ScriptModuleWebService.csprojResolveAssemblyReference.cache
 C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebService\obj\Debug\ScriptModuleWebService.dll
 C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebService\obj\Debug\ScriptModuleWebService.pdb
+C:\Work\rep\ScriptModuleWebService\bin\Xceed.Wpf.AvalonDock.dll

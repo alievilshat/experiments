@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System.Windows;
 using ScriptModule.DAL;
 using ScriptModule.Scripts;
-using ScriptModule.Utils.Collections;
+using ScriptModule.Utils;
 using ScriptModuleModel;
 using System.Linq;
 using System.Collections.ObjectModel;
-using AvalonDock;
 using System;
 using System.Threading;
 using System.Windows.Threading;
+using Xceed.Wpf.AvalonDock.Layout;
 
 namespace ScriptModule.ViewModels
 {
@@ -17,11 +17,18 @@ namespace ScriptModule.ViewModels
         private ScriptManager _scriptManager;
         private ScriptModuleEntities _entities;
 
-        private ObservableCollection<object> _messages = new ObservableCollection<object>();
-        public ObservableCollection<object> Messages
+        private ObservableCollection<object> _output = new ObservableCollection<object>();
+        public ObservableCollection<object> Output
         {
-            get { return _messages; }
-            set { _messages = value; OnPropertyChanged("Messages"); }
+            get { return _output; }
+            set { _output = value; OnPropertyChanged("Output"); }
+        }
+
+        private ObservableCollection<string> _errors = new ObservableCollection<string>();
+        public ObservableCollection<string> Errors
+        {
+            get { return _errors; }
+            set { _errors = value; OnPropertyChanged("Errors"); }
         }
 
         private ObservableCollection<ScriptRowViewModel> _rootScipts;
@@ -31,8 +38,8 @@ namespace ScriptModule.ViewModels
             set { _rootScipts = value; OnPropertyChanged("RootScripts"); }
         }
 
-        private ManagedContent _current;
-        public ManagedContent Current
+        private LayoutContent _current;
+        public LayoutContent Current
         {
             get { return _current; }
             set { _current = value; OnPropertyChanged("Current"); }
@@ -85,14 +92,17 @@ namespace ScriptModule.ViewModels
 
         public bool CanExecute()
         {
-            return Current != null;
+            return Current is LayoutDocument 
+                && Current.Content is FrameworkElement 
+                && ((FrameworkElement)Current.Content).DataContext is ScriptRowViewModel;
         }
 
         internal void Execute()
         {
-            if (Current != null)
-                Execute((ScriptRowViewModel)Current.DataContext);
-            return;
+            if (!CanExecute())
+                return;
+
+            Execute(Current.Content.As<FrameworkElement>().DataContext.As<ScriptRowViewModel>());
         }
 
         public void Execute(ScriptRowViewModel scriptrowviewmodel)
@@ -100,15 +110,18 @@ namespace ScriptModule.ViewModels
             var script = ScriptBase.GetScript(scriptrowviewmodel.ScriptText);
             script.ProgressChanged += (o, e) =>
                 {
-                    Dispatcher.CurrentDispatcher.Invoke(() =>
-                        {
-                            Messages.Add(string.Format("{0}: [{1}] {2}",
-                                DateTime.Now.ToString("YYYY.MM.DD hh:mm:ss"),
-                                e.ProgressPercentage,
-                                e.UserState));
-                        });
+                    App.Current.Dispatcher.Invoke(() => Output.Add(string.Format("{0} [{1}%] {2}",
+                                                                            DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"),
+                                                                            e.ProgressPercentage,
+                                                                            e.UserState)));
                 };
-            var thread = new Thread(() => script.Execute());
+            var thread = new Thread(() =>
+            {
+                var res = script.Execute();
+                App.Current.Dispatcher.Invoke(() => Output.Add(string.Format("{0} [100%] Result: {1}",
+                                                                            DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"),
+                                                                            res)));
+            });
             thread.Start();
         }
 

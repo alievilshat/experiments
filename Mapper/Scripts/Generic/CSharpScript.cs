@@ -49,9 +49,16 @@ namespace ScriptModule.Scripts.Generic
         {
             if (_compiledAssembly == null)
             {
-                _compiledAssembly = Compiler.CompileAssembly(Code, Dependencies.Split(new [] {';'}, StringSplitOptions.RemoveEmptyEntries).ToArray());
+                _compiledAssembly = Compiler.CompileAssembly(Code, getDependencies());
             }
             return _compiledAssembly;
+        }
+
+        private string[] getDependencies()
+        {
+            if (Dependencies == null)
+                return new string[0];
+            return Dependencies.Split(new [] {';'}, StringSplitOptions.RemoveEmptyEntries).ToArray();
         }
 
         private object _instance;

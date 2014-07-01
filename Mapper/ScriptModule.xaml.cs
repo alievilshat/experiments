@@ -2,8 +2,7 @@
 using System.Windows.Input;
 using ScriptModule.ViewModels;
 using System.Windows;
-using AvalonDock;
-using ScriptModule.Designers;
+using Xceed.Wpf.AvalonDock.Layout;
 
 namespace ScriptModule
 {
@@ -62,16 +61,17 @@ namespace ScriptModule
             if (context == null || context.ScriptText == null)
                 return;
 
-            var doc = dockManager.Documents.FirstOrDefault(i => i.Content == context.ScriptDesigner);
-            if (doc != null)
+            var doc = Documents.Children.FirstOrDefault(i => i.Content == context.ScriptDesigner);
+            if (doc == null)
             {
-                doc.Activate();
-                return;
+                doc = new LayoutDocument
+                {
+                    Title = context.ScriptName, 
+                    Content = context.ScriptDesigner
+                };
+                Documents.Children.Add(doc);
             }
-            var documentContent = new DocumentContent();
-            documentContent.Title = context.ScriptName;
-            documentContent.Content = context.ScriptDesigner;
-            documentContent.Show(dockManager);
+            DockManager.ActiveContent = doc;
         }
 
         private static ScriptRowViewModel getModel(object sender)
@@ -106,26 +106,20 @@ namespace ScriptModule
 
         }
 
-        private void CanRun_Handler(object sender, CanExecuteRoutedEventArgs e)
+        private void CanExecute_Handler(object sender, CanExecuteRoutedEventArgs e)
         {
             Model.CanExecute();
         }
 
-        private void Run_Click(object sender, ExecutedRoutedEventArgs e)
+        private void Execute_Click(object sender, ExecutedRoutedEventArgs e)
         {
             Model.Execute();
         }
 
         private void ShowWindow(object sender, RoutedEventArgs e)
         {
-            var pane = ((FrameworkElement)sender).Tag as DockableContent;
-            switch (pane.State)
-            {
-                case DockableContentState.Hidden:
-                case DockableContentState.AutoHide:
-                    pane.Show();
-                    break;
-            }
+            var pane = ((FrameworkElement)sender).Tag as LayoutAnchorable;
+            DockManager.ActiveContent = pane;
         }
     }
 }
