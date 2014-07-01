@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using ScriptModule.Designers.CompositeScriptDesigner.ViewModels;
 using ScriptModule.Scripts;
+using Xceed.Wpf.AvalonDock.Layout;
 
 namespace ScriptModule.Designers.CompositeScriptDesigner
 {
@@ -33,8 +34,7 @@ namespace ScriptModule.Designers.CompositeScriptDesigner
             if (viewModel != null)
             {
                 var designer = viewModel.ScriptDesigner;
-                var window = new Window {Content = designer};
-                window.Show();
+                ShowDesigner(designer);
             }
         }
 

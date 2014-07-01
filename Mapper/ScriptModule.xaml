@@ -39,7 +39,7 @@
             </MenuItem>
         </Menu>
 
-        <xcad:DockingManager x:Name="DockManager" Grid.Row="1" ActiveContent="{Binding Current}">
+        <xcad:DockingManager x:Name="DockManager" Grid.Row="1" ActiveContent="{Binding ActiveDocument}">
             <xcad:DockingManager.Theme>
                 <xcad:AeroTheme />
                 <!--<xcad:VS2010Theme />-->

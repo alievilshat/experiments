@@ -28,6 +28,12 @@ namespace ScriptModule
         {
             DataContext = viewModel;
             InitializeComponent();
+            BindDocuments();
+        }
+
+        private void BindDocuments()
+        {
+            BindingHelper.BindCollections(Documents, Model.Documents);
         }
 
         private void ScriptModule_OnLoaded(object sender, RoutedEventArgs e)
@@ -64,17 +70,7 @@ namespace ScriptModule
             if (context == null || context.ScriptText == null)
                 return;
 
-            var doc = Documents.Children.FirstOrDefault(i => i.Content == context.ScriptDesigner);
-            if (doc == null)
-            {
-                doc = new LayoutDocument
-                {
-                    Title = context.ScriptName, 
-                    Content = context.ScriptDesigner
-                };
-                Documents.Children.Add(doc);
-            }
-            DockManager.ActiveContent = doc;
+            Model.ShowWindow(context.ScriptDesigner);
         }
 
         private static ScriptRowViewModel getModel(object sender)

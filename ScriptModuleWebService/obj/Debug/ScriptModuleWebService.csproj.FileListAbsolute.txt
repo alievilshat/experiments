@@ -27,3 +27,13 @@ C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebS
 C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebService\obj\Debug\ScriptModuleWebService.dll
 C:\Users\vera\Documents\Visual Studio 2012\Projects\experiments\ScriptModuleWebService\obj\Debug\ScriptModuleWebService.pdb
 C:\Work\rep\ScriptModuleWebService\bin\Xceed.Wpf.AvalonDock.dll
+C:\Work\rep\ScriptModuleWebService\bin\de\Xceed.Wpf.AvalonDock.resources.dll
+C:\Work\rep\ScriptModuleWebService\bin\es\Xceed.Wpf.AvalonDock.resources.dll
+C:\Work\rep\ScriptModuleWebService\bin\fr\Xceed.Wpf.AvalonDock.resources.dll
+C:\Work\rep\ScriptModuleWebService\bin\hu\Xceed.Wpf.AvalonDock.resources.dll
+C:\Work\rep\ScriptModuleWebService\bin\it\Xceed.Wpf.AvalonDock.resources.dll
+C:\Work\rep\ScriptModuleWebService\bin\pt-BR\Xceed.Wpf.AvalonDock.resources.dll
+C:\Work\rep\ScriptModuleWebService\bin\ro\Xceed.Wpf.AvalonDock.resources.dll
+C:\Work\rep\ScriptModuleWebService\bin\ru\Xceed.Wpf.AvalonDock.resources.dll
+C:\Work\rep\ScriptModuleWebService\bin\sv\Xceed.Wpf.AvalonDock.resources.dll
+C:\Work\rep\ScriptModuleWebService\bin\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll

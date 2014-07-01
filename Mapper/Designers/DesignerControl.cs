@@ -1,20 +1,25 @@
 using System;
-using System.ComponentModel;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Markup;
 using ScriptModule.Scripts;
 
 namespace ScriptModule.Designers
 {
     public class DesignerControl : ContentControl
     {
+        public IWindowManger WindowManger { get; set; }
+
         static DesignerControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DesignerControl),
                        new FrameworkPropertyMetadata(typeof(DesignerControl)));
+        }
+
+        protected void ShowDesigner(DesignerControl designer)
+        {
+            if (WindowManger != null)
+                WindowManger.ShowWindow(designer);
         }
 
         public virtual IScript GetScript()

@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using ScriptModule.DAL;
+using ScriptModule.Designers;
 using ScriptModule.Scripts;
 using ScriptModule.Utils;
 using ScriptModuleModel;
@@ -7,15 +8,28 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using System;
 using System.Threading;
-using System.Windows.Threading;
 using Xceed.Wpf.AvalonDock.Layout;
 
 namespace ScriptModule.ViewModels
 {
-    public class ScriptModuleViewModel : ViewModelBase
+    public class ScriptModuleViewModel : ViewModelBase, IWindowManger
     {
         private ScriptManager _scriptManager;
         private ScriptModuleEntities _entities;
+
+        private ObservableCollection<LayoutContent> _documents = new ObservableCollection<LayoutContent>();
+        public ObservableCollection<LayoutContent> Documents
+        {
+            get { return _documents; }
+            set { _documents = value; OnPropertyChanged("Documents"); }
+        }
+
+        private LayoutContent _activeDocument;
+        public LayoutContent ActiveDocument
+        {
+            get { return _activeDocument; }
+            set { _activeDocument = value; OnPropertyChanged("ActiveDocument"); }
+        }
 
         private ObservableCollection<object> _output = new ObservableCollection<object>();
         public ObservableCollection<object> Output
@@ -71,6 +85,21 @@ namespace ScriptModule.ViewModels
             return true;
         }
 
+        public void ShowWindow(object content, string title = null)
+        {
+            var doc = Documents.FirstOrDefault(i => i.Content == content);
+            if (doc == null)
+            {
+                doc = new LayoutDocument
+                {
+                    Title = title ?? content.GetType().Name,
+                    Content = content
+                };
+                Documents.Add(doc);
+            }
+            ActiveDocument = doc;
+        }
+
         public void LoadScripts()
         {
             RootScripts = new ObservableCollection<ScriptRowViewModel>(
@@ -97,7 +126,7 @@ namespace ScriptModule.ViewModels
                 && ((FrameworkElement)Current.Content).DataContext is ScriptRowViewModel;
         }
 
-        internal void Execute()
+        public void Execute()
         {
             if (!CanExecute())
                 return;
@@ -110,7 +139,7 @@ namespace ScriptModule.ViewModels
             var script = ScriptBase.GetScript(scriptrowviewmodel.ScriptText);
             script.ProgressChanged += (o, e) =>
                 {
-                    App.Current.Dispatcher.Invoke(() => Output.Add(string.Format("{0} [{1}%] {2}",
+                    Application.Current.Dispatcher.Invoke(() => Output.Add(string.Format("{0} [{1}%] {2}",
                                                                             DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"),
                                                                             e.ProgressPercentage,
                                                                             e.UserState)));
@@ -118,7 +147,7 @@ namespace ScriptModule.ViewModels
             var thread = new Thread(() =>
             {
                 var res = script.Execute();
-                App.Current.Dispatcher.Invoke(() => Output.Add(string.Format("{0} [100%] Result: {1}",
+                Application.Current.Dispatcher.Invoke(() => Output.Add(string.Format("{0} [100%] Result: {1}",
                                                                             DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"),
                                                                             res)));
             });
