@@ -17,6 +17,13 @@ namespace ScriptModule.Designers.CompositeScriptDesigner.ViewModels
             get { return _script.GetType().Name; }
         }
 
+        private bool _isSelected;
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set { _isSelected = value; OnPropertyChanged("IsSelected"); }
+        }
+
         private DesignerControl _scriptDesigner;
         public DesignerControl ScriptDesigner
         {

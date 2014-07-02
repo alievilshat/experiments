@@ -1,10 +1,8 @@
 ﻿using System.Data.Objects;
 using ScriptModule.Designers;
 using ScriptModule.Scripts;
-using ScriptModule.Utils.Collections;
 using ScriptModuleModel;
 using System.Linq;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace ScriptModule.ViewModels

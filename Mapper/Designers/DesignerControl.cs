@@ -8,18 +8,15 @@ namespace ScriptModule.Designers
 {
     public class DesignerControl : ContentControl
     {
-        public IWindowManger WindowManger { get; set; }
-
         static DesignerControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DesignerControl),
                        new FrameworkPropertyMetadata(typeof(DesignerControl)));
         }
 
-        protected void ShowDesigner(DesignerControl designer)
+        protected void ShowDesigner(DesignerControl designer, string title = null)
         {
-            if (WindowManger != null)
-                WindowManger.ShowWindow(designer);
+            WindowManger.Current.ShowWindow(designer, title);
         }
 
         public virtual IScript GetScript()

@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using ScriptModule.Designers.CompositeScriptDesigner.ViewModels;
 using ScriptModule.Scripts;
-using Xceed.Wpf.AvalonDock.Layout;
+using ScriptModule.Utils;
 
 namespace ScriptModule.Designers.CompositeScriptDesigner
 {
@@ -34,43 +34,26 @@ namespace ScriptModule.Designers.CompositeScriptDesigner
             if (viewModel != null)
             {
                 var designer = viewModel.ScriptDesigner;
-                ShowDesigner(designer);
+                ShowDesigner(designer, viewModel.ScriptName);
             }
         }
 
-        private void Scripts_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void MoveUp(object sender, RoutedEventArgs e)
         {
-            if (sender is ListBoxItem)
-            {
-                var draggedItem = sender as ListBoxItem;
-                DragDrop.DoDragDrop(draggedItem, draggedItem.DataContext, DragDropEffects.Move);
-                draggedItem.IsSelected = true;
-            }
+            var item = sender.As<FrameworkElement>().DataContext.As<CompositeScriptItemViewModel>();
+            Model.MoveUp(item);
         }
 
-        private void Scripts_OnDrop(object sender, DragEventArgs e)
+        private void MoveDown(object sender, RoutedEventArgs e)
         {
-            var droppedData = e.Data.GetData(typeof(CompositeScriptItemViewModel)) as CompositeScriptItemViewModel;
-            var target = ((ListBoxItem)sender).DataContext as CompositeScriptItemViewModel;
+            var item = sender.As<FrameworkElement>().DataContext.As<CompositeScriptItemViewModel>();
+            Model.MoveDown(item);
+        }
 
-            int removedIdx = ScriptsListView.Items.IndexOf(droppedData);
-            int targetIdx = ScriptsListView.Items.IndexOf(target);
-
-            if (removedIdx < targetIdx)
-            {
-                Model.ScriptItems.Insert(targetIdx + 1, droppedData);
-                Model.ScriptItems.RemoveAt(removedIdx);
-            }
-            else
-            {
-                int remIdx = removedIdx + 1;
-                if (Model.ScriptItems.Count + 1 > remIdx)
-                {
-                    Model.ScriptItems.Insert(targetIdx, droppedData);
-                    Model.ScriptItems.RemoveAt(remIdx);
-                }
-            }
-
+        private void Remove(object sender, RoutedEventArgs e)
+        {
+            var item = sender.As<FrameworkElement>().DataContext.As<CompositeScriptItemViewModel>();
+            Model.Remove(item);
         }
     }
 }

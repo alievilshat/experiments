@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using ScriptModule.Scripts;
-using ScriptModule.Utils;
+﻿using ScriptModule.Scripts;
 using ScriptModule.Utils.Collections;
 using ScriptModule.ViewModels;
 
@@ -24,11 +22,6 @@ namespace ScriptModule.Designers.CompositeScriptDesigner.ViewModels
         private void InitializeListeners()
         {
             ScriptItems = new ViewModelCollection<CompositeScriptItemViewModel, IScript>(_script.Scripts);
-            ScriptItems.CollectionChanged += (sender, args) =>
-            {
-                SingleElementComposite = ScriptItems.Count == 1;
-
-            };
         }
 
         private ViewModelCollection<CompositeScriptItemViewModel, IScript> _scriptItems;
@@ -45,13 +38,24 @@ namespace ScriptModule.Designers.CompositeScriptDesigner.ViewModels
             set { _singleElementComposite = value; OnPropertyChanged("SingleElementComposite"); }
         }
 
-        private CompositeScriptItemViewModel _singelItem;
 
-        public CompositeScriptItemViewModel SingleItem
+        public void MoveUp(CompositeScriptItemViewModel item)
         {
-            get { return _singelItem; }
-            set { _singelItem = value; OnPropertyChanged("SingleItem"); }
+            var index = ScriptItems.IndexOf(item);
+            if (index-1 >= 0)
+                ScriptItems.Move(index, index-1);
         }
 
+        public void MoveDown(CompositeScriptItemViewModel item)
+        {
+            var index = ScriptItems.IndexOf(item);
+            if (index + 1 < ScriptItems.Count)
+                ScriptItems.Move(index, index + 1);
+        }
+
+        public void Remove(CompositeScriptItemViewModel item)
+        {
+            ScriptItems.Remove(item);
+        }
     }
 }

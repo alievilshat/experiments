@@ -12,7 +12,7 @@ using Xceed.Wpf.AvalonDock.Layout;
 
 namespace ScriptModule.ViewModels
 {
-    public class ScriptModuleViewModel : ViewModelBase, IWindowManger
+    public class ScriptModuleViewModel : ViewModelBase, IWindowManager
     {
         private ScriptManager _scriptManager;
         private ScriptModuleEntities _entities;
@@ -71,8 +71,10 @@ namespace ScriptModule.ViewModels
             this._password = password;
         }
 
-        public bool Iniailzise()
+        public bool Iniailise()
         {
+            WindowManger.SetCurrentWindowManager(this);
+
             var login = new LoginViewModel { Login = _login, Password = _password };
 
             // TODO: UNCOMMENT
@@ -83,6 +85,11 @@ namespace ScriptModule.ViewModels
             _scriptManager = new ScriptManager();
             _entities = _scriptManager.CreateEntitiesContainer();
             return true;
+        }
+
+        public void ShowScriptWindow(ScriptRowViewModel scriptRowViewModel)
+        {
+            ShowWindow(scriptRowViewModel.ScriptDesigner, scriptRowViewModel.ScriptName);
         }
 
         public void ShowWindow(object content, string title = null)

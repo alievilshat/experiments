@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using ScriptModule.Scripts;
 using ScriptModule.Scripts.Generic;
+using ScriptModule.Utils;
 using ScriptModule.ViewModels;
 using System.Windows;
 using Xceed.Wpf.AvalonDock.Layout;
@@ -33,12 +34,12 @@ namespace ScriptModule
 
         private void BindDocuments()
         {
-            BindingHelper.BindCollections(Documents, Model.Documents);
+            BindingHelper.BindCollections(Model.Documents, Documents.Children);
         }
 
         private void ScriptModule_OnLoaded(object sender, RoutedEventArgs e)
         {
-            if (!Model.Iniailzise())
+            if (!Model.Iniailise())
             {
                 Close();
                 return;
@@ -70,7 +71,7 @@ namespace ScriptModule
             if (context == null || context.ScriptText == null)
                 return;
 
-            Model.ShowWindow(context.ScriptDesigner);
+            Model.ShowScriptWindow(context);
         }
 
         private static ScriptRowViewModel getModel(object sender)

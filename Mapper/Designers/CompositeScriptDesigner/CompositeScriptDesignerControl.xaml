@@ -7,13 +7,28 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <ListView x:Name="ScriptsListView" ItemsSource="{Binding ScriptItems}"
-                    AllowDrop="True" PreviewMouseLeftButtonDown="Scripts_OnPreviewMouseLeftButtonDown" Drop="Scripts_OnDrop">
+        <ListView x:Name="ScriptsListView" ItemsSource="{Binding ScriptItems}">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="BorderBrush" Value="LightGray"/>
+                    <Setter Property="BorderThickness" Value="1" />
+                    <Setter Property="Margin" Value="1" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Border Height="40" Width="100" MouseDown="OpenDesigner_Click">
+                    <Grid Height="40" MouseDown="OpenDesigner_Click" >
                         <Label Content="{Binding ScriptName}" />
-                    </Border>
+                        <Menu HorizontalAlignment="Right" Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibility}}">
+                            <MenuItem Header="Action" Height="40">
+                                <MenuItem Header="Up" Click="MoveUp" />
+                                <MenuItem Header="Down" Click="MoveDown" />
+                                <MenuItem Header="Remove" Click="Remove" />
+                            </MenuItem>
+                        </Menu>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
