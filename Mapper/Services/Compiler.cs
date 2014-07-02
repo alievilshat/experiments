@@ -24,6 +24,7 @@ namespace ScriptModule.Services
             parameters.ReferencedAssemblies.AddRange(new[] { 
                     "mscorlib.dll", 
                     "System.dll", 
+                    "System.Xml.dll",
                     "System.Core.dll", 
                     "System.Data.dll",
                     "System.Windows.Forms.dll",

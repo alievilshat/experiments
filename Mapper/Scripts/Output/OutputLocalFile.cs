@@ -9,12 +9,12 @@ namespace ScriptModule.Scripts.Output
         public string FileName { get; set; }
         public string Filter { get; set; }
 
-        protected override object ExecuteScript(object param = null)
+        protected override object ExecuteScript(object param)
         {
             if (param == null)
                 return null;
 
-            var dialog = new SaveFileDialog {Filter = Filter, FileName = FileName };
+            var dialog = new SaveFileDialog {Filter = Filter ?? string.Empty, FileName = FileName ?? string.Empty };
             if (dialog.ShowDialog().GetValueOrDefault())
             {
                 File.WriteAllText(dialog.FileName, param.ToString());

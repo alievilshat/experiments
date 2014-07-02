@@ -5,6 +5,8 @@ namespace ScriptModule.Designers
     public interface IWindowManager
     {
         void ShowWindow(object content, string title = null);
+
+        void SetStatus(string p);
     }
 
     public class WindowManger
@@ -36,6 +38,11 @@ namespace ScriptModule.Designers
                 Content = content
             };
             window.Show();
+        }
+
+
+        public void SetStatus(string p)
+        {
         }
     }
 }

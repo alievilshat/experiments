@@ -139,6 +139,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DAL\AppConnectionString.cs" />
+    <Compile Include="Designers\Default\DefaultDesigner.xaml.cs">
+      <DependentUpon>DefaultDesigner.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Designers\Default\ViewModels\DefaultDesignerViewModel.cs" />
     <Compile Include="Utils\BindingHelper.cs" />
     <Compile Include="Controls\Editor.xaml.cs">
       <DependentUpon>Editor.xaml</DependentUpon>
@@ -156,27 +161,12 @@
     </Compile>
     <Compile Include="Designers\CompositeScriptDesigner\ViewModels\CompositeScriptItemViewModel.cs" />
     <Compile Include="Designers\CompositeScriptDesigner\ViewModels\CompositeScriptViewModel.cs" />
-    <Compile Include="Designers\ConvertCsvToXml\ConvertCsvToXmlScriptDesigner.xaml.cs">
-      <DependentUpon>ConvertCsvToXmlScriptDesigner.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Designers\ConvertXmlToCsv\ConvertXmlToCsvScriptDesigner.xaml.cs">
-      <DependentUpon>ConvertXmlToCsvScriptDesigner.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Designers\CSharpScriptDesigner\CSharpScriptDesignerControl.xaml.cs">
       <DependentUpon>CSharpScriptDesignerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Designers\CSharpScriptDesigner\ViewModels\CSharpScriptViewModel.cs" />
     <Compile Include="Designers\DesignerControl.cs" />
-    <Compile Include="Designers\InputDatabase\InputDatabaseScriptDesigner.xaml.cs">
-      <DependentUpon>InputDatabaseScriptDesigner.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Designers\InputLocalFile\InputLocalFileScriptDesigner.xaml.cs">
-      <DependentUpon>InputLocalFileScriptDesigner.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Designers\WindowManger.cs" />
-    <Compile Include="Designers\OutputLocalFile\OutputLocalFileScriptDesigner.xaml.cs">
-      <DependentUpon>OutputLocalFileScriptDesigner.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Designers\ScriptDesignerAttribute.cs" />
     <Compile Include="Designers\XsltScriptDesigner\Controls\BlockControl.xaml.cs">
       <DependentUpon>BlockControl.xaml</DependentUpon>
@@ -322,33 +312,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Designers\ConvertCsvToXml\ConvertCsvToXmlScriptDesigner.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Designers\ConvertXmlToCsv\ConvertXmlToCsvScriptDesigner.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Designers\CSharpScriptDesigner\CSharpScriptDesignerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Designers\Default\DefaultDesigner.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\Generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Designers\InputDatabase\InputDatabaseScriptDesigner.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Designers\InputLocalFile\InputLocalFileScriptDesigner.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Designers\OutputLocalFile\OutputLocalFileScriptDesigner.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Designers\XsltScriptDesigner\Controls\BlockControl.xaml">
       <SubType>Designer</SubType>
@@ -522,7 +496,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Designers\OutputDatabase\" />
     <Folder Include="Images\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

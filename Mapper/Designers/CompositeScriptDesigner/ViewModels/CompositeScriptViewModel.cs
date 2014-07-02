@@ -4,13 +4,14 @@ using ScriptModule.ViewModels;
 
 namespace ScriptModule.Designers.CompositeScriptDesigner.ViewModels
 {
-    class CompositeScriptViewModel : ViewModelBase
+    class CompositeScriptViewModel : DesignerViewModelBase
     {
-        private readonly CompositeScript _script;
+        private CompositeScript _script;
 
         public override object Model
         {
             get { return _script; }
+            set { _script = (CompositeScript)value; AllPropertiesChanged(); }
         }
 
         public CompositeScriptViewModel(CompositeScript script)
@@ -31,13 +32,10 @@ namespace ScriptModule.Designers.CompositeScriptDesigner.ViewModels
             set { _scriptItems = value; OnPropertyChanged("ScriptItems"); }
         }
 
-        private bool _singleElementComposite;
-        public bool SingleElementComposite
+        public void AddScript(IScript script)
         {
-            get { return _singleElementComposite; }
-            set { _singleElementComposite = value; OnPropertyChanged("SingleElementComposite"); }
+            _script.Scripts.Add(script);
         }
-
 
         public void MoveUp(CompositeScriptItemViewModel item)
         {

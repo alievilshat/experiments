@@ -1,7 +1,5 @@
-﻿using System.Linq;
+﻿using System;
 using System.Windows.Input;
-using ScriptModule.Scripts;
-using ScriptModule.Scripts.Generic;
 using ScriptModule.Utils;
 using ScriptModule.ViewModels;
 using System.Windows;
@@ -120,6 +118,18 @@ namespace ScriptModule
         {
             var pane = ((FrameworkElement)sender).Tag as LayoutAnchorable;
             DockManager.ActiveContent = pane;
+        }
+
+        public void AddScriptToDesigner(object sender, RoutedEventArgs e)
+        {
+            var menu = sender.As<FrameworkElement>();
+            if (menu == null || !menu.IsEnabled)
+                return;
+            
+            var type = menu.Tag.As<Type>();
+            if (type == null)
+                return;
+            Model.AddScriptToDesigner(type);
         }
     }
 }

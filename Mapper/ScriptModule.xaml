@@ -1,6 +1,10 @@
 ﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
+        xmlns:input="clr-namespace:ScriptModule.Scripts.Input"
+        xmlns:converters="clr-namespace:ScriptModule.Scripts.Converters"
+        xmlns:generic="clr-namespace:ScriptModule.Scripts.Generic"
+        xmlns:output="clr-namespace:ScriptModule.Scripts.Output"
         x:Class="ScriptModule.ScriptModuleWindow"
         Title="ScriptModule"
         Loaded="ScriptModule_OnLoaded">
@@ -77,23 +81,36 @@
                             <xcad:LayoutAnchorablePane>
                                 <xcad:LayoutAnchorable x:Name="ToolsPane"  Title="Tools" CanHide="False">
                                     <TreeView DockPanel.Dock="Right" Background="WhiteSmoke">
+                                        <TreeView.Resources>
+                                            <Style TargetType="TreeViewItem">
+                                                <EventSetter Event="MouseDoubleClick" Handler="AddScriptToDesigner" />
+                                            </Style>
+                                        </TreeView.Resources>
                                         <TreeViewItem Header="Input" IsExpanded="True">
-                                            <TreeViewItem Header="Local File System" />
-                                            <TreeViewItem Header="Ftp Location" />
-                                            <TreeViewItem Header="Database" />
-                                        </TreeViewItem>
-                                        <TreeViewItem Header="Converters" IsExpanded="True">
-                                            <TreeViewItem Header="Xml To Csv" />
-                                            <TreeViewItem Header="Csv To Xml" />
-                                        </TreeViewItem>
-                                        <TreeViewItem Header="Scripts" IsExpanded="True">
-                                            <TreeViewItem Header="C# Script" />
-                                            <TreeViewItem Header="XSLT Script" />
+                                            <TreeViewItem Header="Local File System" Tag="{x:Type input:InputLocalFile}" />
+                                            <TreeViewItem Header="Ftp Location" Tag="{x:Type input:InputFtpFile}" IsEnabled="False" />
+                                            <TreeViewItem Header="Database" Tag="{x:Type input:InputDatabase}" />
                                         </TreeViewItem>
                                         <TreeViewItem Header="Output" IsExpanded="True">
-                                            <TreeViewItem Header="Local File System" />
-                                            <TreeViewItem Header="Ftp Location" />
-                                            <TreeViewItem Header="Database" />
+                                            <TreeViewItem Header="Local File System" Tag="{x:Type output:OutputLocalFile}" />
+                                            <TreeViewItem Header="Ftp Location" Tag="{x:Type output:OutputFtpFile}" IsEnabled="False" />
+                                            <TreeViewItem Header="Database" Tag="{x:Type output:OutputDatabase}" />
+                                        </TreeViewItem>
+                                        <TreeViewItem Header="Converters" IsExpanded="True">
+                                            <TreeViewItem Header="Xml To Csv" Tag="{x:Type converters:XmlToCsv}" />
+                                            <TreeViewItem Header="Csv To Xml" Tag="{x:Type converters:CsvToXml}" />
+                                        </TreeViewItem>
+                                        <TreeViewItem Header="Scripts" IsExpanded="True">
+                                            <TreeViewItem Header="C# Script" Tag="{x:Type generic:CSharpScript}" />
+                                            <TreeViewItem Header="XSLT Script" Tag="{x:Type generic:XsltScript}" />
+                                        </TreeViewItem>
+                                        <TreeViewItem Header="Execution" IsExpanded="True">
+                                            <TreeViewItem Header="Transfer To Server" IsEnabled="False" />
+                                            <TreeViewItem Header="Transfer To Client" IsEnabled="False" />
+                                        </TreeViewItem>
+                                        <TreeViewItem Header="Web Services" IsExpanded="True">
+                                            <TreeViewItem Header="Connect To Web Service" IsEnabled="False" />
+                                            <TreeViewItem Header="Web Service Call" IsEnabled="False" />
                                         </TreeViewItem>
                                     </TreeView>
                                 </xcad:LayoutAnchorable>
@@ -117,7 +134,7 @@
         </xcad:DockingManager>
 
         <StatusBar Grid.Row="2">
-            <StatusBarItem Content="Ready"/>
+            <StatusBarItem Content="{Binding Status}"/>
         </StatusBar>
     </Grid>
 </Window>

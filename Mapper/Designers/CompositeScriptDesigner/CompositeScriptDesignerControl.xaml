@@ -8,6 +8,11 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <ListView x:Name="ScriptsListView" ItemsSource="{Binding ScriptItems}">
+            <ListView.Resources>
+                <Style TargetType="MenuItem">
+                    <Setter Property="Height" Value="24" />
+                </Style>
+            </ListView.Resources>
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="BorderBrush" Value="LightGray"/>
@@ -21,13 +26,13 @@
                 <DataTemplate>
                     <Grid Height="40" MouseDown="OpenDesigner_Click" >
                         <Label Content="{Binding ScriptName}" />
-                        <Menu HorizontalAlignment="Right" Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibility}}">
-                            <MenuItem Header="Action" Height="40">
+                        <Expander ExpandDirection="Left" HorizontalAlignment="Right" Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibility}}" VerticalAlignment="Center">
+                            <Menu>
                                 <MenuItem Header="Up" Click="MoveUp" />
                                 <MenuItem Header="Down" Click="MoveDown" />
                                 <MenuItem Header="Remove" Click="Remove" />
-                            </MenuItem>
-                        </Menu>
+                            </Menu>
+                        </Expander>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

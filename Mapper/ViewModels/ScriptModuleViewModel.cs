@@ -1,6 +1,8 @@
-﻿using System.Windows;
+﻿using System.Configuration;
+using System.Windows;
 using ScriptModule.DAL;
 using ScriptModule.Designers;
+using ScriptModule.Properties;
 using ScriptModule.Scripts;
 using ScriptModule.Utils;
 using ScriptModuleModel;
@@ -45,6 +47,13 @@ namespace ScriptModule.ViewModels
             set { _errors = value; OnPropertyChanged("Errors"); }
         }
 
+        private string _statu;
+        public string Status
+        {
+            get { return _statu; }
+            set { _statu = value; OnPropertyChanged("Status"); }
+        }
+
         private ObservableCollection<ScriptRowViewModel> _rootScipts;
         public ObservableCollection<ScriptRowViewModel> RootScripts
         {
@@ -84,6 +93,10 @@ namespace ScriptModule.ViewModels
             //_scriptManager = login.GetScriptManager();
             _scriptManager = new ScriptManager();
             _entities = _scriptManager.CreateEntitiesContainer();
+
+            // TODO: FIX
+            AppConnectionString.Default = "User Id=postgres;Password=Banek12;Host=85.92.146.196;Database=bodyview3";
+
             return true;
         }
 
@@ -141,24 +154,40 @@ namespace ScriptModule.ViewModels
             Execute(Current.Content.As<FrameworkElement>().DataContext.As<ScriptRowViewModel>());
         }
 
+        private static void Invoke(Action action)
+        {
+            Application.Current.Dispatcher.Invoke(action);
+        }
+
         public void Execute(ScriptRowViewModel scriptrowviewmodel)
         {
             var script = ScriptBase.GetScript(scriptrowviewmodel.ScriptText);
+
             script.ProgressChanged += (o, e) =>
-                {
-                    Application.Current.Dispatcher.Invoke(() => Output.Add(string.Format("{0} [{1}%] {2}",
-                                                                            DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"),
-                                                                            e.ProgressPercentage,
-                                                                            e.UserState)));
-                };
+            {
+                Invoke(() => Output.Add(string.Format("{0} [{1}%] {2}", getTimestamp(), e.ProgressPercentage, e.UserState)));
+            };
+
             var thread = new Thread(() =>
             {
-                var res = script.Execute();
-                Application.Current.Dispatcher.Invoke(() => Output.Add(string.Format("{0} [100%] Result: {1}",
-                                                                            DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"),
-                                                                            res)));
+                try
+                {
+                    var res = script.Execute();
+                    Invoke(() => Output.Add(string.Format("{0} [100%] Result: {1}", getTimestamp(), res)));
+                }
+                catch (Exception ex)
+                {
+                    Invoke(() => Errors.Add(string.Format("{0} {1}", getTimestamp(), ex.Message)));
+                    WindowManger.Current.SetStatus("ERROR");
+                }
             });
+                
             thread.Start();
+        }
+
+        private static string getTimestamp()
+        {
+            return DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
         }
 
         public void Save()
@@ -168,6 +197,29 @@ namespace ScriptModule.ViewModels
                 s.SaveChanges();
             }
             _entities.SaveChanges();
+        }
+
+        public void AddScriptToDesigner(IScript script)
+        {
+            if (script == null || ActiveDocument == null)
+                return;
+
+            var control = ActiveDocument.Content.As<DesignerControl>();
+            if (control == null)
+                return;
+            
+            control.AddScript(script);
+        }
+
+        internal void AddScriptToDesigner(Type type)
+        {
+            var script = Activator.CreateInstance(type).As<IScript>();
+            AddScriptToDesigner(script);
+        }
+
+        public void SetStatus(string text)
+        {
+            Status = text;
         }
     }
 }

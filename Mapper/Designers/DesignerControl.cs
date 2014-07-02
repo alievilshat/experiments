@@ -2,6 +2,7 @@ using System;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using ScriptModule.Designers.Default;
 using ScriptModule.Scripts;
 
 namespace ScriptModule.Designers
@@ -14,9 +15,19 @@ namespace ScriptModule.Designers
                        new FrameworkPropertyMetadata(typeof(DesignerControl)));
         }
 
+        public virtual void AddScript(IScript script)
+        {
+            ShowMessage("Action is not valid");
+        }
+
         protected void ShowDesigner(DesignerControl designer, string title = null)
         {
             WindowManger.Current.ShowWindow(designer, title);
+        }
+
+        protected void ShowMessage(string message)
+        {
+            MessageBox.Show(message);
         }
 
         public virtual IScript GetScript()
@@ -28,7 +39,7 @@ namespace ScriptModule.Designers
         {
             var attr = (ScriptDesignerAttribute)script.GetType().GetCustomAttribute(typeof(ScriptDesignerAttribute));
             if (attr == null)
-                throw new ApplicationException("Designer for " + script.GetType() + "is missing.");
+                return new DefaultDesigner(script);
 
             return (DesignerControl)Activator.CreateInstance(attr.DesignerType, script);
         }

@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using ScriptModule.Designers.CompositeScriptDesigner.ViewModels;
 using ScriptModule.Scripts;
@@ -12,7 +11,7 @@ namespace ScriptModule.Designers.CompositeScriptDesigner
     /// </summary>
     public partial class CompositeScriptDesignerControl : DesignerControl
     {
-        private CompositeScript _script;
+        private readonly CompositeScript _script;
 
         private CompositeScriptViewModel Model
         {
@@ -23,6 +22,11 @@ namespace ScriptModule.Designers.CompositeScriptDesigner
             this._script = script;
             DataContext = new CompositeScriptViewModel(script);
             InitializeComponent();
+        }
+
+        public override IScript GetScript()
+        {
+            return _script;
         }
 
         private void OpenDesigner_Click(object sender, MouseButtonEventArgs e)
@@ -54,6 +58,11 @@ namespace ScriptModule.Designers.CompositeScriptDesigner
         {
             var item = sender.As<FrameworkElement>().DataContext.As<CompositeScriptItemViewModel>();
             Model.Remove(item);
+        }
+
+        public override void AddScript(IScript script)
+        {
+            Model.AddScript(script);
         }
     }
 }
