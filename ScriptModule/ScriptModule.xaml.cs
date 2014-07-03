@@ -37,12 +37,13 @@ namespace ScriptModule
 
         private void ScriptModule_OnLoaded(object sender, RoutedEventArgs e)
         {
-            if (!Model.Iniailise())
+            Model.Iniailise(i =>
             {
-                Close();
-                return;
-            }
-            Model.LoadScripts();
+                if (i) 
+                    Model.LoadScripts();
+                else 
+                    Close();
+            });
         }
 
         private void NewScript_Click(object sender, ExecutedRoutedEventArgs e)

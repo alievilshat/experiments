@@ -1,5 +1,6 @@
 ﻿using System.Configuration;
 using System.Windows;
+using System.Windows.Threading;
 using ScriptModule.DAL;
 using ScriptModule.Designers;
 using ScriptModule.Properties;
@@ -80,24 +81,30 @@ namespace ScriptModule.ViewModels
             this._password = password;
         }
 
-        public bool Iniailise()
+        public void Iniailise(Action<bool> callback)
         {
             WindowManger.SetCurrentWindowManager(this);
 
-            var login = new LoginViewModel { Login = _login, Password = _password };
+            var res = Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() =>
+            {
+                var login = new LoginViewModel { Login = _login, Password = _password };
 
-            // TODO: UNCOMMENT
-            //if (!new LoginWindow(login).ShowDialog().GetValueOrDefault())
-            //    return false;
+                if (!new LoginWindow(login).ShowDialog().GetValueOrDefault())
+                {
+                    callback(false);
+                    return;
+                }
 
-            //_scriptManager = login.GetScriptManager();
-            _scriptManager = new ScriptManager();
-            _entities = _scriptManager.CreateEntitiesContainer();
+                _scriptManager = login.GetScriptManager();
+                //_scriptManager = new ScriptManager();
+                _entities = _scriptManager.CreateEntitiesContainer();
 
-            // TODO: FIX
-            AppConnectionString.Default = "User Id=postgres;Password=Banek12;Host=85.92.146.196;Database=dubaiprint";
+                AppConnectionString.Default = _entities.Connection.ConnectionString;
+                //"User Id=postgres;Password=Banek12;Host=85.92.146.196;Database=dubaiprint";
 
-            return true;
+                callback(true);
+
+            }), new object[0]);
         }
 
         public void ShowScriptWindow(ScriptRowViewModel scriptRowViewModel)
