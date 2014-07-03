@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reflection;
 using ScriptModule.Scripts.Generic;
 using ScriptModule.Services;
@@ -71,8 +72,10 @@ namespace ScriptModule.Designers.CSharpScriptDesigner.ViewModels
                     var assembly = Compiler.CompileAssembly(Code, Dependencies);
                     Classes = assembly.GetTypes().Select(i => i.Name).ToArray();
                 }
-                catch
-                { }
+                catch (Exception ex)
+                {
+                    WindowManger.Current.ShowException(ex);
+                }
             }
             OnPropertyChanged("IsMainClassDropDownOpen");
         }

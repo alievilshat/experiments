@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace ScriptModule.Designers
 {
@@ -7,6 +8,8 @@ namespace ScriptModule.Designers
         void ShowWindow(object content, string title = null);
 
         void SetStatus(string p);
+
+        void ShowException(Exception ex);
     }
 
     public class WindowManger
@@ -40,9 +43,14 @@ namespace ScriptModule.Designers
             window.Show();
         }
 
-
         public void SetStatus(string p)
         {
+            MessageBox.Show(p);
+        }
+
+        public void ShowException(Exception ex)
+        {
+            MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

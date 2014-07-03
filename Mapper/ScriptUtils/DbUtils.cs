@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using Npgsql;
+using ScriptModule.DAL;
 
 namespace ScriptModule
 {
@@ -18,7 +19,7 @@ namespace ScriptModule
             Transaction.Commit();
         }
 
-        public static void DisposeConnection()
+        public static void CloseConnection()
         {
             Connection.Close();
         }
@@ -37,7 +38,13 @@ namespace ScriptModule
             return performQuery(query, Connection);
         }
 
-        public static void SetConnection(string con)
+        public static void OpenConnection()
+        {
+            Connection = new NpgsqlConnection(AppConnectionString.Default);
+            Connection.Open();
+        }
+
+        public static void OpenConnection(string con)
         {
             Connection = new NpgsqlConnection(con);
             Connection.Open();

@@ -108,8 +108,8 @@
         </DataTemplate>
     </designers:DesignerControl.Resources>
 
-    <TabControl TabStripPlacement="Bottom">
-        <TabItem Header="Design">
+    <TabControl TabStripPlacement="Top">
+        <TabItem Header="Mapper">
             <DockPanel ClipToBounds="True" Background="Transparent" Focusable="True" IsVisibleChanged="DesignPanel_IsVisibleChanged">
                 <controls:SchemaControl x:Name="SourceSchema" DragDropEnabled="True" DockPanel.Dock="Left" Schema="{Binding SourceSchema, Mode=TwoWay}"
                                  DragEnter="schemaDragEnter"
@@ -124,7 +124,7 @@
                 <ItemsControl DataContext="{Binding TransformationViewModel}" ItemsSource="{Binding Children}" />
             </DockPanel>
         </TabItem>
-        <TabItem Header="Source">
+        <TabItem Header="Xslt">
             <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                             Content="{Binding SourceTextBox}" IsVisibleChanged="SourceTextBox_IsVisibleChanged" />
         </TabItem>

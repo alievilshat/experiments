@@ -15,7 +15,7 @@ using ScriptModule.Designers.XsltScriptDesigner.ViewModels.Xslt;
 
 namespace ScriptModule.Designers.XsltScriptDesigner.ViewModels
 {
-    public class MapperViewModel : DesignerViewModelBase
+    public class MapperViewModel : XsltDesignerViewModelBase
     {
         public event EventHandler Initialized;
         public event EventHandler SizeChanged;
@@ -24,6 +24,7 @@ namespace ScriptModule.Designers.XsltScriptDesigner.ViewModels
         public override object Model
         {
             get { return Script; }
+            set { Script = (XsltScript)value; AllPropertiesChanged(); }
         }
 
         public MapperViewModel()

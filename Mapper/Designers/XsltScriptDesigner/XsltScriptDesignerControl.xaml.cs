@@ -13,6 +13,8 @@ namespace ScriptModule.Designers.XsltScriptDesigner
     /// </summary>
     public partial class XsltScriptDesignerControl : DesignerControl, IMapperHost
     {
+        private XsltScript _script;
+
         public FrameworkElement SourceSchemaControl { get { return SourceSchema; } }
 
         public FrameworkElement TargetSchemaControl { get { return TargetSchema; } }
@@ -24,7 +26,9 @@ namespace ScriptModule.Designers.XsltScriptDesigner
 
         public XsltScriptDesignerControl(XsltScript script)
         {
-            DataContext = new MapperViewModel(script);
+            this._script = script;
+            DataContext = new MapperViewModel(_script);
+            InitializeComponent();
         }
 
         private MapperViewModel Model

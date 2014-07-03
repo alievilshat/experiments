@@ -95,7 +95,7 @@ namespace ScriptModule.ViewModels
             _entities = _scriptManager.CreateEntitiesContainer();
 
             // TODO: FIX
-            AppConnectionString.Default = "User Id=postgres;Password=Banek12;Host=85.92.146.196;Database=bodyview3";
+            AppConnectionString.Default = "User Id=postgres;Password=Banek12;Host=85.92.146.196;Database=dubaiprint";
 
             return true;
         }
@@ -220,6 +220,11 @@ namespace ScriptModule.ViewModels
         public void SetStatus(string text)
         {
             Status = text;
+        }
+
+        public void ShowException(Exception ex)
+        {
+            Errors.Add(ex.ToString());
         }
     }
 }

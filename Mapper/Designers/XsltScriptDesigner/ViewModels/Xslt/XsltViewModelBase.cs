@@ -8,7 +8,7 @@ using System.Xml.Schema;
 
 namespace ScriptModule.Designers.XsltScriptDesigner.ViewModels.Xslt
 {
-    public class XsltViewModelBase : DesignerViewModelBase
+    public class XsltViewModelBase : XsltDesignerViewModelBase
     {
         private XmlNode _node;
         public XmlNode Node

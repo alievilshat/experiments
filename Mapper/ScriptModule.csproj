@@ -286,7 +286,7 @@
     <Compile Include="Designers\XsltScriptDesigner\ViewModels\IMapperHost.cs" />
     <Compile Include="Designers\XsltScriptDesigner\ViewModels\MapperViewModel.cs" />
     <Compile Include="Designers\XsltScriptDesigner\Logic\TransformationBuilder.cs" />
-    <Compile Include="Designers\XsltScriptDesigner\ViewModels\DesignerViewModelBase.cs" />
+    <Compile Include="Designers\XsltScriptDesigner\ViewModels\XsltDesignerViewModelBase.cs" />
     <Compile Include="Designers\XsltScriptDesigner\ViewModels\Xslt\XsltContentNodeViewModel.cs" />
     <Compile Include="Designers\XsltScriptDesigner\ViewModels\Xslt\XsltForEachViewModel.cs" />
     <Compile Include="Designers\XsltScriptDesigner\ViewModels\Xslt\XsltMixedContentViewModel.cs" />

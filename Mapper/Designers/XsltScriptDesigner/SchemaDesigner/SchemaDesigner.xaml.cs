@@ -167,7 +167,7 @@ namespace ScriptModule.Designers.XsltScriptDesigner.SchemaDesigner
             if (handledContextMenuEventArgs != e)
             {
                 handledContextMenuEventArgs = e;
-                TreeViewItem item = sender as TreeViewItem;
+                var item = sender as TreeViewItem;
                 if (item != null)
                 {
                     item.Focus();

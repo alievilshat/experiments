@@ -88,6 +88,8 @@ namespace ScriptModule.Designers.XsltScriptDesigner.ViewModels.Xslt
 
         private void updateTargetPort()
         {
+            if (MapperViewModel.Host == null)
+                return;
             var port = GetNodePort(MapperViewModel.Host.TargetSchemaControl, _targetPath);
             if (port != TargetPort.As<Thumb>())
                 TargetPort = new Reference<Thumb>(port);

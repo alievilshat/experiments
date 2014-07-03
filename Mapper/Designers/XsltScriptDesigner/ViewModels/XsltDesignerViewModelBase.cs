@@ -6,7 +6,7 @@ using ScriptModule.ViewModels;
 
 namespace ScriptModule.Designers.XsltScriptDesigner.ViewModels
 {
-    public abstract class DesignerViewModelBase : ViewModelBase
+    public abstract class XsltDesignerViewModelBase : DesignerViewModelBase
     {
         public const string XSL = "xsl";
         public const string XSL_NAMESPACE = "http://www.w3.org/1999/XSL/Transform";
